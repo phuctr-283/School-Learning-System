@@ -1,0 +1,380 @@
+<div class="section-title semester-section-title">
+
+    <i class="fa-light fa-calendar-days"></i>
+
+    <h2>
+        Học kỳ
+    </h2>
+
+</div>
+
+
+<div class="data-card semester-list-card">
+
+    <div class="data-card__body">
+
+
+        <!-- =====================================================
+             TOOLBAR
+        ====================================================== -->
+
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+
+                <div class="page-list-title">
+
+                    <div class="page-list-title__icon">
+                        <i class="fa-light fa-calendar-range"></i>
+                    </div>
+
+                    <div>
+
+                        <h5>
+                            Danh sách học kỳ
+                        </h5>
+
+                        <span>
+                            Quản lý thời gian và trạng thái các học kỳ
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="data-toolbar__actions">
+
+
+                <!-- SEARCH -->
+
+                <div class="data-search">
+
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchSemester" placeholder="Tìm theo mã hoặc tên học kỳ...">
+
+                </div>
+
+
+                <!-- CREATE -->
+
+                <a href="/school-admin/university/semesters/create" class="data-btn data-btn--primary">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm học kỳ
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ERROR
+        ====================================================== -->
+
+        {{#if error}}
+
+        <div class="data-alert data-alert--danger">
+
+            <div class="data-alert__icon">
+
+                <i class="fa-light fa-circle-exclamation"></i>
+
+            </div>
+
+            <div class="data-alert__content">
+
+                <strong>
+                    Không thể tải dữ liệu
+                </strong>
+
+                <span>
+                    {{error}}
+                </span>
+
+            </div>
+
+        </div>
+
+        {{/if}}
+
+
+        <!-- =====================================================
+             TABLE
+        ====================================================== -->
+
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--semester">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="text-center">
+                            MÃ HỌC KỲ
+                        </th>
+
+                        <th>
+                            HỌC KỲ
+                        </th>
+
+                        <th>
+                            NĂM HỌC
+                        </th>
+
+                        <th class="text-center">
+                            THỜI GIAN
+                        </th>
+
+                        <th class="text-center">
+                            TRẠNG THÁI
+                        </th>
+
+                        <th class="text-center">
+                            HOẠT ĐỘNG
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {{#each semesters}}
+
+                    <tr>
+
+
+                        <!-- =================================================
+                             SEMESTER ID
+                        ================================================== -->
+
+                        <td class="text-center">
+
+                            <span class="data-code">
+                                {{semesterId}}
+                            </span>
+
+                        </td>
+
+
+                        <!-- =================================================
+                             SEMESTER NAME
+                        ================================================== -->
+
+                        <td>
+
+                            <div class="semester-name">
+
+                                <div class="semester-name__icon">
+
+                                    <i class="fa-light fa-calendar-range"></i>
+
+                                </div>
+
+
+                                <div class="semester-name__content">
+
+                                    <span>
+                                        {{name}}
+                                    </span>
+
+                                    <small>
+                                        Học kỳ đào tạo
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================================
+                             ACADEMIC YEAR
+                        ================================================== -->
+
+                        <td>
+
+                            <div class="semester-academic-year">
+
+                                <i class="fa-light fa-calendar-days"></i>
+
+                                <span>
+                                    {{academicYearName}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================================
+                             DATE RANGE
+                        ================================================== -->
+
+                        <td class="text-center">
+
+                            <div class="semester-date-range">
+
+
+                                <div class="semester-date">
+
+                                    <i class="fa-light fa-calendar-check"></i>
+
+                                    <span>
+                                        {{startDate}}
+                                    </span>
+
+                                </div>
+
+
+                                <i class="fa-light fa-arrow-right semester-date-range__arrow"></i>
+
+
+                                <div class="semester-date">
+
+                                    <i class="fa-light fa-calendar-xmark"></i>
+
+                                    <span>
+                                        {{endDate}}
+                                    </span>
+
+                                </div>
+
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================================
+                             STATUS
+                        ================================================== -->
+
+                        <td class="text-center">
+
+
+                            {{#if (eq status "active")}}
+
+                            <span class="data-status data-status--active">
+
+                                <span class="data-status__dot"></span>
+
+                                Đang hoạt động
+
+                            </span>
+
+
+                            {{else if (eq status "planned")}}
+
+                            <span class="data-status data-status--planned">
+
+                                <span class="data-status__dot"></span>
+
+                                Chưa bắt đầu
+
+                            </span>
+
+
+                            {{else}}
+
+                            <span class="data-status data-status--inactive">
+
+                                <span class="data-status__dot"></span>
+
+                                Đã kết thúc
+
+                            </span>
+
+                            {{/if}}
+
+
+                        </td>
+
+
+                        <!-- =================================================
+                             ACTION
+                        ================================================== -->
+
+                        <td class="text-center">
+
+                            <a href="/school-admin/university/semesters/{{semesterId}}/edit" class="data-action"
+                                title="Chỉnh sửa học kỳ">
+
+                                <i class="fa-light fa-pen-to-square"></i>
+
+                                <span>
+                                    Sửa
+                                </span>
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {{else}}
+
+
+                    <!-- =====================================================
+                         EMPTY STATE
+                    ====================================================== -->
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+
+                                    <i class="fa-light fa-calendar-range"></i>
+
+                                </div>
+
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có học kỳ
+                                    </strong>
+
+                                    <span>
+                                        Chưa có dữ liệu học kỳ nào trong trường.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    {{/each}}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

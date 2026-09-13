@@ -1,0 +1,330 @@
+<div class="section-title">
+    <i class="fa-light fa-building-columns"></i>
+    <h2>Thêm trường đại học</h2>
+</div>
+
+<div class="university-form-page">
+
+    <div class="university-form-card">
+
+        <!-- =========================================
+             HEADER
+        ========================================== -->
+        <div class="university-form-card__header">
+
+            <div class="university-form-card__heading">
+
+                <div class="university-form-card__icon">
+                    <i class="fa-light fa-building-columns"></i>
+                </div>
+
+                <div>
+                    <h4>Thông tin trường đại học</h4>
+
+                    <p>
+                        Nhập đầy đủ thông tin để tạo trường đại học mới
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             FORM
+        ========================================== -->
+        <form
+            action="/super-admin/university/create"
+            method="POST"
+            class="university-form"
+            id="createUniversityForm"
+        >
+
+            <div class="university-form__body">
+
+
+                <!-- =====================================
+                     MÃ TRƯỜNG
+                ====================================== -->
+                <div class="form-group">
+
+                    <label for="university_id">
+                        Mã trường
+
+                        <span class="form-required">
+                            *
+                        </span>
+                    </label>
+
+                    <div class="form-input-wrapper">
+
+                        <i class="fa-light fa-hashtag"></i>
+
+                        <input
+                            type="text"
+                            id="university_id"
+                            name="university_id"
+                            placeholder="Ví dụ: DH001"
+                            value="{{form.university_id}}"
+                            autocomplete="off"
+                            required
+                        >
+
+                    </div>
+
+                    <span class="form-help">
+                        Mã trường phải là mã duy nhất trong hệ thống.
+                    </span>
+
+                    {{#if errors.university_id}}
+                        <span class="form-error">
+                            <i class="fa-light fa-circle-exclamation"></i>
+                            {{errors.university_id}}
+                        </span>
+                    {{/if}}
+
+                </div>
+
+
+                <!-- =====================================
+                     TÊN TRƯỜNG
+                ====================================== -->
+                <div class="form-group">
+
+                    <label for="name">
+                        Tên trường
+
+                        <span class="form-required">
+                            *
+                        </span>
+                    </label>
+
+                    <div class="form-input-wrapper">
+
+                        <i class="fa-light fa-building-columns"></i>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Nhập tên trường đại học"
+                            value="{{form.name}}"
+                            autocomplete="organization"
+                            required
+                        >
+
+                    </div>
+
+                    {{#if errors.name}}
+                        <span class="form-error">
+                            <i class="fa-light fa-circle-exclamation"></i>
+                            {{errors.name}}
+                        </span>
+                    {{/if}}
+
+                </div>
+
+
+                <!-- =====================================
+                     DOMAIN
+                ====================================== -->
+                <div class="form-group">
+
+                    <label for="domain">
+                        Domain
+
+                        <span class="form-required">
+                            *
+                        </span>
+                    </label>
+
+                    <div class="form-input-wrapper">
+
+                        <i class="fa-light fa-globe"></i>
+
+                        <input
+                            type="text"
+                            id="domain"
+                            name="domain"
+                            placeholder="Ví dụ: stu.edu.vn"
+                            value="{{form.domain}}"
+                            autocomplete="url"
+                            required
+                        >
+
+                    </div>
+
+                    <span class="form-help">
+                        Domain được sử dụng để xác định website/email của trường.
+                    </span>
+
+                    {{#if errors.domain}}
+                        <span class="form-error">
+                            <i class="fa-light fa-circle-exclamation"></i>
+                            {{errors.domain}}
+                        </span>
+                    {{/if}}
+
+                </div>
+
+
+                <!-- =====================================
+                     EMAIL + PHONE
+                ====================================== -->
+                <div class="form-row">
+
+                    <!-- EMAIL -->
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+
+                            <span class="form-required">
+                                *
+                            </span>
+                        </label>
+
+                        <div class="form-input-wrapper">
+
+                            <i class="fa-light fa-envelope"></i>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="contact@stu.edu.vn"
+                                value="{{form.email}}"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+                        {{#if errors.email}}
+                            <span class="form-error">
+                                <i class="fa-light fa-circle-exclamation"></i>
+                                {{errors.email}}
+                            </span>
+                        {{/if}}
+
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Số điện thoại
+
+                            <span class="form-required">
+                                *
+                            </span>
+                        </label>
+
+                        <div class="form-input-wrapper">
+
+                            <i class="fa-light fa-phone"></i>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="028 1234 5678"
+                                value="{{form.phone}}"
+                                autocomplete="tel"
+                                required
+                            >
+
+                        </div>
+
+                        {{#if errors.phone}}
+                            <span class="form-error">
+                                <i class="fa-light fa-circle-exclamation"></i>
+                                {{errors.phone}}
+                            </span>
+                        {{/if}}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 FOOTER
+            ========================================== -->
+            <div class="university-form-card__footer">
+
+                <a
+                    href="/admin/university"
+                    class="form-btn form-btn--cancel"
+                >
+                    <i class="fa-light fa-arrow-left"></i>
+                    <span>Quay lại</span>
+                </a>
+
+
+                <button
+                    type="reset"
+                    class="form-btn form-btn--reset"
+                >
+                    <i class="fa-light fa-rotate-left"></i>
+                    <span>Nhập lại</span>
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="form-btn form-btn--submit"
+                >
+                    <i class="fa-light fa-plus"></i>
+                    <span>Tạo trường</span>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         INFORMATION CARD
+    ========================================== -->
+    <div class="university-form-info">
+
+        <div class="university-form-info__icon">
+            <i class="fa-light fa-circle-info"></i>
+        </div>
+
+        <div>
+
+            <h5>Lưu ý khi tạo trường</h5>
+
+            <ul>
+
+                <li>
+                    Mã trường phải là duy nhất.
+                </li>
+
+                <li>
+                    Domain nên sử dụng domain chính thức của trường.
+                </li>
+
+                <li>
+                    Email và số điện thoại phải là thông tin liên hệ chính thức.
+                </li>
+
+                <li>
+                    Kiểm tra lại thông tin trước khi tạo.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>

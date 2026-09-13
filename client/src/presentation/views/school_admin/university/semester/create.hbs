@@ -1,0 +1,465 @@
+<div class="section-title semester-create-title">
+
+    <div class="section-title__icon">
+        <i class="fa-light fa-calendar-plus"></i>
+    </div>
+
+    <div class="section-title__content">
+
+        <span class="section-title__eyebrow">
+            QUẢN LÝ HỌC KỲ
+        </span>
+
+        <h2>
+            Thêm học kỳ
+        </h2>
+
+        <p>
+            Tạo học kỳ mới và thiết lập thời gian đào tạo.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="data-card semester-form-card">
+
+    <div class="data-card__body">
+
+        <!-- ================================================
+             HEADER
+        ================================================= -->
+
+        <div class="form-card-header semester-form-header">
+
+            <div class="form-card-header__icon">
+                <i class="fa-light fa-calendar-days"></i>
+            </div>
+
+            <div>
+
+                <h3>
+                    Thông tin học kỳ
+                </h3>
+
+                <p>
+                    Thiết lập năm học, học kỳ và khoảng thời gian áp dụng.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================
+             FORM
+        ================================================= -->
+
+        <form action="/school-admin/university/semesters/create" method="POST" class="form-container semester-form">
+
+            <!-- ============================================
+                 ERROR
+            ============================================= -->
+
+            {{#if error}}
+
+            <div class="form-error semester-form-error">
+
+                <div class="semester-form-error__icon">
+                    <i class="fa-light fa-circle-exclamation"></i>
+                </div>
+
+                <div class="semester-form-error__content">
+
+                    <strong>
+                        Không thể tạo học kỳ
+                    </strong>
+
+                    <span>
+                        {{error}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {{/if}}
+
+
+            <!-- ============================================
+                 ACADEMIC YEAR
+            ============================================= -->
+
+            <div class="form-group semester-academic-year-group">
+
+                <label for="academicYear">
+
+                    <span class="semester-label-icon">
+                        <i class="fa-light fa-calendar-range"></i>
+                    </span>
+
+                    <span>
+                        Năm học
+                    </span>
+
+                    <span class="required">
+                        *
+                    </span>
+
+                </label>
+
+
+                <div class="semester-select-wrapper">
+
+                    <i class="semester-select-icon fa-light fa-calendar-days"></i>
+
+                    <select id="academicYear" name="academic_year_id" required>
+
+                        <option value="">
+                            -- Chọn năm học --
+                        </option>
+
+                        {{#each academicYears}}
+
+                        <option value="{{academicYearId}}" {{#if (eq academicYearId ../formData.academic_year_id)}}
+                            selected {{/if}}>
+                            {{name}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                    <i class="semester-select-arrow fa-light fa-chevron-down"></i>
+
+                </div>
+
+
+                <small class="semester-form-hint">
+
+                    <i class="fa-light fa-circle-info"></i>
+
+                    <span>
+                        Chọn năm học mà học kỳ này thuộc về.
+                    </span>
+
+                </small>
+
+            </div>
+
+
+            <!-- ============================================
+     SEMESTER NUMBER
+============================================= -->
+
+            <div class="semester-plan-section semester-number-group">
+
+                <div class="semester-plan-section__heading">
+
+                    <div class="semester-plan-section__number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Học kỳ
+                        </h4>
+
+                        <p>
+                            Chọn học kỳ muốn tạo trong năm học.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="semester-number-grid">
+
+                    <!-- =====================================
+             SEMESTER 1
+        ====================================== -->
+
+                    <label class="semester-number-card">
+
+                        <input type="radio" name="semester_number" value="1" {{#if (eq formData.semester_number "1" )}}
+                            checked {{/if}} required>
+
+                        <span class="semester-number-card__content">
+
+                            <span class="semester-number-card__top">
+
+                                <span class="semester-number-card__icon">
+                                    01
+                                </span>
+
+                                <span class="semester-number-card__check">
+                                    <i class="fa-light fa-check"></i>
+                                </span>
+
+                            </span>
+
+                            <span class="semester-number-card__text">
+
+                                <strong>
+                                    Học kỳ 1
+                                </strong>
+
+                                <small>
+                                    Học kỳ thứ nhất
+                                </small>
+
+                            </span>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- =====================================
+             SEMESTER 2
+        ====================================== -->
+
+                    <label class="semester-number-card">
+
+                        <input type="radio" name="semester_number" value="2" {{#if (eq formData.semester_number "2" )}}
+                            checked {{/if}} required>
+
+                        <span class="semester-number-card__content">
+
+                            <span class="semester-number-card__top">
+
+                                <span class="semester-number-card__icon">
+                                    02
+                                </span>
+
+                                <span class="semester-number-card__check">
+                                    <i class="fa-light fa-check"></i>
+                                </span>
+
+                            </span>
+
+                            <span class="semester-number-card__text">
+
+                                <strong>
+                                    Học kỳ 2
+                                </strong>
+
+                                <small>
+                                    Học kỳ thứ hai
+                                </small>
+
+                            </span>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- =====================================
+             SEMESTER 3
+        ====================================== -->
+
+                    <label class="semester-number-card">
+
+                        <input type="radio" name="semester_number" value="3" {{#if (eq formData.semester_number "3" )}}
+                            checked {{/if}} required>
+
+                        <span class="semester-number-card__content">
+
+                            <span class="semester-number-card__top">
+
+                                <span class="semester-number-card__icon">
+                                    03
+                                </span>
+
+                                <span class="semester-number-card__check">
+                                    <i class="fa-light fa-check"></i>
+                                </span>
+
+                            </span>
+
+                            <span class="semester-number-card__text">
+
+                                <strong>
+                                    Học kỳ 3
+                                </strong>
+
+                                <small>
+                                    Học kỳ bổ sung
+                                </small>
+
+                            </span>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================
+                 DATE RANGE
+            ============================================= -->
+
+            <div class="semester-date-section">
+
+                <div class="semester-section-heading">
+
+                    <div>
+
+                        <span class="semester-section-heading__eyebrow">
+                            THỜI GIAN ÁP DỤNG
+                        </span>
+
+                        <h4>
+                            Khoảng thời gian học kỳ
+                        </h4>
+
+                    </div>
+
+                    <div class="semester-section-heading__icon">
+                        <i class="fa-light fa-clock"></i>
+                    </div>
+
+                </div>
+
+
+                <div class="semester-date-grid">
+
+
+                    <!-- START DATE -->
+
+                    <div class="form-group">
+
+                        <label for="startDate">
+
+                            <span class="semester-label-icon">
+                                <i class="fa-light fa-calendar-check"></i>
+                            </span>
+
+                            <span>
+                                Ngày bắt đầu
+                            </span>
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="form-input-wrapper">
+
+                            <i class="form-input-icon fa-light fa-calendar-day"></i>
+
+                            <input type="date" id="startDate" name="start_date" value="{{formData.start_date}}"
+                                required />
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- END DATE -->
+
+                    <div class="form-group">
+
+                        <label for="endDate">
+
+                            <span class="semester-label-icon">
+                                <i class="fa-light fa-calendar-xmark"></i>
+                            </span>
+
+                            <span>
+                                Ngày kết thúc
+                            </span>
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <div class="form-input-wrapper">
+
+                            <i class="form-input-icon fa-light fa-calendar-days"></i>
+
+                            <input type="date" id="endDate" name="end_date" value="{{formData.end_date}}" required />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================
+                 AUTO INFORMATION
+            ============================================= -->
+
+            <div class="semester-info-box">
+
+                <div class="semester-info-box__icon">
+                    <i class="fa-light fa-wand-magic-sparkles"></i>
+                </div>
+
+                <div class="semester-info-box__content">
+
+                    <strong>
+                        Hệ thống tự động xử lý
+                    </strong>
+
+                    <p>
+                        Tên học kỳ và mã học kỳ sẽ được hệ thống tự động tạo
+                        dựa trên năm học và học kỳ đã chọn.
+                        Trạng thái ban đầu là
+                        <b>Chưa bắt đầu</b>.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ============================================
+                 ACTIONS
+            ============================================= -->
+
+            <div class="semester-form-actions">
+
+                <a href="/admin/university/semester" class="data-btn semester-btn-back">
+
+                    <i class="fa-light fa-arrow-left"></i>
+
+                    <span>
+                        Quay lại
+                    </span>
+
+                </a>
+
+
+                <button type="submit" class="data-btn data-btn--primary semester-btn-submit">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Tạo học kỳ
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

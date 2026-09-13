@@ -1,0 +1,76 @@
+<h2 class="subject-name">
+
+    {{#if groups}}
+
+    {{#each groups}}
+
+    {{#if @first}}
+
+    {{subjectName}}
+
+    {{/if}}
+
+    {{/each}}
+
+    {{else}}
+
+    Danh sách nhóm học phần
+
+    {{/if}}
+
+</h2>
+
+<div class="group-grid">
+
+    {{#each groups}}
+
+    <a href="/teacher/history/{{academicYearId}}/{{semesterId}}/{{subjectId}}/{{groupNumber}}" class="group-item">
+
+        <div class="group-icon">
+
+            <i class="fa-light fa-users"></i>
+
+        </div>
+
+        <div class="group-content">
+
+            <div class="group-title">
+
+                Nhóm
+                {{groupNumber}}
+
+            </div>
+
+            <div class="group-meta">
+
+                {{semesterName}}
+                -
+                {{academicYearName}}
+
+            </div>
+
+        </div>
+
+        <div class="group-arrow">
+
+            <i class="fa-light fa-chevron-right"></i>
+
+        </div>
+
+    </a>
+
+    {{else}}
+
+    <div class="group-empty">
+
+        <i class="fa-light fa-users-slash"></i>
+
+        <span>
+            Chưa có nhóm học phần đang hoạt động
+        </span>
+
+    </div>
+
+    {{/each}}
+
+</div>

@@ -1,0 +1,249 @@
+<div class="section-title">
+    <i class="fa-light fa-building-columns"></i>
+    <h2>Trường đại học</h2>
+</div>
+
+<div class="data-card">
+    <div class="data-card__body">
+
+        <!-- ================================
+             TOOLBAR
+        ================================= -->
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+                <h5>Danh sách trường đại học</h5>
+                <span>Quản lý thông tin các trường đại học</span>
+            </div>
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchUniversity" placeholder="Tìm theo mã hoặc tên trường...">
+                </div>
+
+                <a href="/super-admin/university/create" class="data-btn data-btn--primary">
+                    <i class="fa-light fa-plus"></i>
+                    <span>Thêm trường</span>
+                </a>
+
+            </div>
+        </div>
+
+
+        <!-- ================================
+             TABLE
+        ================================= -->
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--university">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="text-center">
+                            Mã trường
+                        </th>
+
+                        <th>
+                            Tên trường
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Số điện thoại
+                        </th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each universities}}
+
+                    <tr>
+
+                        <!-- ================================
+                             UNIVERSITY ID
+                        ================================= -->
+                        <td class="text-center">
+
+                            <span class="data-code">
+                                {{universityId}}
+                            </span>
+
+                        </td>
+
+
+                        <!-- ================================
+                             UNIVERSITY NAME
+                        ================================= -->
+                        <td>
+
+                            <div class="university-info">
+
+                                <div class="university-info__icon">
+                                    <i class="fa-light fa-building-columns"></i>
+                                </div>
+
+                                <div class="university-info__content">
+
+                                    <span class="data-name">
+                                        {{name}}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ================================
+                             EMAIL
+                        ================================= -->
+                        <td>
+
+                            <div class="data-contact">
+
+                                <div class="data-contact__icon">
+                                    <i class="fa-light fa-envelope"></i>
+                                </div>
+
+                                <span>
+                                    {{email}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ================================
+                             PHONE
+                        ================================= -->
+                        <td>
+
+                            <div class="data-contact">
+
+                                <div class="data-contact__icon">
+                                    <i class="fa-light fa-phone"></i>
+                                </div>
+
+                                <span>
+                                    {{phone}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ================================
+                             STATUS
+                        ================================= -->
+                        <td class="text-center">
+
+                            <span class="
+                                    data-status
+                                    {{#if isActive}} data-status--active {{else}} data-status--inactive
+                                {{/if}} "
+                            >
+
+                                <span class=" data-status__dot"></span>
+
+                            {{#if isActive}}
+
+                            Đang hoạt động
+
+                            {{else}}
+
+                            Không hoạt động
+
+                            {{/if}}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- ================================
+                             ACTION
+                        ================================= -->
+                        <td class="text-center">
+
+                            <a href="/admin/university/edit/{{universityId}}" class="data-action"
+                                title="Chỉnh sửa trường">
+
+                                <i class="fa-light fa-pen-to-square"></i>
+
+                                <span>
+                                    Sửa
+                                </span>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {{else}}
+
+                    <!-- ================================
+                         EMPTY STATE
+                    ================================= -->
+                    <tr>
+
+                        <td colspan="6" class="text-center">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+                                    <i class="fa-light fa-building-columns"></i>
+                                </div>
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có trường đại học
+                                    </strong>
+
+                                    <span>
+                                        Hiện chưa có dữ liệu trường đại học nào.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>

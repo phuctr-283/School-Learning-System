@@ -1,0 +1,1237 @@
+<div class="section-title lesson-plan-section-title">
+    <div class="section-title__icon">
+        <i class="fa-light fa-list-check"></i>
+    </div>
+
+    <div class="section-title__content">
+        <span class="section-title__eyebrow">
+            QUẢN LÝ ĐÀO TẠO
+        </span>
+
+        <h2>
+            Kế hoạch giảng dạy
+        </h2>
+
+        <p>
+            Quản lý buổi học và các kế hoạch giảng dạy theo từng cấp độ.
+        </p>
+    </div>
+</div>
+
+
+<div class="lesson-plan-card">
+
+    <div class="lesson-plan-layout">
+
+
+        <!-- =====================================================
+             LEFT : CONTENT
+        ====================================================== -->
+
+        <div class="lesson-plan-content">
+
+
+            <!-- =================================================
+                 LESSON
+            ================================================== -->
+
+            <section class="lesson-panel is-active" data-panel="lesson">
+
+                <div class="lesson-panel__header">
+
+                    <div class="lesson-panel__title">
+
+                        <div class="lesson-panel__icon">
+                            <i class="fa-light fa-calendar-lines"></i>
+                        </div>
+
+                        <div>
+                            <h3>
+                                Danh sách buổi học
+                            </h3>
+
+                            <span>
+                                Quản lý các buổi học trong chương trình đào tạo
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-panel__header-actions">
+
+                        <div class="lesson-panel__count">
+                            <strong>
+                                {{lessons.length}}
+                            </strong>
+
+                            <span>
+                                Buổi học
+                            </span>
+                        </div>
+
+
+                        <a href="/school-admin/university/lessons/create/lesson"
+                            class="data-btn data-btn--primary lesson-add-btn">
+                            <i class="fa-light fa-plus"></i>
+
+                            <span>
+                                Thêm buổi học
+                            </span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lesson-table-wrap">
+
+                    <table class="data-table lesson-table">
+
+                        <thead>
+                            <tr>
+
+                                <th class="text-center">
+                                    Mã buổi
+                                </th>
+
+                                <th class="text-center">
+                                    STT
+                                </th>
+
+                                <th>
+                                    Tên buổi học
+                                </th>
+
+                                <th class="text-center lesson-action-column">
+                                    Hoạt động
+                                </th>
+
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+
+                            {{#each lessons}}
+
+                            <tr>
+
+                                <td class="text-center">
+
+                                    <span class="lesson-code">
+                                        {{lessonId}}
+                                    </span>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <span class="lesson-number">
+                                        {{lessonNumber}}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="lesson-name">
+
+                                        <div class="lesson-name__icon">
+                                            <i class="fa-light fa-calendar-check"></i>
+                                        </div>
+
+                                        <div class="lesson-name__content">
+
+                                            <strong>
+                                                {{name}}
+                                            </strong>
+
+                                            <small>
+                                                Buổi học
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <div class="lesson-actions">
+
+                                        <a href="/school-admin/university/lessons/{{lessonId}}"
+                                            class="lesson-action lesson-action--view" title="Xem buổi học">
+                                            <i class="fa-light fa-eye"></i>
+                                        </a>
+
+
+                                        <a href="/school-admin/university/lessons/{{lessonId}}/edit"
+                                            class="lesson-action lesson-action--edit" title="Chỉnh sửa">
+                                            <i class="fa-light fa-pen"></i>
+                                        </a>
+
+
+                                        <button type="button" class="lesson-action lesson-action--delete"
+                                            title="Xóa buổi học"
+                                            data-delete-url="/school-admin/university/lessons/{{lessonId}}"
+                                            data-delete-name="{{name}}">
+                                            <i class="fa-light fa-trash"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                            {{else}}
+
+                            <tr>
+
+                                <td colspan="4" class="text-center">
+
+                                    <div class="lesson-empty">
+
+                                        <div class="lesson-empty__icon">
+                                            <i class="fa-light fa-calendar-xmark"></i>
+                                        </div>
+
+                                        <div>
+                                            <strong>
+                                                Chưa có buổi học
+                                            </strong>
+
+                                            <span>
+                                                Chưa có dữ liệu buổi học trong hệ thống.
+                                            </span>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {{/each}}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SEMESTER LESSON PLAN
+            ================================================== -->
+
+            <section class="lesson-panel" data-panel="semester">
+
+                <div class="lesson-panel__header">
+
+                    <div class="lesson-panel__title">
+
+                        <div class="lesson-panel__icon">
+                            <i class="fa-light fa-calendar-range"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Kế hoạch theo học kỳ
+                            </h3>
+
+                            <span>
+                                Quản lý tổng số buổi học theo từng học kỳ
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-panel__header-actions">
+
+                        <div class="lesson-panel__count">
+
+                            <strong>
+                                {{semesterLessonPlans.length}}
+                            </strong>
+
+                            <span>
+                                Kế hoạch
+                            </span>
+
+                        </div>
+
+
+                        <a href="/school-admin/university/lessons/create/semester-lesson-plan"
+                            class="data-btn data-btn--primary lesson-add-btn">
+
+                            <i class="fa-light fa-plus"></i>
+
+                            <span>
+                                Thêm kế hoạch
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lesson-table-wrap">
+
+                    <table class="data-table lesson-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Học kỳ
+                                </th>
+
+                                <th>
+                                    Năm học
+                                </th>
+
+                                <th class="text-center">
+                                    Số học kỳ
+                                </th>
+
+                                <th class="text-center">
+                                    Tổng buổi học
+                                </th>
+
+                                <th class="text-center lesson-action-column">
+                                    Hoạt động
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {{#each semesterLessonPlans}}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="lesson-reference">
+
+                                        <div class="lesson-reference__icon">
+                                            <i class="fa-light fa-calendar-days"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                {{semesterName}}
+                                            </strong>
+
+                                            <small>
+                                                {{semesterId}}
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="lesson-academic-year">
+
+                                        <i class="fa-light fa-calendar"></i>
+
+                                        <span>
+                                            {{academicYearName}}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <span class="lesson-number">
+                                        {{semesterNumber}}
+                                    </span>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <div class="lesson-total">
+
+                                        <strong>
+                                            {{totalLessons}}
+                                        </strong>
+
+                                        <span>
+                                            buổi
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <div class="lesson-actions">
+
+                                        <a href="/school-admin/university/semester-lesson-plans/{{semesterLessonPlanId}}"
+                                            class="lesson-action lesson-action--view" title="Xem kế hoạch">
+                                            <i class="fa-light fa-eye"></i>
+                                        </a>
+
+
+                                        <a href="/school-admin/university/semester-lesson-plans/{{semesterLessonPlanId}}/edit"
+                                            class="lesson-action lesson-action--edit" title="Chỉnh sửa">
+                                            <i class="fa-light fa-pen"></i>
+                                        </a>
+
+
+                                        <button type="button" class="lesson-action lesson-action--delete"
+                                            title="Xóa kế hoạch"
+                                            data-delete-url="/school-admin/university/semester-lesson-plans/{{semesterLessonPlanId}}"
+                                            data-delete-name="{{semesterName}}">
+                                            <i class="fa-light fa-trash"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                            {{else}}
+
+                            <tr>
+
+                                <td colspan="5" class="text-center">
+
+                                    <div class="lesson-empty">
+
+                                        <div class="lesson-empty__icon">
+                                            <i class="fa-light fa-calendar-xmark"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Chưa có kế hoạch học kỳ
+                                            </strong>
+
+                                            <span>
+                                                Chưa có dữ liệu kế hoạch theo học kỳ.
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {{/each}}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SUBJECT LESSON PLAN
+            ================================================== -->
+
+            <section class="lesson-panel" data-panel="subject">
+
+                <div class="lesson-panel__header">
+
+                    <div class="lesson-panel__title">
+
+                        <div class="lesson-panel__icon">
+                            <i class="fa-light fa-book-open"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Quy tắc kế hoạch theo môn học
+                            </h3>
+
+                            <span>
+                                Quản lý số buổi học theo loại môn và số tín chỉ
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-panel__header-actions">
+
+                        <div class="lesson-panel__count">
+
+                            <strong>
+                                {{subjectLessonPlans.length}}
+                            </strong>
+
+                            <span>
+                                Quy tắc
+                            </span>
+
+                        </div>
+
+
+                        <a href="/school-admin/university/lessons/create/subject-lesson-plan"
+                            class="data-btn data-btn--primary lesson-add-btn">
+
+                            <i class="fa-light fa-plus"></i>
+
+                            <span>
+                                Thêm quy tắc
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="lesson-table-wrap">
+
+                    <table class="data-table lesson-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Học kỳ
+                                </th>
+
+                                <th>
+                                    Loại môn
+                                </th>
+
+                                <th>
+                                    Khoảng tín chỉ
+                                </th>
+
+                                <th class="text-center">
+                                    Tổng buổi
+                                </th>
+
+                                <th class="text-center">
+                                    Tùy chỉnh
+                                </th>
+
+                                <th class="text-center lesson-action-column">
+                                    Hoạt động
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {{#each subjectLessonPlans}}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="lesson-semester">
+
+                                        <strong>
+                                            Học kỳ {{semesterNumber}}
+                                        </strong>
+
+                                        <small>
+                                            Quy tắc áp dụng
+                                        </small>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    {{#if (eq lessonType "theory")}}
+
+                                    <span class="lesson-type lesson-type--theory">
+                                        <i class="fa-light fa-book"></i>
+                                        Lý thuyết
+                                    </span>
+
+                                    {{else if (eq lessonType "practice")}}
+
+                                    <span class="lesson-type lesson-type--practice">
+                                        <i class="fa-light fa-flask"></i>
+                                        Thực hành
+                                    </span>
+
+                                    {{else}}
+
+                                    <span class="lesson-type lesson-type--default">
+                                        {{lessonType}}
+                                    </span>
+
+                                    {{/if}}
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="lesson-credit-range">
+
+                                        {{#if minCredits}}
+
+                                        <strong>
+                                            {{minCredits}}
+                                        </strong>
+
+                                        {{else}}
+
+                                        <strong>
+                                            Không giới hạn
+                                        </strong>
+
+                                        {{/if}}
+
+
+                                        {{#if maxCredits}}
+
+                                        <span>
+                                            –
+                                        </span>
+
+                                        <strong>
+                                            {{maxCredits}}
+                                        </strong>
+
+                                        <small>
+                                            tín chỉ
+                                        </small>
+
+                                        {{else}}
+
+                                        {{#if minCredits}}
+
+                                        <span>
+                                            trở lên
+                                        </span>
+
+                                        <small>
+                                            tín chỉ
+                                        </small>
+
+                                        {{/if}}
+
+                                        {{/if}}
+
+                                    </div>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <div class="lesson-total">
+
+                                        <strong>
+                                            {{totalLessons}}
+                                        </strong>
+
+                                        <span>
+                                            buổi
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    {{#if isCustom}}
+
+                                    <span class="lesson-custom lesson-custom--yes">
+
+                                        <i class="fa-light fa-check"></i>
+
+                                        Tùy chỉnh
+
+                                    </span>
+
+                                    {{else}}
+
+                                    <span class="lesson-custom lesson-custom--no">
+
+                                        <i class="fa-light fa-minus"></i>
+
+                                        Mặc định
+
+                                    </span>
+
+                                    {{/if}}
+
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    <div class="lesson-actions">
+
+                                        <a href="/school-admin/university/lessons/subject-lesson-plan/{{subjectLessonPlanId}}"
+                                            class="lesson-action lesson-action--view" title="Xem quy tắc">
+                                            <i class="fa-light fa-eye"></i>
+                                        </a>
+
+
+                                        <a href="/school-admin/university/lessons/subject-lesson-plan/{{subjectLessonPlanId}}/edit"
+                                            class="lesson-action lesson-action--edit" title="Chỉnh sửa quy tắc">
+                                            <i class="fa-light fa-pen"></i>
+                                        </a>
+
+
+                                        <button type="button" class="lesson-action lesson-action--delete"
+                                            title="Xóa quy tắc"
+                                            data-delete-url="/school-admin/university/lessons/subject-lesson-plan/{{subjectLessonPlanId}}"
+                                            data-delete-name="Quy tắc học kỳ {{semesterNumber}}">
+                                            <i class="fa-light fa-trash"></i>
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                            {{else}}
+
+                            <tr>
+
+                                <td colspan="6" class="text-center">
+
+                                    <div class="lesson-empty">
+
+                                        <div class="lesson-empty__icon">
+                                            <i class="fa-light fa-book-open"></i>
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                Chưa có quy tắc kế hoạch môn học
+                                            </strong>
+
+                                            <span>
+                                                Chưa có quy tắc số buổi học theo loại môn và số tín chỉ.
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {{/each}}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+     COURSE LESSON PLAN
+================================================== -->
+
+            <section class="lesson-panel" data-panel="course">
+
+                <!-- =================================================
+         HEADER
+    ================================================== -->
+
+                <div class="lesson-panel__header">
+
+                    <div class="lesson-panel__title">
+
+                        <div class="lesson-panel__icon">
+                            <i class="fa-light fa-book-bookmark"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Kế hoạch theo môn học phần
+                            </h3>
+
+                            <span>
+                                Quản lý kế hoạch giảng dạy của từng môn học phần
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-panel__header-actions">
+
+                        <div class="lesson-panel__count">
+
+                            <strong>
+                                {{courseLessonPlans.length}}
+                            </strong>
+
+                            <span>
+                                Kế hoạch
+                            </span>
+
+                        </div>
+
+
+                        <form action="/school-admin/university/lessons/ensure/lesson-plans" method="POST"
+                            class="lesson-add-form">
+
+                            <button type="submit" class="data-btn data-btn--primary lesson-add-btn">
+
+                                <i class="fa-light fa-plus"></i>
+
+                                <span>
+                                    Khởi tạo
+                                </span>
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+         TABLE
+    ================================================== -->
+
+                <div class="lesson-table-wrap">
+
+                    <table class="data-table lesson-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Môn học
+                                </th>
+
+                                <th>
+                                    Học kỳ
+                                </th>
+
+                                <th>
+                                    Năm học
+                                </th>
+
+                                <th class="text-center">
+                                    Số học kỳ
+                                </th>
+
+                                <th class="text-center">
+                                    Tổng buổi
+                                </th>
+
+                                <th class="text-center lesson-action-column">
+                                    Hoạt động
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {{#each courseLessonPlans}}
+
+                            <tr>
+
+                                <!-- =====================================
+                         SUBJECT
+                    ====================================== -->
+
+                                <td>
+
+                                    <div class="lesson-reference">
+
+                                        <div class="lesson-reference__icon">
+                                            <i class="fa-light fa-book-open"></i>
+                                        </div>
+
+
+                                        <div>
+
+                                            <strong>
+                                                {{subjectName}}
+                                            </strong>
+
+                                            <small>
+                                                {{subjectId}}
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =====================================
+                         SEMESTER
+                    ====================================== -->
+
+                                <td>
+
+                                    <div class="lesson-semester">
+
+                                        <strong>
+                                            {{semesterName}}
+                                        </strong>
+
+                                        <small>
+                                            {{semesterId}}
+                                        </small>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =====================================
+                         ACADEMIC YEAR
+                    ====================================== -->
+
+                                <td>
+
+                                    <div class="lesson-academic-year">
+
+                                        <i class="fa-light fa-calendar"></i>
+
+                                        <span>
+                                            {{academicYearName}}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =====================================
+                         SEMESTER NUMBER
+                    ====================================== -->
+
+                                <td class="text-center">
+
+                                    <span class="lesson-number">
+                                        {{semesterNumber}}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- =====================================
+                         TOTAL LESSONS
+                    ====================================== -->
+
+                                <td class="text-center">
+
+                                    <div class="lesson-total">
+
+                                        <strong>
+                                            {{totalLessons}}
+                                        </strong>
+
+                                        <span>
+                                            buổi
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- =====================================
+                         ACTIONS
+                    ====================================== -->
+
+                                <td class="text-center">
+
+                                    <div class="lesson-actions">
+
+                                        <a href="/school-admin/university/lessons/course-lesson-plan/{{courseLessonPlanId}}/class-sections"
+                                            class="lesson-action lesson-action--view" title="Xem kế hoạch">
+
+                                            <i class="fa-light fa-eye"></i>
+
+                                        </a>
+
+
+                                        <a href="/school-admin/university/course-lesson-plans/{{courseLessonPlanId}}/edit"
+                                            class="lesson-action lesson-action--edit" title="Chỉnh sửa kế hoạch">
+
+                                            <i class="fa-light fa-pen"></i>
+
+                                        </a>
+
+
+                                        <button type="button" class="lesson-action lesson-action--delete"
+                                            title="Xóa kế hoạch"
+                                            data-delete-url="/school-admin/university/course-lesson-plans/{{courseLessonPlanId}}"
+                                            data-delete-name="{{subjectName}} - {{semesterName}}">
+
+                                            <i class="fa-light fa-trash"></i>
+
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+
+                            {{else}}
+
+                            <!-- =========================================
+                     EMPTY
+                ========================================== -->
+
+                            <tr>
+
+                                <td colspan="6" class="text-center">
+
+                                    <div class="lesson-empty">
+
+                                        <div class="lesson-empty__icon">
+
+                                            <i class="fa-light fa-book-open"></i>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <strong>
+                                                Chưa có kế hoạch môn học phần
+                                            </strong>
+
+                                            <span>
+                                                Chưa có dữ liệu kế hoạch giảng dạy theo môn học phần.
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {{/each}}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             RIGHT : SIDEBAR
+        ====================================================== -->
+
+        <aside class="lesson-plan-sidebar">
+
+
+            <div class="lesson-sidebar__header">
+
+                <div class="lesson-sidebar__header-icon">
+                    <i class="fa-light fa-sliders"></i>
+                </div>
+
+                <div>
+
+                    <strong>
+                        Nội dung
+                    </strong>
+
+                    <span>
+                        Chọn loại kế hoạch
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <nav class="lesson-sidebar__nav">
+
+
+                <button type="button" class="lesson-sidebar-item is-active" data-target="lesson">
+
+                    <span class="lesson-sidebar-item__icon">
+                        <i class="fa-light fa-calendar-lines"></i>
+                    </span>
+
+                    <span class="lesson-sidebar-item__content">
+
+                        <strong>
+                            Buổi học
+                        </strong>
+
+                        <small>
+                            Danh sách các buổi học
+                        </small>
+
+                    </span>
+
+                    <i class="fa-light fa-chevron-right lesson-sidebar-item__arrow"></i>
+
+                </button>
+
+
+                <button type="button" class="lesson-sidebar-item" data-target="semester">
+
+                    <span class="lesson-sidebar-item__icon">
+                        <i class="fa-light fa-calendar-range"></i>
+                    </span>
+
+                    <span class="lesson-sidebar-item__content">
+
+                        <strong>
+                            Theo học kỳ
+                        </strong>
+
+                        <small>
+                            Kế hoạch theo học kỳ
+                        </small>
+
+                    </span>
+
+                    <i class="fa-light fa-chevron-right lesson-sidebar-item__arrow"></i>
+
+                </button>
+
+
+                <button type="button" class="lesson-sidebar-item" data-target="subject">
+
+                    <span class="lesson-sidebar-item__icon">
+                        <i class="fa-light fa-book-open"></i>
+                    </span>
+
+                    <span class="lesson-sidebar-item__content">
+
+                        <strong>
+                            Theo môn học
+                        </strong>
+
+                        <small>
+                            Kế hoạch theo môn học
+                        </small>
+
+                    </span>
+
+                    <i class="fa-light fa-chevron-right lesson-sidebar-item__arrow"></i>
+
+                </button>
+
+
+                <button type="button" class="lesson-sidebar-item" data-target="course">
+
+                    <span class="lesson-sidebar-item__icon">
+                        <i class="fa-light fa-chalkboard"></i>
+                    </span>
+
+                    <span class="lesson-sidebar-item__content">
+
+                        <strong>
+                            Theo lớp học phần
+                        </strong>
+
+                        <small>
+                            Kế hoạch theo lớp học phần
+                        </small>
+
+                    </span>
+
+                    <i class="fa-light fa-chevron-right lesson-sidebar-item__arrow"></i>
+
+                </button>
+
+            </nav>
+
+
+            <div class="lesson-sidebar__footer">
+
+                <i class="fa-light fa-circle-info"></i>
+
+                <span>
+                    Chọn một nội dung để xem dữ liệu tương ứng.
+                </span>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>

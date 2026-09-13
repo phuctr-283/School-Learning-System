@@ -1,0 +1,696 @@
+<div class="section-title subject-lesson-plan-create-title">
+
+    <div class="section-title__icon">
+        <i class="fa-light fa-book-open"></i>
+    </div>
+
+    <div class="section-title__content">
+
+        <span class="section-title__eyebrow">
+            QUẢN LÝ KẾ HOẠCH THEO MÔN HỌC
+        </span>
+
+        <h2>
+            Tạo quy tắc kế hoạch môn học
+        </h2>
+
+        <p>
+            Thiết lập số buổi học dựa trên loại môn và số tín chỉ.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="data-card subject-lesson-plan-form-card">
+
+    <div class="data-card__body">
+
+        <!-- =========================================
+             HEADER
+        ========================================== -->
+
+        <div class="form-card-header subject-lesson-plan-form-header">
+
+            <div class="form-card-header__icon">
+                <i class="fa-light fa-sliders"></i>
+            </div>
+
+            <div class="subject-lesson-plan-form-header__content">
+
+                <h3>
+                    Cấu hình quy tắc
+                </h3>
+
+                <p>
+                    Mỗi loại môn có thể có nhiều quy tắc dựa trên số tín chỉ.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/school-admin/university/lessons/create/subject-lesson-plan" method="POST"
+            class="form-container subject-lesson-plan-form" id="subjectLessonPlanCreateForm">
+
+            {{#if error}}
+
+            <div class="form-error subject-lesson-plan-form-error">
+
+                <div class="subject-lesson-plan-form-error__icon">
+                    <i class="fa-light fa-circle-exclamation"></i>
+                </div>
+
+                <div class="subject-lesson-plan-form-error__content">
+
+                    <strong>
+                        Không thể tạo quy tắc
+                    </strong>
+
+                    <span>
+                        {{error}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {{/if}}
+            <!-- =========================================
+     SEMESTER
+========================================== -->
+
+            <section class="subject-semester-section">
+
+                <div class="subject-semester-section__heading">
+
+                    <div class="subject-semester-section__number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Học kỳ
+                        </h4>
+
+                        <p>
+                            Chọn học kỳ áp dụng cho các quy tắc kế hoạch môn học.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="subject-semester-grid">
+
+                    <!-- =========================================
+             SEMESTER 1
+        ========================================== -->
+
+                    <label class="subject-semester-card {{#if (eq selectedSemesterNumber 1)}}is-active{{/if}}"
+                        data-semester-option="1">
+
+                        <input type="radio" name="semester_number" value="1" {{#if (eq selectedSemesterNumber
+                            1)}}checked{{/if}} required>
+
+                        <span class="subject-semester-card__content">
+
+                            <span class="subject-semester-card__top">
+
+                                <span class="subject-semester-card__icon">
+                                    01
+                                </span>
+
+                                <span class="subject-semester-card__check">
+                                    <i class="fa-light fa-check"></i>
+                                </span>
+
+                            </span>
+
+
+                            <span class="subject-semester-card__text">
+
+                                <strong>
+                                    Học kỳ 1
+                                </strong>
+
+                                <small>
+                                    Học kỳ thứ nhất
+                                </small>
+
+                            </span>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- =========================================
+             SEMESTER 2
+        ========================================== -->
+
+                    <label class="subject-semester-card {{#if (eq selectedSemesterNumber 2)}}is-active{{/if}}"
+                        data-semester-option="2">
+
+                        <input type="radio" name="semester_number" value="2" {{#if (eq selectedSemesterNumber
+                            2)}}checked{{/if}} required>
+
+                        <span class="subject-semester-card__content">
+
+                            <span class="subject-semester-card__top">
+
+                                <span class="subject-semester-card__icon">
+                                    02
+                                </span>
+
+                                <span class="subject-semester-card__check">
+                                    <i class="fa-light fa-check"></i>
+                                </span>
+
+                            </span>
+
+
+                            <span class="subject-semester-card__text">
+
+                                <strong>
+                                    Học kỳ 2
+                                </strong>
+
+                                <small>
+                                    Học kỳ thứ hai
+                                </small>
+
+                            </span>
+
+                        </span>
+
+                    </label>
+
+
+                    <!-- =========================================
+             SEMESTER 3
+        ========================================== -->
+
+                    <label class="subject-semester-card {{#if (eq selectedSemesterNumber 3)}}is-active{{/if}}"
+                        data-semester-option="3">
+
+                        <input type="radio" name="semester_number" value="3" {{#if (eq selectedSemesterNumber
+                            3)}}checked{{/if}} required>
+
+                        <span class="subject-semester-card__content">
+
+                            <span class="subject-semester-card__top">
+
+                                <span class="subject-semester-card__icon">
+                                    03
+                                </span>
+
+                                <span class="subject-semester-card__check">
+                                    <i class="fa-light fa-check"></i>
+                                </span>
+
+                            </span>
+
+
+                            <span class="subject-semester-card__text">
+
+                                <strong>
+                                    Học kỳ 3
+                                </strong>
+
+                                <small>
+                                    Học kỳ thứ ba
+                                </small>
+
+                            </span>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+            <!-- =========================================
+                 THEORY
+            ========================================== -->
+
+            <section class="subject-lesson-type-section" data-lesson-type="theory">
+
+                <div class="subject-lesson-type-header">
+
+                    <div class="subject-lesson-type-header__main">
+
+                        <div class="subject-lesson-type-header__icon">
+                            <i class="fa-light fa-book-open"></i>
+                        </div>
+
+                        <div>
+
+                            <span class="subject-lesson-type-header__eyebrow">
+                                LESSON TYPE
+                            </span>
+
+                            <h4>
+                                Lý thuyết
+                            </h4>
+
+                            <p>
+                                Quy định số buổi học theo số tín chỉ của môn lý thuyết.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="subject-lesson-type-header__badge">
+                        <i class="fa-light fa-layer-group"></i>
+                        <span>
+                            <span data-rule-count="theory">0</span>
+                            quy tắc
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="subject-rule-list" data-rule-list="theory">
+
+                    <!-- RULE -->
+                    <div class="subject-rule-card" data-rule-item>
+
+                        <input type="hidden" name="rules[theory][0][lesson_type]" value="theory">
+
+                        <div class="subject-rule-card__number">
+                            01
+                        </div>
+
+
+                        <div class="subject-rule-card__content">
+
+                            <div class="subject-rule-card__header">
+
+                                <div>
+
+                                    <strong>
+                                        Quy tắc số 1
+                                    </strong>
+
+                                    <span>
+                                        Xác định khoảng tín chỉ áp dụng.
+                                    </span>
+
+                                </div>
+
+                                <button type="button" class="subject-rule-remove" data-remove-rule title="Xóa quy tắc">
+                                    <i class="fa-light fa-trash-can"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="subject-rule-fields">
+
+                                <!-- MIN CREDIT -->
+
+                                <div class="subject-rule-field">
+
+                                    <label>
+                                        Từ tín chỉ
+                                    </label>
+
+                                    <div class="subject-rule-input-wrapper">
+
+                                        <i class="fa-light fa-arrow-down-1-9"></i>
+
+                                        <input type="number" name="rules[theory][0][min_credits]" min="0"
+                                            placeholder="Không giới hạn">
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- MAX CREDIT -->
+
+                                <div class="subject-rule-field">
+
+                                    <label>
+                                        Đến tín chỉ
+                                    </label>
+
+                                    <div class="subject-rule-input-wrapper">
+
+                                        <i class="fa-light fa-arrow-up-1-9"></i>
+
+                                        <input type="number" name="rules[theory][0][max_credits]" min="0"
+                                            placeholder="Không giới hạn">
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- TOTAL LESSONS -->
+
+                                <div class="subject-rule-field subject-rule-field--lessons">
+
+                                    <label>
+                                        Tổng số buổi
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <div class="subject-rule-input-wrapper">
+
+                                        <i class="fa-light fa-list-ol"></i>
+
+                                        <input type="number" name="rules[theory][0][total_lessons]" min="1" max="100"
+                                            placeholder="10" required>
+
+                                        <span>
+                                            buổi
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="subject-rule-example">
+
+                                <i class="fa-light fa-circle-info"></i>
+
+                                <span>
+                                    Ví dụ: để áp dụng cho môn từ 1–2 tín chỉ,
+                                    nhập <strong>Đến tín chỉ = 2</strong>.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button type="button" class="subject-add-rule-btn" data-add-rule="theory">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm quy tắc lý thuyết
+                    </span>
+
+                </button>
+
+            </section>
+
+
+            <!-- =========================================
+                 PRACTICE
+            ========================================== -->
+
+            <section class="subject-lesson-type-section" data-lesson-type="practice">
+
+                <div class="subject-lesson-type-header">
+
+                    <div class="subject-lesson-type-header__main">
+
+                        <div class="subject-lesson-type-header__icon">
+                            <i class="fa-light fa-flask"></i>
+                        </div>
+
+                        <div>
+
+                            <span class="subject-lesson-type-header__eyebrow">
+                                LESSON TYPE
+                            </span>
+
+                            <h4>
+                                Thực hành
+                            </h4>
+
+                            <p>
+                                Quy định số buổi học theo số tín chỉ của môn thực hành.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="subject-lesson-type-header__badge">
+                        <i class="fa-light fa-layer-group"></i>
+                        <span>
+                            <span data-rule-count="practice">0</span>
+                            quy tắc
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="subject-rule-list" data-rule-list="practice">
+
+                    <!-- RULE -->
+                    <div class="subject-rule-card" data-rule-item>
+
+                        <input type="hidden" name="rules[practice][0][lesson_type]" value="practice">
+
+                        <div class="subject-rule-card__number">
+                            01
+                        </div>
+
+
+                        <div class="subject-rule-card__content">
+
+                            <div class="subject-rule-card__header">
+
+                                <div>
+
+                                    <strong>
+                                        Quy tắc số 1
+                                    </strong>
+
+                                    <span>
+                                        Xác định khoảng tín chỉ áp dụng.
+                                    </span>
+
+                                </div>
+
+                                <button type="button" class="subject-rule-remove" data-remove-rule title="Xóa quy tắc">
+                                    <i class="fa-light fa-trash-can"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="subject-rule-fields">
+
+                                <div class="subject-rule-field">
+
+                                    <label>
+                                        Từ tín chỉ
+                                    </label>
+
+                                    <div class="subject-rule-input-wrapper">
+
+                                        <i class="fa-light fa-arrow-down-1-9"></i>
+
+                                        <input type="number" name="rules[practice][0][min_credits]" min="0"
+                                            placeholder="Không giới hạn">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="subject-rule-field">
+
+                                    <label>
+                                        Đến tín chỉ
+                                    </label>
+
+                                    <div class="subject-rule-input-wrapper">
+
+                                        <i class="fa-light fa-arrow-up-1-9"></i>
+
+                                        <input type="number" name="rules[practice][0][max_credits]" min="0"
+                                            placeholder="Không giới hạn">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="subject-rule-field subject-rule-field--lessons">
+
+                                    <label>
+                                        Tổng số buổi
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <div class="subject-rule-input-wrapper">
+
+                                        <i class="fa-light fa-list-ol"></i>
+
+                                        <input type="number" name="rules[practice][0][total_lessons]" min="1" max="100"
+                                            placeholder="15" required>
+
+                                        <span>
+                                            buổi
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="subject-rule-example">
+
+                                <i class="fa-light fa-circle-info"></i>
+
+                                <span>
+                                    Có thể thêm nhiều quy tắc nếu số buổi thay đổi
+                                    theo số tín chỉ.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button type="button" class="subject-add-rule-btn" data-add-rule="practice">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm quy tắc thực hành
+                    </span>
+
+                </button>
+
+            </section>
+
+
+            <!-- =========================================
+                 SUMMARY
+            ========================================== -->
+
+            <div class="subject-lesson-plan-summary">
+
+                <div class="subject-lesson-plan-summary__header">
+
+                    <div class="subject-lesson-plan-summary__icon">
+                        <i class="fa-light fa-list-check"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Tổng quan quy tắc
+                        </strong>
+
+                        <span>
+                            Hệ thống sẽ sử dụng các quy tắc này để xác định số buổi học.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="subject-lesson-plan-summary__details">
+
+                    <div class="subject-summary-item">
+
+                        <span>
+                            Lý thuyết
+                        </span>
+
+                        <strong data-summary-count="theory">
+                            0 quy tắc
+                        </strong>
+
+                    </div>
+
+
+                    <div class="subject-summary-item">
+
+                        <span>
+                            Thực hành
+                        </span>
+
+                        <strong data-summary-count="practice">
+                            0 quy tắc
+                        </strong>
+
+                    </div>
+
+
+                    <div class="subject-summary-item">
+
+                        <span>
+                            Tổng cộng
+                        </span>
+
+                        <strong data-summary-count="total">
+                            0 quy tắc
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 ACTIONS
+            ========================================== -->
+
+            <div class="subject-lesson-plan-form-actions">
+
+                <a href="/school-admin/university/subject-lesson-plans" class="data-btn subject-lesson-plan-btn-back">
+
+                    <i class="fa-light fa-arrow-left"></i>
+
+                    <span>
+                        Quay lại
+                    </span>
+
+                </a>
+
+
+                <button type="submit" class="data-btn data-btn--primary subject-lesson-plan-btn-submit">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Lưu quy tắc
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

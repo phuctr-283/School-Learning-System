@@ -1,0 +1,332 @@
+<div class="section-title">
+    <i class="fa-light fa-building-columns"></i>
+    <h2>Khoa</h2>
+</div>
+
+<div class="data-card department-page">
+
+    <div class="data-card__body">
+
+        <!-- =========================================
+             TOOLBAR
+        ========================================== -->
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+
+                <div class="department-page-title">
+                    <div class="department-page-title__icon">
+                        <i class="fa-light fa-layer-group"></i>
+                    </div>
+
+                    <div>
+                        <h5>Danh sách khoa</h5>
+                        <span>
+                            Quản lý các khoa trực thuộc trường
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchDepartment" placeholder="Tìm theo mã hoặc tên khoa...">
+                </div>
+
+
+                <a href="/school-admin/university/departments/create" class="data-btn data-btn--primary">
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm khoa
+                    </span>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             ERROR
+        ========================================== -->
+        {{#if error}}
+
+        <div class="department-alert department-alert--danger">
+
+            <div class="department-alert__icon">
+                <i class="fa-light fa-circle-exclamation"></i>
+            </div>
+
+            <div>
+                <strong>Không thể tải dữ liệu</strong>
+                <span>{{error}}</span>
+            </div>
+
+        </div>
+
+        {{/if}}
+
+
+        <!-- =========================================
+             TABLE
+        ========================================== -->
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--department">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="text-center">
+                            Mã khoa
+                        </th>
+
+                        <th class="text-center">
+                            Mã số khoa
+                        </th>
+
+                        <th>
+                            Tên khoa
+                        </th>
+
+                        <th>
+                            Đại học
+                        </th>
+
+                        <th>
+                            Trưởng khoa
+                        </th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each departments}}
+
+                    <tr>
+
+                        <!-- =================================
+                             DEPARTMENT ID
+                        ================================== -->
+                        <td class="text-center">
+
+                            <span class="data-code">
+                                {{departmentId}}
+                            </span>
+
+                        </td>
+
+
+                        <!-- =================================
+                             DEPARTMENT NUMBER
+                        ================================== -->
+                        <td class="text-center">
+
+                            <span class="department-number">
+                                {{departmentNumber}}
+                            </span>
+
+                        </td>
+
+
+                        <!-- =================================
+                             NAME
+                        ================================== -->
+                        <td>
+
+                            <div class="department-name">
+
+                                <div class="department-name__icon">
+                                    <i class="fa-light fa-layer-group"></i>
+                                </div>
+
+                                <span>
+                                    {{name}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================
+                             UNIVERSITY
+                        ================================== -->
+                        <td>
+
+                            <div class="department-university">
+
+                                <div class="department-university__icon">
+                                    <i class="fa-light fa-building-columns"></i>
+                                </div>
+
+                                <div class="department-university__content">
+
+                                    <span>
+                                        {{universityName}}
+                                    </span>
+
+                                    {{#if universityId}}
+                                    <small>
+                                        {{universityId}}
+                                    </small>
+                                    {{/if}}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================
+                             HEAD
+                        ================================== -->
+                        <td>
+
+                            {{#if headName}}
+
+                            <div class="department-head">
+
+                                <div class="department-head__avatar">
+                                    <i class="fa-light fa-user-tie"></i>
+                                </div>
+
+                                <div class="department-head__content">
+
+                                    <span>
+                                        {{headName}}
+                                    </span>
+
+                                    {{#if headId}}
+                                    <small>
+                                        {{headId}}
+                                    </small>
+                                    {{/if}}
+
+                                </div>
+
+                            </div>
+
+                            {{else}}
+
+                            <span class="department-no-head">
+                                <i class="fa-light fa-user-slash"></i>
+                                Chưa có trưởng khoa
+                            </span>
+
+                            {{/if}}
+
+                        </td>
+
+
+                        <!-- =================================
+                             STATUS
+                        ================================== -->
+                        <td class="text-center">
+
+                            <span class="
+                                    data-status
+                                    {{#if isActive}}
+                                        data-status--active
+                                    {{else}}
+                                        data-status--inactive
+                                    {{/if}}
+                                ">
+
+                                <span class="data-status__dot"></span>
+
+                                {{#if isActive}}
+                                Đang hoạt động
+                                {{else}}
+                                Không hoạt động
+                                {{/if}}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- =================================
+                             ACTION
+                        ================================== -->
+                        <td class="text-center">
+
+                            <a href="/school-admin/departments/edit/{{departmentId}}" class="data-action"
+                                title="Chỉnh sửa khoa">
+
+                                <i class="fa-light fa-pen-to-square"></i>
+
+                                <span>
+                                    Sửa
+                                </span>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {{else}}
+
+                    <!-- =================================
+                         EMPTY STATE
+                    ================================== -->
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+                                    <i class="fa-light fa-layer-group"></i>
+                                </div>
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có khoa
+                                    </strong>
+
+                                    <span>
+                                        Chưa có dữ liệu khoa nào trong trường.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

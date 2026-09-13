@@ -1,0 +1,70 @@
+<header class="header">
+    <div class="header-start">
+        <button class="menu-toggle" id="menuToggle" type="button">
+            <img src="/img/left-bar.svg" class="collapse-icon" alt="Collapse">
+
+            <img src="/img/right-bar.svg" class="expand-icon" alt="Expand">
+
+            <span class="navbar-mobile-icon">
+                <i class="fa-light fa-bars"></i>
+            </span>
+        </button>
+    </div>
+    <a href="/" class="header-logo">
+        <img src="/img/ZOLKER.png" alt="ZOLKER">
+    </a>
+    <div class="header-end">
+        <div class="user-profile-wrapper">
+            <button class="user-profile" id="userProfileBtn" type="button">
+                <div class="user-avatar">
+                    <img src="/img/avatar.jpg" alt="Avatar">
+                </div>
+                <div class="user-info">
+                    <span class="user-name">
+                        Nguyễn Văn A
+                    </span>
+                    <span class="user-role">
+                        Giảng viên
+                    </span>
+                </div>
+                <i class="fa-solid fa-chevron-down user-arrow"></i>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+                <div class="user-dropdown-header">
+                    <img src="/img/avatar.jpg" alt="Avatar" class="user-dropdown-avatar">
+                    <div class="user-dropdown-info">
+                        <span class="user-dropdown-name">
+                            Nguyễn Văn A
+                        </span>
+                        <span class="user-dropdown-email">
+                            nguyenvana@stu.edu.vn
+                        </span>
+                    </div>
+                </div>
+                <div class="user-dropdown-menu">
+                    <a href="/profile" class="user-dropdown-item">
+                        <span class="dropdown-icon">
+                            <i class="fa-light fa-user"></i>
+                        </span>
+                        <span>Thông tin cá nhân</span>
+                    </a>
+                    <a href="/settings" class="user-dropdown-item">
+                        <span class="dropdown-icon">
+                            <i class="fa-light fa-gear"></i>
+                        </span>
+                        <span>Cài đặt</span>
+                    </a>
+                    <div class="user-dropdown-divider"></div>
+                    <form action="/logout" method="POST">
+                        <button type="submit" class="user-dropdown-item logout" style="width: 100%;">
+                            <span class="dropdown-icon">
+                                <i class="fa-light fa-right-from-bracket"></i>
+                            </span>
+                            <span>Đăng xuất</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

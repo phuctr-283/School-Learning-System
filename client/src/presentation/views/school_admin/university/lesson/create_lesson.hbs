@@ -1,0 +1,402 @@
+<div class="section-title lesson-create-title">
+    <div class="section-title__icon"><i class="fa-light fa-calendar-plus"></i></div>
+    <div class="section-title__content">
+        <span class="section-title__eyebrow">QUẢN LÝ BUỔI HỌC</span>
+        <h2>Tạo buổi học</h2>
+        <p>Tạo một hoặc nhiều buổi học và thiết lập thông tin cơ bản.</p>
+    </div>
+</div>
+<div class="data-card lesson-form-card">
+    <div class="data-card__body">
+        <!-- =====================================================
+             HEADER
+        ====================================================== -->
+        <div class="form-card-header lesson-form-header">
+            <div class="form-card-header__icon"><i class="fa-light fa-calendar-days"></i></div>
+            <div>
+                <h3>Thông tin buổi học</h3>
+                <p>Chọn cách tạo và thiết lập số thứ tự cho buổi học.</p>
+            </div>
+        </div>
+        <!-- =====================================================
+             FORM
+        ====================================================== -->
+        <form action="/school-admin/university/lessons/create/lesson" method="POST" class="form-container lesson-form"
+            id="lessonCreateForm">
+            <!-- =================================================
+                 ERROR
+            ================================================== -->
+            {{#if error}}
+            <div class="form-error lesson-form-error">
+                <div class="lesson-form-error__icon">
+                    <i class="fa-light fa-circle-exclamation"></i>
+                </div>
+                <div class="lesson-form-error__content">
+                    <strong>Không thể tạo buổi học</strong>
+                    <span>{{error}}</span>
+                </div>
+            </div>
+            {{/if}}
+            <!-- =================================================
+                 CREATE MODE
+            ================================================== -->
+            <div class="lesson-mode-group">
+                <div class="lesson-field-heading">
+                    <div>
+                        <label>
+                            <span class="lesson-label-icon"><i class="fa-light fa-layer-group"></i></span>
+                            <span>
+                                Cách tạo
+                            </span>
+                            <span class="required">*</span>
+                        </label>
+                        <p>Chọn cách bạn muốn tạo buổi học.</p>
+                    </div>
+                </div>
+                <div class="lesson-mode-grid">
+                    <!-- =================================================
+                         SINGLE
+                    ================================================== -->
+                    <label class="lesson-mode-card is-active" data-mode-option="single">
+                        <input type="radio" name="create_mode" value="single" checked>
+                        <span class="lesson-mode-card__content">
+                            <span class="lesson-mode-card__icon"><i class="fa-light fa-file"></i></span>
+                            <span class="lesson-mode-card__text">
+                                <strong>Tạo đơn</strong>
+                                <small>Tạo một buổi học riêng lẻ.</small>
+                            </span>
+                            <span class="lesson-mode-card__check">
+                                <i class="fa-light fa-check"></i>
+                            </span>
+                        </span>
+                    </label>
+                    <!-- =================================================
+                         MULTIPLE
+                    ================================================== -->
+                    <label class="lesson-mode-card" data-mode-option="multiple">
+                        <input type="radio" name="create_mode" value="multiple">
+                        <span class="lesson-mode-card__content">
+                            <span class="lesson-mode-card__icon">
+                                <i class="fa-light fa-files"></i>
+                            </span>
+                            <span class="lesson-mode-card__text">
+                                <strong>Tạo nhiều</strong>
+                                <small>Tạo liên tiếp nhiều buổi học.</small>
+                            </span>
+                            <span class="lesson-mode-card__check">
+                                <i class="fa-light fa-check"></i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- =================================================
+                 LESSON NUMBER
+            ================================================== -->
+            <div class="lesson-number-group">
+                <!-- =================================================
+                     SINGLE
+                ================================================== -->
+                <div class="lesson-number-section is-active" id="singleLessonSection">
+                    <div class="lesson-field-heading">
+                        <div>
+                            <label for="lessonNumber">
+                                <span class="lesson-label-icon">
+                                    <i class="fa-light fa-list-ol"></i>
+                                </span>
+                                <span>Số buổi</span>
+                                <span class="required">*</span>
+                            </label>
+                            <p>Nhập số thứ tự của buổi học cần tạo.</p>
+                        </div>
+                    </div>
+                    <div class="form-input-wrapper lesson-input-wrapper">
+                        <i class="form-input-icon fa-light fa-hashtag"></i>
+                        <input type="number" id="lessonNumber" name="lesson_number" min="1" max="100"
+                            placeholder="Ví dụ: 1" />
+                    </div>
+                </div>
+                <!-- =================================================
+                     MULTIPLE
+                ================================================== -->
+                <div class="lesson-number-section" id="multipleLessonSection">
+                    <div class="lesson-field-heading">
+                        <div>
+                            <label>
+                                <span class="lesson-label-icon">
+                                    <i class="fa-light fa-list-ol"></i>
+                                </span>
+                                <span>Khoảng buổi học</span>
+                                <span class="required">*</span>
+                            </label>
+                            <p>Nhập buổi bắt đầu và buổi kết thúc cần tạo.</p>
+                        </div>
+                    </div>
+                    <div class="lesson-range-grid">
+                        <!-- START -->
+                        <div class="form-group">
+                            <label for="lessonNumberStart">
+                                <span class="lesson-label-icon lesson-label-icon--small">
+                                    <i class="fa-light fa-arrow-right-to-bracket"></i>
+                                </span>
+                                <span>Buổi bắt đầu</span>
+                                <span class="required">*</span>
+                            </label>
+                            <div class="form-input-wrapper lesson-input-wrapper">
+                                <i class="form-input-icon fa-light fa-hashtag"></i>
+                                <input type="number" id="lessonNumberStart" name="lesson_number_start" min="1" max="100"
+                                    placeholder="Ví dụ: 1" />
+                            </div>
+                        </div>
+                        <!-- ARROW -->
+                        <div class="lesson-range-arrow">
+                            <i class="fa-light fa-arrow-right"></i>
+                        </div>
+                        <!-- END -->
+                        <div class="form-group">
+                            <label for="lessonNumberEnd">
+                                <span class="lesson-label-icon lesson-label-icon--small">
+                                    <i class="fa-light fa-arrow-right-from-bracket"></i>
+                                </span>
+                                <span>Buổi kết thúc</span>
+                                <span class="required">*</span>
+                            </label>
+                            <div class="form-input-wrapper lesson-input-wrapper">
+                                <i class="form-input-icon fa-light fa-hashtag"></i>
+                                <input type="number" id="lessonNumberEnd" name="lesson_number_end" min="1" max="100"
+                                    placeholder="Ví dụ: 10" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RANGE RESULT -->
+                    <div class="lesson-range-result">
+                        <div class="lesson-range-result__icon">
+                            <i class="fa-light fa-circle-info"></i>
+                        </div>
+                        <div class="lesson-range-result__content">
+                            <strong>Khoảng buổi học</strong>
+                            <span id="lessonRangeText">Chưa xác định khoảng buổi học</span>
+                        </div>
+                        <div class="lesson-range-result__count" id="lessonRangeCount">
+                            0 buổi
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- =================================================
+     REVIEW
+================================================== -->
+
+            <div class="lesson-review" id="lessonReview">
+
+                <div class="lesson-review__header">
+
+                    <div class="lesson-review__header-main">
+
+                        <div class="lesson-review__icon">
+                            <i class="fa-light fa-eye"></i>
+                        </div>
+
+                        <div class="lesson-review__title">
+
+                            <strong>
+                                Xem trước buổi học
+                            </strong>
+
+                            <span>
+                                Kiểm tra thông tin trước khi tạo.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <span class="lesson-review__badge">
+                        <i class="fa-light fa-circle-check"></i>
+                        <span id="lessonReviewStatus">
+                            Chưa hoàn tất
+                        </span>
+                    </span>
+
+                </div>
+
+
+                <!-- =============================================
+         SINGLE REVIEW
+    ============================================== -->
+
+                <div class="lesson-review__content" id="singleLessonReview">
+
+                    <div class="lesson-review__item">
+
+                        <div class="lesson-review__item-icon">
+                            <i class="fa-light fa-list-ol"></i>
+                        </div>
+
+                        <div class="lesson-review__item-content">
+
+                            <span>
+                                Số buổi
+                            </span>
+
+                            <strong id="reviewLessonNumber">
+                                Chưa nhập
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-review__item">
+
+                        <div class="lesson-review__item-icon">
+                            <i class="fa-light fa-layer-group"></i>
+                        </div>
+
+                        <div class="lesson-review__item-content">
+
+                            <span>
+                                Loại tạo
+                            </span>
+
+                            <strong>
+                                Buổi học đơn
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-review__item">
+
+                        <div class="lesson-review__item-icon">
+                            <i class="fa-light fa-calendar-plus"></i>
+                        </div>
+
+                        <div class="lesson-review__item-content">
+
+                            <span>
+                                Số lượng
+                            </span>
+
+                            <strong id="reviewLessonCount">
+                                0 buổi
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =============================================
+         MULTIPLE REVIEW
+    ============================================== -->
+
+                <div class="lesson-review__content" id="multipleLessonReview">
+
+                    <div class="lesson-review__item">
+
+                        <div class="lesson-review__item-icon">
+                            <i class="fa-light fa-arrow-right-arrow-left"></i>
+                        </div>
+
+                        <div class="lesson-review__item-content">
+
+                            <span>
+                                Khoảng buổi học
+                            </span>
+
+                            <strong id="reviewLessonRange">
+                                Chưa xác định
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-review__item">
+
+                        <div class="lesson-review__item-icon">
+                            <i class="fa-light fa-layer-group"></i>
+                        </div>
+
+                        <div class="lesson-review__item-content">
+
+                            <span>
+                                Loại tạo
+                            </span>
+
+                            <strong>
+                                Tạo nhiều buổi
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="lesson-review__item">
+
+                        <div class="lesson-review__item-icon">
+                            <i class="fa-light fa-calendar-plus"></i>
+                        </div>
+
+                        <div class="lesson-review__item-content">
+
+                            <span>
+                                Số lượng
+                            </span>
+
+                            <strong id="reviewLessonRangeCount">
+                                0 buổi
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- =================================================
+                 AUTO INFORMATION
+            ================================================== -->
+            <div class="lesson-info-box">
+                <div class="lesson-info-box__icon">
+                    <i class="fa-light fa-wand-magic-sparkles"></i>
+                </div>
+                <div class="lesson-info-box__content">
+                    <strong>Hệ thống tự động xử lý</strong>
+                    <p id="lessonAutoDescription">
+                        Hệ thống sẽ tạo buổi học theo số thứ tự bạn nhập.
+                        Với chế độ tạo nhiều, các buổi sẽ được tạo liên tiếp
+                        từ buổi bắt đầu đến buổi kết thúc.
+                    </p>
+                    <div class="lesson-info-example" id="lessonInfoExample">
+                        <span>Ví dụ:</span>
+                        <code>Buổi 1 → Buổi 10</code>
+                        <strong>10 buổi</strong>
+                    </div>
+                </div>
+            </div>
+            <!-- =================================================
+                 ACTIONS
+            ================================================== -->
+            <div class="lesson-form-actions">
+                <a href="/school-admin/university/lessons" class="data-btn lesson-btn-back">
+                    <i class="fa-light fa-arrow-left"></i>
+                    <span>Quay lại</span>
+                </a>
+                <button type="submit" class="data-btn data-btn--primary lesson-btn-submit">
+                    <i class="fa-light fa-plus"></i>
+                    <span id="submitText">Tạo buổi học</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

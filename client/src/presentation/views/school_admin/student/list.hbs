@@ -1,0 +1,352 @@
+<div class="section-title">
+
+    <i class="fa-light fa-user-graduate"></i>
+
+    <h2>
+        Sinh viên
+    </h2>
+
+</div>
+
+<div class="data-card">
+
+    <div class="data-card__body">
+
+        <!-- TOOLBAR -->
+
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+
+                <h5>
+                    Tất cả sinh viên
+                </h5>
+
+                <span>
+                    Quản lý danh sách sinh viên
+                </span>
+
+            </div>
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchStudent" placeholder="Tìm theo MSSV hoặc họ tên..." />
+
+                </div>
+
+                <a href="/student/create" class="data-btn data-btn--primary">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm sinh viên
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--student">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Sinh viên
+                        </th>
+
+                        <th class="text-center">
+                            Lớp
+                        </th>
+
+                        <th class="text-center">
+                            Giới tính
+                        </th>
+
+                        <th class="text-center">
+                            Khóa
+                        </th>
+
+                        <th>
+                            Khoa
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {{#each students}}
+
+                    <tr>
+
+                        <!-- STUDENT -->
+
+                        <td>
+
+                            <div class="student-info">
+
+                                <div class="student-info__icon">
+
+                                    <i class="fa-light fa-user-graduate"></i>
+
+                                </div>
+
+                                <div class="student-info__content">
+
+                                    <strong>
+                                        {{fullName}}
+                                    </strong>
+
+                                    <small>
+                                        {{studentId}}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- CLASS -->
+
+                        <td class="text-center">
+
+                            <span class="student-class">
+
+                                <i class="fa-light fa-users"></i>
+
+                                {{studentClass}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- GENDER -->
+
+                        <td class="text-center">
+
+                            <span class="student-gender">
+
+                                {{#if (eq gender "male")}}
+
+                                <i class="fa-light fa-mars"></i>
+
+                                Nam
+
+                                {{else}}
+
+                                <i class="fa-light fa-venus"></i>
+
+                                Nữ
+
+                                {{/if}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- COHORT -->
+
+                        <td class="text-center">
+
+                            <span class="student-cohort">
+
+                                <i class="fa-light fa-layer-group"></i>
+
+                                {{cohortId}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- DEPARTMENT -->
+
+                        <td>
+
+                            <div class="student-department">
+
+                                <i class="fa-light fa-building-columns"></i>
+
+                                <div>
+
+                                    <strong>
+                                        {{departmentName}}
+                                    </strong>
+
+                                    <small>
+                                        {{departmentId}}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- EMAIL -->
+
+                        <td>
+
+                            <span class="student-email">
+
+                                <i class="fa-light fa-envelope"></i>
+
+                                {{email}}
+
+                            </span>
+
+                        </td>
+
+                        <!-- STATUS -->
+
+                        <td class="text-center">
+
+                            {{#if (eq status "studying")}}
+
+                            <span class="data-status data-status--active">
+
+                                <span class="data-status__dot"></span>
+
+                                Đang học
+
+                            </span>
+
+                            {{/if}}
+
+                            {{#if (eq status "graduated")}}
+
+                            <span class="data-status data-status--inactive">
+
+                                <span class="data-status__dot"></span>
+
+                                Đã tốt nghiệp
+
+                            </span>
+
+                            {{/if}}
+
+                            {{#if (eq status "reserved")}}
+
+                            <span class="data-status data-status--planned">
+
+                                <span class="data-status__dot"></span>
+
+                                Bảo lưu
+
+                            </span>
+
+                            {{/if}}
+
+                            {{#if (eq status "suspended")}}
+
+                            <span class="data-status data-status--inactive">
+
+                                <span class="data-status__dot"></span>
+
+                                Tạm ngưng
+
+                            </span>
+
+                            {{/if}}
+
+                            {{#if (eq status "dropped_out")}}
+
+                            <span class="data-status data-status--inactive">
+
+                                <span class="data-status__dot"></span>
+
+                                Thôi học
+
+                            </span>
+
+                            {{/if}}
+
+                        </td>
+
+                        <!-- ACTION -->
+
+                        <td class="text-center">
+
+                            <a href="/admin/university/student/{{studentId}}/edit" class="data-action"
+                                title="Chỉnh sửa sinh viên">
+
+                                <i class="fa-light fa-pen-to-square"></i>
+
+                                <span>
+                                    Sửa
+                                </span>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {{else}}
+
+                    <tr>
+
+                        <td colspan="8" class="text-center">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+
+                                    <i class="fa-light fa-user-graduate"></i>
+
+                                </div>
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có sinh viên
+                                    </strong>
+
+                                    <span>
+                                        Chưa có dữ liệu sinh viên trong hệ thống.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

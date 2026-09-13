@@ -1,0 +1,52 @@
+from django.urls import path, include
+
+urlpatterns = [
+    path(
+        "api/users/",
+        include("apps.users.presentation.urls"),
+    ),
+    path(
+        "api/universities/",
+        include("apps.universities.presentation.urls"),
+    ),
+    path(
+        "api/",
+        include("apps.administrators.presentation.urls"),
+    ),
+    path(
+        "api/departments/",
+        include("apps.departments.presentation.urls"),
+    ),
+    path(
+        "api/academic-years/",
+        include("apps.academic_years.presentation.urls"),
+    ),
+    path(
+        "api/semesters/",
+        include("apps.semesters.presentation.urls"),
+    ),
+    path(
+        "api/subjects/",
+        include("apps.subjects.presentation.urls"),
+    ),
+    path(
+        "api/teachers/",
+        include("apps.teachers.presentation.urls"),
+    ),
+    path(
+        "api/class-sections/",
+        include("apps.class_sections.presentation.urls"),
+    ),
+    path(
+        "api/students/",
+        include("apps.students.presentation.urls"),
+    ),
+    path(
+        "api/lessons/",
+        include("apps.lessons.presentation.urls"),
+    ),
+    path(
+        "api/assignments/",
+        include("apps.assignments.presentation.urls"),
+    ),
+]

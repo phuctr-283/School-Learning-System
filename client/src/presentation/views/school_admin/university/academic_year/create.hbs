@@ -1,0 +1,338 @@
+<div class="section-title academic-year-page-title">
+
+    <div class="section-title__icon">
+        <i class="fa-light fa-calendar-days"></i>
+    </div>
+
+    <div class="section-title__content">
+        <span class="section-title__eyebrow">
+            QUẢN LÝ NĂM HỌC
+        </span>
+
+        <h2>
+            Thêm năm học
+        </h2>
+
+        <p>
+            Tạo năm học mới và thiết lập thời gian đào tạo.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="academic-year-create-card">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="academic-year-create-header">
+
+        <div class="academic-year-create-header__icon">
+            <i class="fa-light fa-calendar-plus"></i>
+        </div>
+
+        <div class="academic-year-create-header__content">
+
+            <h3>
+                Thông tin năm học
+            </h3>
+
+            <p>
+                Nhập tên và khoảng thời gian áp dụng cho năm học.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ERROR
+    ====================================================== -->
+
+    {{#if error}}
+
+    <div class="academic-year-form-error">
+
+        <div class="academic-year-form-error__icon">
+            <i class="fa-light fa-circle-exclamation"></i>
+        </div>
+
+        <div class="academic-year-form-error__content">
+
+            <strong>
+                Không thể tạo năm học
+            </strong>
+
+            <span>
+                {{error}}
+            </span>
+
+        </div>
+
+    </div>
+
+    {{/if}}
+
+
+    <!-- =====================================================
+         FORM
+    ====================================================== -->
+
+    <form
+        method="POST"
+        action="/school-admin/university/academic-years/create"
+        class="academic-year-form"
+    >
+
+        <!-- =================================================
+             ACADEMIC YEAR NAME
+        ================================================== -->
+
+        <div class="academic-year-form-group">
+
+            <label for="name">
+
+                <span class="academic-year-form-label-icon">
+                    <i class="fa-light fa-heading"></i>
+                </span>
+
+                <span>
+                    Tên năm học
+                </span>
+
+            </label>
+
+
+            <div class="academic-year-input">
+
+                <i class="fa-light fa-calendar academic-year-input__icon"></i>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{formData.name}}"
+                    placeholder=" "
+                    autocomplete="off"
+                    required
+                />
+
+                <span class="academic-year-input__placeholder">
+                    Ví dụ: 2026-2027
+                </span>
+
+            </div>
+
+
+            <div class="academic-year-form-hint">
+
+                <i class="fa-light fa-circle-info"></i>
+
+                <span>
+                    Tên năm học nên có dạng <strong>YYYY-YYYY</strong>
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DATE RANGE
+        ================================================== -->
+
+        <div class="academic-year-date-section">
+
+            <div class="academic-year-date-heading">
+
+                <div>
+
+                    <span class="academic-year-date-heading__eyebrow">
+                        THỜI GIAN ÁP DỤNG
+                    </span>
+
+                    <h4>
+                        Khoảng thời gian năm học
+                    </h4>
+
+                </div>
+
+                <div class="academic-year-date-heading__badge">
+                    <i class="fa-light fa-clock"></i>
+                    <span>Thời gian</span>
+                </div>
+
+            </div>
+
+
+            <div class="academic-year-date-grid">
+
+                <!-- START DATE -->
+
+                <div class="academic-year-date-card">
+
+                    <div class="academic-year-date-card__top">
+
+                        <div class="academic-year-date-card__icon">
+                            <i class="fa-light fa-calendar-check"></i>
+                        </div>
+
+                        <div>
+
+                            <span class="academic-year-date-card__label">
+                                NGÀY BẮT ĐẦU
+                            </span>
+
+                            <span class="academic-year-date-card__description">
+                                Thời điểm bắt đầu năm học
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-year-date-input">
+
+                        <input
+                            type="date"
+                            id="startDate"
+                            name="start_date"
+                            value="{{formData.start_date}}"
+                            required
+                        />
+
+                        <i class="fa-light fa-calendar-days"></i>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONNECTOR -->
+
+                <div class="academic-year-date-connector">
+
+                    <span></span>
+
+                    <i class="fa-light fa-arrow-right"></i>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- END DATE -->
+
+                <div class="academic-year-date-card">
+
+                    <div class="academic-year-date-card__top">
+
+                        <div class="academic-year-date-card__icon">
+                            <i class="fa-light fa-calendar-xmark"></i>
+                        </div>
+
+                        <div>
+
+                            <span class="academic-year-date-card__label">
+                                NGÀY KẾT THÚC
+                            </span>
+
+                            <span class="academic-year-date-card__description">
+                                Thời điểm kết thúc năm học
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-year-date-input">
+
+                        <input
+                            type="date"
+                            id="endDate"
+                            name="end_date"
+                            value="{{formData.end_date}}"
+                            required
+                        />
+
+                        <i class="fa-light fa-calendar-days"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INFORMATION
+        ================================================== -->
+
+        <div class="academic-year-info">
+
+            <div class="academic-year-info__icon">
+                <i class="fa-light fa-circle-info"></i>
+            </div>
+
+            <div class="academic-year-info__content">
+
+                <strong>
+                    Lưu ý khi thiết lập thời gian
+                </strong>
+
+                <p>
+                    Ngày kết thúc phải lớn hơn ngày bắt đầu.
+                    Sau khi tạo, trạng thái năm học sẽ được hệ thống
+                    xác định dựa trên khoảng thời gian đã thiết lập.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTIONS
+        ================================================== -->
+
+        <div class="academic-year-form-actions">
+
+            <a
+                href="/admin/university/academic-year"
+                class="academic-year-btn academic-year-btn--back"
+            >
+
+                <i class="fa-light fa-arrow-left"></i>
+
+                <span>
+                    Quay lại
+                </span>
+
+            </a>
+
+
+            <button
+                type="submit"
+                class="academic-year-btn academic-year-btn--submit"
+            >
+
+                <i class="fa-light fa-plus"></i>
+
+                <span>
+                    Tạo năm học
+                </span>
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

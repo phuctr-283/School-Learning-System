@@ -1,0 +1,254 @@
+<div class="section-title">
+    <i class="fa-light fa-calendar-days"></i>
+    <h2>Năm học</h2>
+</div>
+
+<div class="data-card academic-year-page">
+    <div class="data-card__body">
+
+        <!-- TOOLBAR -->
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+                <div class="page-list-title">
+
+                    <div class="page-list-title__icon">
+                        <i class="fa-light fa-calendar-days"></i>
+                    </div>
+
+                    <div>
+                        <h5>Danh sách năm học</h5>
+                        <span>Quản lý các năm học của trường</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="searchAcademicYear"
+                        placeholder="Tìm theo mã hoặc tên năm học..."
+                    >
+                </div>
+
+                <a
+                    href="/school-admin/university/academic-years/create"
+                    class="data-btn data-btn--primary"
+                >
+                    <i class="fa-light fa-plus"></i>
+                    <span>Thêm năm học</span>
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--academic-year">
+
+                <thead>
+                    <tr>
+
+                        <th class="text-center">
+                            MÃ NĂM HỌC
+                        </th>
+
+                        <th>
+                            TÊN NĂM HỌC
+                        </th>
+
+                        <th class="text-center">
+                            NGÀY BẮT ĐẦU
+                        </th>
+
+                        <th class="text-center">
+                            NGÀY KẾT THÚC
+                        </th>
+
+                        <th class="text-center">
+                            TRẠNG THÁI
+                        </th>
+
+                        <th class="text-center">
+                            HOẠT ĐỘNG
+                        </th>
+
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {{#each academicYears}}
+
+                    <tr>
+
+                        <!-- MÃ -->
+                        <td class="text-center">
+
+                            <span class="data-code">
+                                {{academicYearId}}
+                            </span>
+
+                        </td>
+
+
+                        <!-- TÊN -->
+                        <td>
+
+                            <div class="academic-year-name">
+
+                                <div class="academic-year-name__icon">
+                                    <i class="fa-light fa-calendar-days"></i>
+                                </div>
+
+                                <div class="academic-year-name__content">
+
+                                    <span>
+                                        {{name}}
+                                    </span>
+
+                                    {{#if universityName}}
+                                    <small>
+                                        {{universityName}}
+                                    </small>
+                                    {{/if}}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- NGÀY BẮT ĐẦU -->
+                        <td class="text-center">
+
+                            <div class="academic-year-date">
+
+                                <i class="fa-light fa-calendar-check"></i>
+
+                                <span>
+                                    {{startDate}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- NGÀY KẾT THÚC -->
+                        <td class="text-center">
+
+                            <div class="academic-year-date">
+
+                                <i class="fa-light fa-calendar-xmark"></i>
+
+                                <span>
+                                    {{endDate}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- TRẠNG THÁI -->
+                        <td class="text-center">
+
+                            {{#if (eq status "planned")}}
+
+                            <span class="data-status data-status--planned">
+                                <span class="data-status__dot"></span>
+                                Chưa bắt đầu
+                            </span>
+
+                            {{else}}
+
+                                {{#if (eq status "active")}}
+
+                                <span class="data-status data-status--active">
+                                    <span class="data-status__dot"></span>
+                                    Đang diễn ra
+                                </span>
+
+                                {{else}}
+
+                                <span class="data-status data-status--inactive">
+                                    <span class="data-status__dot"></span>
+                                    Đã kết thúc
+                                </span>
+
+                                {{/if}}
+
+                            {{/if}}
+
+                        </td>
+
+
+                        <!-- HOẠT ĐỘNG -->
+                        <td class="text-center">
+
+                            <a
+                                href="/school-admin/university/academic-year/edit/{{academicYearId}}"
+                                class="data-action"
+                                title="Chỉnh sửa năm học"
+                            >
+                                <i class="fa-light fa-pen-to-square"></i>
+                                <span>Sửa</span>
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {{else}}
+
+                    <!-- EMPTY STATE -->
+                    <tr>
+
+                        <td colspan="6" class="text-center">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+                                    <i class="fa-light fa-calendar-days"></i>
+                                </div>
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có năm học
+                                    </strong>
+
+                                    <span>
+                                        Chưa có dữ liệu năm học trong trường.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>

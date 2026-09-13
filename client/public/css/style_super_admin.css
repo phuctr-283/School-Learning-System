@@ -1,0 +1,1184 @@
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 20px 20px;
+}
+.section-title i {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 9px;
+  font-size: 16px;
+}
+.section-title h2 {
+  margin: 0;
+  color: #303841;
+  font-size: 22px;
+  font-weight: 600;
+}
+/* =========================================================
+   DATA CARD
+========================================================= */
+
+.data-card {
+  width: 100%;
+
+  background: #fff;
+
+  border: 1px solid #e8edf2;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 20px rgba(30, 50, 70, 0.045);
+}
+
+.data-card__body {
+  padding: 22px 24px 24px;
+}
+
+/* =========================================================
+   DATA TOOLBAR
+========================================================= */
+
+.data-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 18px;
+  padding: 17px 20px;
+
+  background: #fafcfd;
+
+  border: 1px solid #edf1f4;
+  border-radius: 12px;
+}
+
+/* =========================================================
+   TOOLBAR TITLE
+========================================================= */
+
+.data-toolbar__title {
+  min-width: 0;
+}
+
+.data-toolbar__title h5 {
+  margin: 0;
+
+  color: #303841;
+
+  font-size: 16px;
+  font-weight: 650;
+
+  line-height: 1.4;
+}
+
+.data-toolbar__title span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #929ba4;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   TOOLBAR ACTIONS
+========================================================= */
+
+.data-toolbar__actions {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.data-search {
+  position: relative;
+
+  width: 270px;
+}
+
+.data-search > i {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #9ca5ad;
+
+  font-size: 13px;
+
+  pointer-events: none;
+}
+
+.data-search input {
+  width: 100%;
+  height: 38px;
+
+  padding: 0 13px 0 36px;
+
+  background: #fff;
+
+  border: 1px solid #e1e7eb;
+  border-radius: 8px;
+
+  outline: none;
+
+  color: #303841;
+
+  font-size: 13px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.data-search input::placeholder {
+  color: #a3abb2;
+}
+
+.data-search input:hover {
+  border-color: #d3dbe0;
+}
+
+.data-search input:focus {
+  border-color: #4187b6;
+
+  box-shadow: 0 0 0 3px rgba(65, 135, 182, 0.1);
+}
+
+/* =========================================================
+   DATA BUTTON
+========================================================= */
+
+.data-btn {
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.data-btn--primary {
+  background: #4187b6;
+
+  color: #fff;
+
+  border: 1px solid #4187b6;
+}
+
+.data-btn--primary:hover {
+  background: #3679a6;
+  border-color: #3679a6;
+
+  color: #fff;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 12px rgba(65, 135, 182, 0.18);
+}
+
+.data-btn--primary i {
+  font-size: 12px;
+}
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.data-table-wrap {
+  width: 100%;
+
+  overflow-x: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #d7dde2 transparent;
+}
+
+/* =========================================================
+   DATA TABLE
+========================================================= */
+
+.data-table {
+  width: 100%;
+
+  min-width: 750px;
+
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.data-table thead th {
+  padding: 7px 14px 10px;
+
+  border: none;
+
+  color: #8b959e;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   TABLE ROW
+========================================================= */
+
+.data-table tbody tr {
+  background: #fff;
+
+  box-shadow: 0 1px 5px rgba(30, 50, 70, 0.035);
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+  background: #fbfdfe;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 14px rgba(30, 50, 70, 0.065);
+}
+
+/* =========================================================
+   TABLE CELL
+========================================================= */
+
+.data-table tbody td {
+  padding: 14px;
+
+  border-top: 1px solid #f0f3f5;
+  border-bottom: 1px solid #f0f3f5;
+
+  color: #444c53;
+
+  font-size: 13px;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   FIRST / LAST CELL
+========================================================= */
+
+.data-table tbody tr td:first-child {
+  border-left: 1px solid #f0f3f5;
+
+  border-radius: 10px 0 0 10px;
+}
+
+.data-table tbody tr td:last-child {
+  border-right: 1px solid #f0f3f5;
+
+  border-radius: 0 10px 10px 0;
+}
+/* =========================================
+   UNIVERSITY TABLE
+========================================= */
+
+.data-table--university {
+    min-width: 1000px;
+}
+
+
+/* =========================================
+   UNIVERSITY INFO
+========================================= */
+
+.university-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.university-info__icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 18px;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.university-info__content {
+    min-width: 0;
+}
+
+.university-info .data-name {
+    display: block;
+
+    color: var(--color-text-primary);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.data-contact {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 13.5px;
+}
+
+.data-contact__icon {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-xs);
+
+    background: var(--color-bg-soft);
+    color: var(--color-text-muted);
+
+    font-size: 13px;
+}
+
+.data-contact span {
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.data-table--university tbody tr {
+    transition:
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.data-table--university tbody tr:hover {
+    background: var(--color-bg-soft);
+}
+
+.data-table--university tbody tr:hover
+.university-info__icon {
+    background: var(--color-primary);
+    color: var(--color-white);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   CODE
+========================================= */
+
+.data-table--university .data-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 76px;
+    height: 30px;
+
+    padding: 0 10px;
+
+    border-radius: var(--radius-xs);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================
+   ACTION
+========================================= */
+
+.data-table--university .data-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    height: 34px;
+
+    padding: 0 12px;
+
+    border-radius: var(--radius-xs);
+
+    color: var(--color-primary);
+
+    background: transparent;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.data-table--university .data-action:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+
+.data-table--university .data-action i {
+    font-size: 14px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.data-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+
+    min-height: 160px;
+
+    padding: 30px;
+}
+
+.data-empty__icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 21px;
+}
+
+.data-empty__content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    text-align: left;
+}
+
+.data-empty__content strong {
+    color: var(--color-text-primary);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.data-empty__content span {
+    color: var(--color-text-muted);
+
+    font-size: 13px;
+}
+/* =========================================
+   UNIVERSITY CREATE PAGE
+========================================= */
+
+.university-form-page {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   MAIN CARD
+========================================= */
+
+.university-form-card {
+    overflow: hidden;
+
+    background: var(--color-bg-card);
+
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.university-form-card__header {
+    padding: 24px 28px;
+
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.university-form-card__heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.university-form-card__icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 21px;
+}
+
+.university-form-card__heading h4 {
+    margin: 0 0 4px;
+
+    color: var(--color-text-primary);
+
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.university-form-card__heading p {
+    margin: 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   FORM BODY
+========================================= */
+
+.university-form__body {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    padding: 28px;
+}
+
+
+/* =========================================
+   FORM ROW
+========================================= */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+/* =========================================
+   FORM GROUP
+========================================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: var(--color-text-primary);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-required {
+    margin-left: 3px;
+
+    color: var(--color-danger);
+
+    font-weight: 700;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.form-input-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.form-input-wrapper > i {
+    position: absolute;
+    left: 14px;
+
+    color: var(--color-text-muted);
+
+    font-size: 15px;
+
+    pointer-events: none;
+
+    transition: color var(--transition-fast);
+}
+
+.form-input-wrapper input {
+    width: 100%;
+    height: 46px;
+
+    padding: 0 14px 0 42px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+
+    outline: none;
+
+    background: var(--color-bg-input);
+
+    color: var(--color-text-primary);
+
+    font-family: inherit;
+    font-size: 13.5px;
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.form-input-wrapper input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.form-input-wrapper input:hover {
+    border-color: var(--color-border-dark);
+}
+
+.form-input-wrapper input:focus {
+    border-color: var(--color-primary);
+
+    background: var(--color-white);
+
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 196, 0.10);
+}
+
+.form-input-wrapper:focus-within > i {
+    color: var(--color-primary);
+}
+
+
+/* =========================================
+   HELP TEXT
+========================================= */
+
+.form-help {
+    color: var(--color-text-muted);
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    color: var(--color-danger);
+
+    font-size: 12px;
+}
+
+.form-error i {
+    font-size: 12px;
+}
+
+
+/* =========================================
+   CARD FOOTER
+========================================= */
+
+.university-form-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+    padding: 20px 28px;
+
+    border-top: 1px solid var(--color-border-light);
+
+    background: var(--color-bg-soft);
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.form-btn {
+    height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: var(--radius-sm);
+
+    border: 1px solid transparent;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.form-btn:active {
+    transform: translateY(1px);
+}
+
+
+/* Cancel */
+
+.form-btn--cancel {
+    background: var(--color-white);
+    border-color: var(--color-border);
+
+    color: var(--color-text-secondary);
+}
+
+.form-btn--cancel:hover {
+    background: var(--color-bg-soft);
+    border-color: var(--color-border-dark);
+
+    color: var(--color-text-primary);
+}
+
+
+/* Reset */
+
+.form-btn--reset {
+    background: var(--color-white);
+    border-color: var(--color-border);
+
+    color: var(--color-text-secondary);
+}
+
+.form-btn--reset:hover {
+    background: var(--color-bg-soft);
+
+    color: var(--color-text-primary);
+}
+
+
+/* Submit */
+
+.form-btn--submit {
+    background: var(--color-primary);
+    color: var(--color-white);
+
+    box-shadow: var(--shadow-xs);
+}
+
+.form-btn--submit:hover {
+    background: var(--color-primary-dark);
+
+    box-shadow: var(--shadow-sm);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   INFORMATION CARD
+========================================= */
+
+.university-form-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 18px 20px;
+
+    border: 1px solid #dcecf7;
+    border-radius: var(--radius-md);
+
+    background: var(--color-primary-light);
+}
+
+.university-form-info__icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--color-white);
+    color: var(--color-primary);
+
+    font-size: 15px;
+}
+
+.university-form-info h5 {
+    margin: 2px 0 8px;
+
+    color: var(--color-text-primary);
+
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.university-form-info ul {
+    margin: 0;
+    padding-left: 17px;
+}
+
+.university-form-info li {
+    margin-bottom: 4px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+.university-form-info li:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .university-form-page {
+        margin: 0 12px;
+    }
+
+    .university-form-card__header {
+        padding: 20px;
+    }
+
+    .university-form__body {
+        padding: 20px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .university-form-card__footer {
+        flex-wrap: wrap;
+
+        padding: 18px 20px;
+    }
+
+    .form-btn {
+        flex: 1;
+    }
+
+    .university-form-info {
+        padding: 16px;
+    }
+}
+/* =========================================
+   ADMIN TABLE
+========================================= */
+
+.data-table--admin {
+    min-width: 900px;
+}
+
+
+/* =========================================
+   UNIVERSITY
+========================================= */
+
+.admin-university {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-university__icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 17px;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.admin-university__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.admin-university__name {
+    color: var(--color-text-primary);
+
+    font-size: 13.5px;
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+.admin-university__code {
+    color: var(--color-text-muted);
+
+    font-size: 11.5px;
+}
+
+
+/* =========================================
+   ADMIN USER
+========================================= */
+
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-user__avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--color-bg-soft);
+    color: var(--color-text-secondary);
+
+    border: 1px solid var(--color-border-light);
+
+    font-size: 14px;
+}
+
+.admin-user__name {
+    color: var(--color-text-primary);
+
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   EMAIL
+========================================= */
+
+.admin-email {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+}
+
+.admin-email i {
+    color: var(--color-text-muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+
+.data-table--admin tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.data-table--admin tbody tr:hover {
+    background: var(--color-bg-soft);
+}
+
+.data-table--admin tbody tr:hover
+.admin-university__icon {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+
+/* =========================================
+   ACTION
+========================================= */
+
+.data-table--admin .data-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    height: 34px;
+
+    padding: 0 12px;
+
+    border-radius: var(--radius-xs);
+
+    color: var(--color-primary);
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.data-table--admin .data-action:hover {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}

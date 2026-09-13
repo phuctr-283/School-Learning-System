@@ -1,0 +1,1483 @@
+/* =========================================================
+   LESSON PLAN
+========================================================= */
+
+.lesson-plan-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.lesson-plan-section-title > .section-title__icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(59, 130, 196, 0.08);
+    border-radius: 12px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 17px;
+}
+
+
+.lesson-plan-section-title .section-title__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.lesson-plan-section-title .section-title__eyebrow {
+    color: var(--color-primary);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+}
+
+
+.lesson-plan-section-title h2 {
+    margin: 0;
+
+    color: var(--color-text-primary);
+
+    font-size: 20px;
+    font-weight: 700;
+
+    line-height: 1.25;
+}
+
+
+.lesson-plan-section-title p {
+    margin: 2px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.lesson-plan-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    background: var(--color-bg-card);
+
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.lesson-plan-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        280px;
+
+    min-height: 580px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.lesson-plan-content {
+    min-width: 0;
+
+    background: var(--color-white);
+}
+
+
+/* =========================================================
+   PANEL
+========================================================= */
+
+.lesson-panel {
+    display: none;
+
+    min-width: 0;
+}
+
+
+.lesson-panel.is-active {
+    display: block;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.lesson-panel__header {
+    min-height: 86px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px 22px;
+
+    background: var(--color-white);
+
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+
+.lesson-panel__title {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    min-width: 0;
+}
+
+
+.lesson-panel__icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(59, 130, 196, 0.08);
+    border-radius: 12px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 17px;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.lesson-panel__header:hover .lesson-panel__icon {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
+}
+
+
+.lesson-panel__title > div:last-child {
+    min-width: 0;
+}
+
+
+.lesson-panel__title h3 {
+    margin: 0 0 4px;
+
+    overflow: hidden;
+
+    color: var(--color-text-primary);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.lesson-panel__title span {
+    display: block;
+
+    overflow: hidden;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+    line-height: 1.4;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.lesson-panel__header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   COUNT
+========================================================= */
+
+.lesson-panel__count {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    min-height: 34px;
+
+    padding: 0 11px;
+
+    border: 1px solid var(--color-border);
+    border-radius: 9px;
+
+    background: var(--color-bg-soft);
+
+    white-space: nowrap;
+}
+
+
+.lesson-panel__count strong {
+    color: var(--color-primary);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+.lesson-panel__count span {
+    margin: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ADD BUTTON
+========================================================= */
+
+.lesson-add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 35px;
+
+    padding: 0 13px;
+
+    border-radius: 9px;
+
+    font-size: 10px;
+    font-weight: 650;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.lesson-add-btn i {
+    font-size: 11px;
+}
+
+
+.lesson-add-btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.lesson-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.lesson-table {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+
+.lesson-table th {
+    height: 44px;
+
+    padding: 0 16px;
+
+    background: var(--color-bg-soft);
+
+    border-bottom: 1px solid var(--color-border);
+
+    color: var(--color-text-secondary);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+.lesson-table td {
+    height: 66px;
+
+    padding: 11px 16px;
+
+    background: var(--color-white);
+
+    border-bottom: 1px solid var(--color-border-light);
+
+    color: var(--color-text-primary);
+
+    font-size: 12px;
+
+    vertical-align: middle;
+
+    transition:
+        background-color var(--transition-fast);
+}
+
+
+.lesson-table tbody tr {
+    transition:
+        background-color var(--transition-fast);
+}
+
+
+.lesson-table tbody tr:hover td {
+    background: var(--color-bg-soft);
+}
+
+
+.lesson-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* =========================================================
+   ACTION COLUMN
+========================================================= */
+
+.lesson-action-column {
+    width: 125px;
+}
+
+
+/* =========================================================
+   LESSON CODE
+========================================================= */
+
+.lesson-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+
+    padding: 6px 9px;
+
+    border: 1px solid rgba(59, 130, 196, 0.08);
+    border-radius: 7px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-family: monospace;
+
+    font-size: 10px;
+    font-weight: 650;
+
+    letter-spacing: 0.01em;
+}
+
+
+/* =========================================================
+   LESSON NUMBER
+========================================================= */
+
+.lesson-number {
+    width: 30px;
+    height: 30px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(59, 130, 196, 0.08);
+    border-radius: 8px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   LESSON NAME
+========================================================= */
+
+.lesson-name {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 180px;
+}
+
+
+.lesson-name__icon {
+    width: 37px;
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 14px;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.lesson-table tbody tr:hover .lesson-name__icon {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-xs);
+}
+
+
+.lesson-name__content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+
+.lesson-name__content strong {
+    overflow: hidden;
+
+    color: var(--color-text-primary);
+
+    font-size: 11.5px;
+    font-weight: 650;
+
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.lesson-name__content small {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   REFERENCE
+========================================================= */
+
+.lesson-reference {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 155px;
+}
+
+
+.lesson-reference__icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 13px;
+}
+
+
+.lesson-reference > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+
+.lesson-reference strong {
+    overflow: hidden;
+
+    color: var(--color-text-primary);
+
+    font-size: 11.5px;
+    font-weight: 650;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.lesson-reference small {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   ACADEMIC YEAR
+========================================================= */
+
+.lesson-academic-year {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    white-space: nowrap;
+}
+
+
+.lesson-academic-year i {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--color-bg-soft);
+    color: var(--color-primary);
+
+    font-size: 11px;
+}
+
+
+.lesson-academic-year span {
+    color: var(--color-text-primary);
+
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SEMESTER
+========================================================= */
+
+.lesson-semester {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 90px;
+}
+
+
+.lesson-semester strong {
+    color: var(--color-text-primary);
+
+    font-size: 11px;
+    font-weight: 650;
+}
+
+
+.lesson-semester small {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.lesson-total {
+    display: inline-flex;
+    align-items: baseline;
+
+    gap: 4px;
+
+    min-width: 60px;
+    justify-content: center;
+}
+
+
+.lesson-total strong {
+    color: var(--color-primary);
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.lesson-total span {
+    color: var(--color-text-muted);
+
+    font-size: 8.5px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   GROUP
+========================================================= */
+
+.lesson-group {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 9px;
+
+    border: 1px solid var(--color-border-light);
+    border-radius: 7px;
+
+    background: var(--color-bg-soft);
+    color: var(--color-text-secondary);
+
+    font-size: 9.5px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TYPE
+========================================================= */
+
+.lesson-type {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 9px;
+
+    border-radius: 7px;
+
+    font-size: 9.5px;
+    font-weight: 650;
+
+    white-space: nowrap;
+}
+
+
+.lesson-type i {
+    font-size: 10px;
+}
+
+
+.lesson-type--theory {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+
+.lesson-type--practice {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+
+.lesson-type--default {
+    background: var(--color-bg-soft);
+    color: var(--color-text-secondary);
+}
+
+
+/* =========================================================
+   CREDIT RANGE
+========================================================= */
+
+.lesson-credit-range {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    min-width: 120px;
+
+    white-space: nowrap;
+}
+
+
+.lesson-credit-range strong {
+    color: var(--color-text-primary);
+
+    font-size: 10.5px;
+    font-weight: 650;
+}
+
+
+.lesson-credit-range span {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+.lesson-credit-range small {
+    color: var(--color-text-muted);
+
+    font-size: 8.5px;
+}
+
+
+/* =========================================================
+   CUSTOM
+========================================================= */
+
+.lesson-custom {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    font-size: 9px;
+    font-weight: 650;
+
+    white-space: nowrap;
+}
+
+
+.lesson-custom i {
+    font-size: 9px;
+}
+
+
+.lesson-custom--yes {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+
+.lesson-custom--no {
+    background: var(--color-bg-soft);
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.lesson-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.lesson-action {
+    width: 32px;
+    height: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--color-text-muted);
+
+    cursor: pointer;
+    text-decoration: none;
+
+    font-size: 11px;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.lesson-action:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   VIEW
+========================================================= */
+
+.lesson-action--view:hover {
+    background: var(--color-primary-light);
+
+    border-color: rgba(59, 130, 196, 0.12);
+
+    color: var(--color-primary);
+
+    box-shadow: var(--shadow-xs);
+}
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+.lesson-action--edit:hover {
+    background: var(--color-warning-bg);
+
+    border-color: rgba(233, 162, 59, 0.14);
+
+    color: var(--color-warning);
+
+    box-shadow: var(--shadow-xs);
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+.lesson-action--delete:hover {
+    background: var(--color-danger-bg);
+
+    border-color: rgba(224, 82, 82, 0.14);
+
+    color: var(--color-danger);
+
+    box-shadow: var(--shadow-xs);
+}
+
+
+.lesson-action i {
+    font-size: 11px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.lesson-empty {
+    min-height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    padding: 30px;
+}
+
+
+.lesson-empty__icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(59, 130, 196, 0.08);
+    border-radius: 13px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 17px;
+}
+
+
+.lesson-empty > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    text-align: left;
+}
+
+
+.lesson-empty strong {
+    color: var(--color-text-primary);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.lesson-empty span {
+    color: var(--color-text-muted);
+
+    font-size: 9.5px;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.lesson-plan-sidebar {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    background: var(--color-bg-soft);
+
+    border-left: 1px solid var(--color-border);
+}
+
+
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
+
+.lesson-sidebar__header {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 86px;
+
+    padding: 18px;
+
+    background: var(--color-white);
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.lesson-sidebar__header-icon {
+    width: 39px;
+    height: 39px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(59, 130, 196, 0.08);
+    border-radius: 10px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 14px;
+}
+
+
+.lesson-sidebar__header > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.lesson-sidebar__header strong {
+    color: var(--color-text-primary);
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.lesson-sidebar__header span {
+    color: var(--color-text-muted);
+
+    font-size: 9.5px;
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+========================================================= */
+
+.lesson-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 14px;
+}
+
+
+/* =========================================================
+   SIDEBAR ITEM
+========================================================= */
+
+.lesson-sidebar-item {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    border: 1px solid transparent;
+    border-radius: 10px;
+
+    background: transparent;
+    color: var(--color-text-secondary);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.lesson-sidebar-item:hover {
+    background: var(--color-white);
+
+    border-color: var(--color-border-light);
+
+    color: var(--color-primary);
+
+    transform: translateX(-1px);
+}
+
+
+.lesson-sidebar-item.is-active {
+    background: var(--color-white);
+
+    border-color: rgba(59, 130, 196, 0.12);
+
+    color: var(--color-primary);
+
+    box-shadow: var(--shadow-xs);
+}
+
+
+.lesson-sidebar-item.is-active::before {
+    content: "";
+
+    position: absolute;
+
+    left: -1px;
+    top: 9px;
+    bottom: 9px;
+
+    width: 3px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: var(--color-primary);
+}
+
+
+/* =========================================================
+   SIDEBAR ICON
+========================================================= */
+
+.lesson-sidebar-item__icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: var(--color-bg-soft);
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+.lesson-sidebar-item:hover .lesson-sidebar-item__icon,
+.lesson-sidebar-item.is-active .lesson-sidebar-item__icon {
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+
+.lesson-sidebar-item.is-active .lesson-sidebar-item__icon {
+    transform: scale(1.02);
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.lesson-sidebar-item__content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.lesson-sidebar-item__content strong {
+    overflow: hidden;
+
+    color: var(--color-text-primary);
+
+    font-size: 10.5px;
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.lesson-sidebar-item__content small {
+    overflow: hidden;
+
+    color: var(--color-text-muted);
+
+    font-size: 8.5px;
+
+    line-height: 1.3;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SIDEBAR ARROW
+========================================================= */
+
+.lesson-sidebar-item__arrow {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+
+    transition:
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+.lesson-sidebar-item:hover .lesson-sidebar-item__arrow,
+.lesson-sidebar-item.is-active .lesson-sidebar-item__arrow {
+    color: var(--color-primary);
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   SIDEBAR FOOTER
+========================================================= */
+
+.lesson-sidebar__footer {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin: auto 14px 14px;
+
+    padding: 11px;
+
+    border: 1px solid var(--color-border-light);
+    border-radius: 9px;
+
+    background: var(--color-white);
+
+    color: var(--color-text-muted);
+
+    font-size: 8.5px;
+
+    line-height: 1.5;
+}
+
+
+.lesson-sidebar__footer i {
+    margin-top: 1px;
+
+    flex-shrink: 0;
+
+    color: var(--color-primary);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .lesson-plan-layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            245px;
+    }
+
+    .lesson-panel__header {
+        padding: 16px 18px;
+    }
+
+    .lesson-table th,
+    .lesson-table td {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .lesson-plan-layout {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lesson-plan-sidebar {
+        order: -1;
+
+        border-left: 0;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+
+    .lesson-sidebar__header {
+        min-height: 65px;
+
+        padding: 12px 16px;
+    }
+
+
+    .lesson-sidebar__nav {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 7px;
+
+        padding: 10px 14px;
+    }
+
+
+    .lesson-sidebar__footer {
+        display: none;
+    }
+
+
+    .lesson-sidebar-item.is-active::before {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .lesson-plan-section-title {
+        align-items: flex-start;
+    }
+
+
+    .lesson-plan-section-title h2 {
+        font-size: 17px;
+    }
+
+
+    .lesson-panel__header {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 13px;
+    }
+
+
+    .lesson-panel__header-actions {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+
+    .lesson-panel__title h3 {
+        font-size: 14px;
+    }
+
+
+    .lesson-panel__title span {
+        white-space: normal;
+    }
+
+
+    .lesson-sidebar__nav {
+        grid-template-columns: 1fr;
+    }
+
+
+    .lesson-sidebar-item {
+        min-height: 54px;
+    }
+
+
+    .lesson-table {
+        min-width: 760px;
+    }
+
+
+    .lesson-empty {
+        min-height: 160px;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .lesson-panel__header-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    .lesson-panel__count {
+        justify-content: center;
+    }
+
+
+    .lesson-add-btn {
+        width: 100%;
+    }
+
+}

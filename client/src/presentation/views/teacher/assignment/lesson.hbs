@@ -1,0 +1,209 @@
+<div class="title mx-3">
+    <h2 class="subject-name">
+        Nhập môn lập trình
+    </h2>
+
+    <h4 class="group-name">
+        Nhóm 1
+    </h4>
+</div>
+
+<div class="data-card mx-2">
+    <div class="data-card-body">
+
+        <div class="data-table-wrap">
+
+            <table class="data-table">
+
+                <thead>
+                    <tr>
+                        <th>Tên buổi</th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                        <th class="text-center">
+                            Bài tập
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td class="lesson-name">
+                            Buổi 1
+                        </td>
+
+                        <td class="text-center">
+                            <span class="data-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="data-btn" data-bs-toggle="modal"
+                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-1"
+                                data-lesson-name="Buổi 1" data-current-status="active">
+                                Thay đổi
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="" class="data-link">
+                                Chi tiết
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="lesson-name">
+                            Buổi 2
+                        </td>
+
+                        <td class="text-center">
+                            <span class="data-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="data-btn" data-bs-toggle="modal"
+                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-2"
+                                data-lesson-name="Buổi 2" data-current-status="active">
+                                Thay đổi
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="" class="data-link">
+                                Chi tiết
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="lesson-name">
+                            Buổi 3
+                        </td>
+
+                        <td class="text-center">
+                            <span class="data-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="data-btn" data-bs-toggle="modal"
+                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-3"
+                                data-lesson-name="Buổi 3" data-current-status="active">
+                                Thay đổi
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="" class="data-link">
+                                Chi tiết
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="lesson-name">
+                            Buổi 4
+                        </td>
+
+                        <td class="text-center">
+                            <span class="data-status active">
+                                Active
+                            </span>
+                        </td>
+
+                        <td class="text-center">
+                            <button type="button" class="data-btn" data-bs-toggle="modal"
+                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-4"
+                                data-lesson-name="Buổi 4" data-current-status="active">
+                                Thay đổi
+                            </button>
+                        </td>
+
+                        <td class="text-center">
+                            <a href="" class="data-link">
+                                Chi tiết
+                            </a>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL XÁC NHẬN -->
+
+<div class="modal fade" id="changeLessonStatusModal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <form id="changeLessonStatusForm">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Xác nhận thay đổi
+                    </h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <p id="changeLessonStatusMessage">
+                        Bạn có chắc chắn muốn thay đổi trạng thái buổi học?
+                    </p>
+
+                    <input type="hidden" id="lessonId" />
+
+                    <input type="hidden" id="newLessonStatus" />
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Hủy
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

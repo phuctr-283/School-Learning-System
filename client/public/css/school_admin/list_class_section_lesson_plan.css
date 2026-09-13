@@ -1,0 +1,442 @@
+/* =========================================================
+   CLASS SECTION LESSON PLAN
+========================================================= */
+
+.class-section-plan-page {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.class-section-plan-page-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.class-section-plan-page-title__icon {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 20px;
+}
+
+.class-section-plan-page-title h5 {
+    margin: 0 0 4px;
+
+    color: var(--color-text-primary);
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.class-section-plan-page-title span {
+    display: block;
+
+    color: var(--color-text-secondary);
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   CLASS SECTION
+========================================================= */
+
+.class-section-plan-class {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.class-section-plan-class__icon {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 17px;
+}
+
+.class-section-plan-class__content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.class-section-plan-class__id {
+    color: var(--color-text-primary);
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.class-section-plan-class__content small {
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SUBJECT
+========================================================= */
+
+.class-section-plan-subject {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-width: 210px;
+}
+
+.class-section-plan-subject__icon {
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: var(--color-bg-soft);
+    color: var(--color-primary);
+
+    border: 1px solid var(--color-border-light);
+}
+
+.class-section-plan-subject__content {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.class-section-plan-subject__name {
+    max-width: 230px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: var(--color-text-primary);
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.class-section-plan-subject__content small {
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   GROUP
+========================================================= */
+
+.class-section-plan-group {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 66px;
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SEMESTER
+========================================================= */
+
+.class-section-plan-semester {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.class-section-plan-semester__icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--color-bg-soft);
+    color: var(--color-text-secondary);
+
+    border: 1px solid var(--color-border-light);
+}
+
+.class-section-plan-semester__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.class-section-plan-semester__content span {
+    color: var(--color-text-primary);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.class-section-plan-semester__content small {
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ACADEMIC YEAR
+========================================================= */
+
+.class-section-plan-academic-year {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--color-text-secondary);
+
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.class-section-plan-academic-year i {
+    color: var(--color-primary);
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   LESSON COUNT
+========================================================= */
+
+.class-section-plan-lessons {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+}
+
+.class-section-plan-lessons strong {
+    color: var(--color-primary);
+
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.class-section-plan-lessons > span {
+    color: var(--color-text-muted);
+
+    font-size: 11px;
+}
+
+.class-section-plan-lessons small {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
+    margin-top: 3px;
+
+    color: var(--color-warning);
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.class-section-plan-lessons small i {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.class-section-plan-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.class-section-plan-actions .lesson-action {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    border: 1px solid transparent;
+
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.class-section-plan-actions .lesson-action:hover {
+    transform: translateY(-1px);
+}
+
+.class-section-plan-actions .lesson-action--view {
+    background: var(--color-info-bg);
+    color: var(--color-info);
+}
+
+.class-section-plan-actions .lesson-action--view:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.class-section-plan-actions .lesson-action--edit {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+}
+
+.class-section-plan-actions .lesson-action--edit:hover {
+    background: var(--color-warning);
+    color: var(--color-white);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.class-section-plan-empty {
+    min-height: 230px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    padding: 35px 20px;
+}
+
+.class-section-plan-empty__icon {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 27px;
+}
+
+.class-section-plan-empty__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 5px;
+}
+
+.class-section-plan-empty__content strong {
+    color: var(--color-text-primary);
+
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.class-section-plan-empty__content span {
+    color: var(--color-text-muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.data-table--class-section-plan th {
+    white-space: nowrap;
+}
+
+.data-table--class-section-plan td {
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1400px) {
+
+    .class-section-plan-subject__name {
+        max-width: 180px;
+    }
+
+    .class-section-plan-subject {
+        min-width: 180px;
+    }
+
+}
+
+@media (max-width: 1100px) {
+
+    .data-table-wrap {
+        overflow-x: auto;
+    }
+
+    .data-table--class-section-plan {
+        min-width: 1150px;
+    }
+
+}

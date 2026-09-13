@@ -1,0 +1,365 @@
+<div class="section-title">
+
+    <i class="fa-light fa-chalkboard"></i>
+
+    <h2>
+        Lớp học phần
+    </h2>
+
+</div>
+
+
+<div class="data-card">
+
+    <div class="data-card__body">
+
+        <!-- TOOLBAR -->
+
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+
+                <h5>
+                    Tất cả lớp học phần
+                </h5>
+
+                <span>
+                    Quản lý danh sách lớp học phần
+                </span>
+
+            </div>
+
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchClass" placeholder="Tìm theo môn học, nhóm hoặc giảng viên...">
+
+                </div>
+
+
+                <a href="/admin/university/class-section/create" class="data-btn data-btn--primary">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm lớp học phần
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--class">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Môn học
+                        </th>
+
+                        <th class="text-center">
+                            Nhóm
+                        </th>
+
+                        <th>
+                            Giảng viên
+                        </th>
+
+                        <th>
+                            Học kỳ
+                        </th>
+
+                        <th class="text-center">
+                            Thời gian
+                        </th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each classSections}}
+
+                    <tr>
+
+                        <!-- SUBJECT -->
+
+                        <td>
+
+                            <div class="class-subject">
+
+                                <div class="class-subject__icon">
+
+                                    <i class="fa-light fa-book-open"></i>
+
+                                </div>
+
+
+                                <div class="class-subject__content">
+
+                                    <strong>
+                                        {{subjectName}}
+                                    </strong>
+
+                                    <small>
+                                        {{subjectId}}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- GROUP -->
+
+                        <td class="text-center">
+
+                            <span class="class-group">
+
+                                <i class="fa-light fa-users"></i>
+
+                                Nhóm {{groupNumber}}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- TEACHER -->
+
+                        <td>
+
+                            <div class="class-teacher">
+
+                                <div class="class-teacher__icon">
+
+                                    <i class="fa-light fa-user"></i>
+
+                                </div>
+
+
+                                <div class="class-teacher__content">
+
+                                    <strong>
+                                        {{teacherName}}
+                                    </strong>
+
+                                    <small>
+                                        {{teacherId}}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- SEMESTER -->
+
+                        <td>
+
+                            <div class="class-semester">
+
+                                <span class="class-semester__name">
+
+                                    <i class="fa-light fa-calendar-days"></i>
+
+                                    {{semesterName}}
+
+                                </span>
+
+                                <small>
+                                    {{academicYearName}}
+                                </small>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- DATE -->
+
+                        <td class="text-center">
+
+                            <div class="class-date">
+
+                                <div>
+
+                                    <i class="fa-light fa-calendar-check"></i>
+
+                                    <span>
+                                        {{formatDate startDate}}
+                                    </span>
+
+                                </div>
+
+
+                                <i class="fa-light fa-arrow-right class-date__arrow"></i>
+
+
+                                <div>
+
+                                    <i class="fa-light fa-calendar-xmark"></i>
+
+                                    <span>
+                                        {{formatDate endDate}}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td class="text-center">
+
+                            {{#if (eq status "active")}}
+
+                            <span class="data-status data-status--active">
+
+                                <span class="data-status__dot"></span>
+
+                                Đang hoạt động
+
+                            </span>
+
+                            {{/if}}
+
+
+                            {{#if (eq status "planned")}}
+
+                            <span class="data-status data-status--planned">
+
+                                <span class="data-status__dot"></span>
+
+                                Chưa bắt đầu
+
+                            </span>
+
+                            {{/if}}
+
+
+                            {{#if (eq status "locked")}}
+
+                            <span class="data-status data-status--inactive">
+
+                                <span class="data-status__dot"></span>
+
+                                Đã kết thúc
+
+                            </span>
+
+                            {{/if}}
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td class="text-center">
+
+                            <div class="data-actions">
+
+                                <a href="/admin/university/class-section/detail/{{academicYearId}}/{{semesterId}}/{{subjectId}}/{{groupNumber}}"
+                                    class="data-action" title="Xem chi tiết">
+
+                                    <i class="fa-light fa-eye"></i>
+
+                                    <span>
+                                        Chi tiết
+                                    </span>
+
+                                </a>
+
+
+                                <a href="/admin/university/class-section/edit/{{academicYearId}}/{{semesterId}}/{{subjectId}}/{{groupNumber}}"
+                                    class="data-action" title="Chỉnh sửa">
+
+                                    <i class="fa-light fa-pen-to-square"></i>
+
+                                    <span>
+                                        Sửa
+                                    </span>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    {{else}}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+
+                                    <i class="fa-light fa-chalkboard"></i>
+
+                                </div>
+
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có lớp học phần
+                                    </strong>
+
+                                    <span>
+                                        Chưa có lớp học phần nào trong hệ thống.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

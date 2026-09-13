@@ -1,0 +1,478 @@
+<div class="section-title subject-section-title">
+
+    <div class="section-title__icon">
+        <i class="fa-light fa-book-open"></i>
+    </div>
+
+    <div>
+        <h2>Thêm môn học</h2>
+
+        <p>
+            Tạo và thiết lập thông tin cho môn học mới.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="data-card subject-form-card">
+
+    <div class="data-card__body">
+
+
+        <!-- FORM HEADER -->
+
+        <div class="form-card-header">
+
+            <div class="form-card-header__icon">
+
+                <i class="fa-light fa-book-open"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Thông tin môn học
+                </h3>
+
+                <p>
+                    Nhập đầy đủ thông tin để tạo môn học mới.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form action="/school-admin/university/subjects/create" method="POST" class="form-container subject-form">
+
+
+            <!-- ERROR -->
+
+            {{#if error}}
+
+            <div class="form-error">
+
+                <i class="fa-light fa-circle-exclamation"></i>
+
+                <span>
+                    {{error}}
+                </span>
+
+            </div>
+
+            {{/if}}
+
+
+            <!-- BASIC INFORMATION -->
+
+            <div class="subject-form-section">
+
+                <div class="subject-form-section__title">
+
+                    <i class="fa-light fa-circle-info"></i>
+
+                    <div>
+
+                        <strong>
+                            Thông tin cơ bản
+                        </strong>
+
+                        <span>
+                            Xác định mã, tên và số tín chỉ của môn học.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUBJECT ID -->
+
+                <div class="form-group">
+
+                    <label for="subjectId">
+
+                        <i class="fa-light fa-hashtag"></i>
+
+                        Mã môn học
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="form-input-wrapper">
+
+                        <i class="form-input-icon fa-light fa-barcode"></i>
+
+                        <input type="text" id="subjectId" name="subject_id" placeholder="Ví dụ: CS09001"
+                            value="{{formData.subject_id}}" maxlength="30" required>
+
+                    </div>
+
+                    <small>
+                        Mã môn học phải là duy nhất trong hệ thống.
+                    </small>
+
+                </div>
+
+
+                <!-- SUBJECT NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+
+                        <i class="fa-light fa-book"></i>
+
+                        Tên môn học
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="form-input-wrapper">
+
+                        <i class="form-input-icon fa-light fa-book-open"></i>
+
+                        <input type="text" id="name" name="name" placeholder="Ví dụ: Nhập môn lập trình"
+                            value="{{formData.name}}" maxlength="255" required>
+
+                    </div>
+
+                </div>
+                <!-- DEPARTMENT -->
+
+                <div class="form-group subject-department-group">
+
+                    <label for="departmentId">
+
+                        <i class="fa-light fa-building-columns"></i>
+
+                        Khoa
+
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="subject-select-wrapper">
+
+                        <div class="subject-select__icon">
+
+                            <i class="fa-light fa-building"></i>
+
+                        </div>
+
+
+                        <select id="departmentId" name="department_id" required>
+
+                            <option value="" disabled selected>
+                                -- Chọn khoa --
+                            </option>
+
+
+                            {{#each departments}}
+
+                            <option value="{{departmentId}}" {{#if (eq ../formData.department_id departmentId ) }}
+                                selected {{/if}}>
+
+                                {{name}}
+
+                            </option>
+
+                            {{/each}}
+
+                        </select>
+
+
+                        <div class="subject-select__arrow">
+
+                            <i class="fa-light fa-chevron-down"></i>
+
+                        </div>
+
+                    </div>
+
+
+                    <small>
+
+                        Chọn khoa phụ trách môn học này.
+
+                    </small>
+
+                </div>
+                <!-- SUBJECT TYPE -->
+
+                <div class="form-group subject-type-group">
+
+                    <label for="subjectTypes">
+                        <i class="fa-light fa-layer-group"></i>
+                        Loại môn học
+                        <span class="required">*</span>
+                    </label>
+
+                    <div class="subject-select-wrapper subject-type-select-wrapper">
+
+                        <div class="subject-select__icon">
+                            <i class="fa-light fa-layer-group"></i>
+                        </div>
+
+                        <select id="subjectTypes" name="subject_types" required>
+                            <option value="" disabled {{#unless formData.subject_types}} selected {{/unless}}>
+                                -- Chọn loại môn học --
+                            </option>
+
+                            <option value="Theory" {{#if (eq formData.subject_types "Theory" )}} selected {{/if}}>
+                                Lý thuyết
+                            </option>
+
+                            <option value="Practice" {{#if (eq formData.subject_types "Practice" )}} selected {{/if}}>
+                                Thực hành
+                            </option>
+
+                        </select>
+
+                        <div class="subject-select__arrow">
+                            <i class="fa-light fa-chevron-down"></i>
+                        </div>
+
+                    </div>
+
+                    <small class="subject-type-hint">
+                        <i class="fa-light fa-circle-info"></i>
+                        Chọn loại môn học tương ứng.
+                    </small>
+
+                </div>
+                <!-- CREDITS -->
+
+                <div class="form-group">
+
+                    <label for="credits">
+
+                        <i class="fa-light fa-award"></i>
+
+                        Số tín chỉ
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="form-input-wrapper">
+
+                        <i class="form-input-icon fa-light fa-layer-group"></i>
+
+                        <input type="number" id="credits" name="credits" placeholder="Ví dụ: 3" min="1"
+                            value="{{formData.credits}}" required>
+
+                        <span class="input-suffix">
+                            tín chỉ
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GRADING -->
+
+            <div class="subject-form-section">
+
+                <div class="subject-form-section__title">
+
+                    <i class="fa-light fa-chart-pie"></i>
+
+                    <div>
+
+                        <strong>
+                            Cơ cấu điểm
+                        </strong>
+
+                        <span>
+                            Tổng tỷ lệ các thành phần phải bằng 100%.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="subject-percent-grid">
+
+
+                    <!-- PROCESS -->
+
+                    <div class="form-group">
+
+                        <label for="processPercent">
+
+                            <i class="fa-light fa-clipboard-list"></i>
+
+                            Điểm quá trình
+
+                        </label>
+
+
+                        <div class="form-input-wrapper">
+
+                            <i class="form-input-icon fa-light fa-pen-line"></i>
+
+                            <input type="number" id="processPercent" name="process_percent" min="0" max="100"
+                                step="0.01" placeholder="10" value="{{formData.process_percent}}" required>
+
+                            <span class="input-suffix">
+                                %
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MIDTERM -->
+
+                    <div class="form-group">
+
+                        <label for="midtermPercent">
+
+                            <i class="fa-light fa-file-pen"></i>
+
+                            Điểm giữa kỳ
+
+                        </label>
+
+
+                        <div class="form-input-wrapper">
+
+                            <i class="form-input-icon fa-light fa-pen-to-square"></i>
+
+                            <input type="number" id="midtermPercent" name="midterm_percent" min="0" max="100"
+                                step="0.01" placeholder="30" value="{{formData.midterm_percent}}" required>
+
+                            <span class="input-suffix">
+                                %
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FINAL -->
+
+                    <div class="form-group">
+
+                        <label for="finalPercent">
+
+                            <i class="fa-light fa-file-certificate"></i>
+
+                            Điểm cuối kỳ
+
+                        </label>
+
+
+                        <div class="form-input-wrapper">
+
+                            <i class="form-input-icon fa-light fa-graduation-cap"></i>
+
+                            <input type="number" id="finalPercent" name="final_percent" min="0" max="100" step="0.01"
+                                placeholder="60" value="{{formData.final_percent}}" required>
+
+                            <span class="input-suffix">
+                                %
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- TOTAL PREVIEW -->
+
+                <div class="subject-percent-preview">
+
+                    <div class="subject-percent-preview__left">
+
+                        <div class="subject-percent-preview__icon">
+
+                            <i class="fa-light fa-chart-simple"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Tổng tỷ lệ điểm
+                            </strong>
+
+                            <span>
+                                Kiểm tra tổng các thành phần đánh giá.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="subject-percent-preview__total" id="percentTotal">
+                        0%
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ACTIONS -->
+
+            <div class="form-actions">
+
+
+                <a href="/subject" class="data-btn form-btn-back">
+
+                    <i class="fa-light fa-arrow-left"></i>
+
+                    <span>
+                        Quay lại
+                    </span>
+
+                </a>
+
+
+                <button type="submit" class="data-btn data-btn--primary form-btn-submit">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Tạo môn học
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>

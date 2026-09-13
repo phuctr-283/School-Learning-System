@@ -1,0 +1,424 @@
+<div class="section-title">
+    <i class="fa-light fa-school-flag"></i>
+    <h2>Import</h2>
+</div>
+
+<div class="import-card import-card--class">
+
+    <div class="import-card__body">
+
+        <!-- HEADER -->
+        <div class="import-header">
+
+            <div class="import-header__icon">
+                <i class="fa-light fa-chalkboard"></i>
+            </div>
+
+            <div class="import-header__content">
+
+                <h5>
+                    Nhập dữ liệu lớp học phần
+                </h5>
+
+                <span>
+                    Thêm danh sách lớp học phần từ tập tin Excel
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <form action="/school-admin/imports/class-sections/import" method="POST" enctype="multipart/form-data"
+            class="import-form">
+
+            <!-- FILE SECTION -->
+            <div class="import-section">
+
+                <div class="import-section__title">
+
+                    <i class="fa-light fa-file-import"></i>
+
+                    <span>
+                        Tập tin lớp học phần
+                    </span>
+
+                </div>
+
+
+                <!-- UPLOAD -->
+                <div class="import-upload">
+
+                    <div class="import-upload__icon">
+                        <i class="fa-light fa-file-excel"></i>
+                    </div>
+
+
+                    <div class="import-upload__content">
+
+                        <h6>
+                            Chọn tập tin lớp học phần
+                        </h6>
+
+                        <p>
+                            Hỗ trợ
+                            <strong>.XLSX</strong>
+                        </p>
+
+                    </div>
+
+
+                    <div class="import-upload__input">
+
+                        <label for="classSectionFile" class="import-upload__button">
+
+                            <i class="fa-light fa-folder-open"></i>
+
+                            <span>
+                                Chọn tập tin
+                            </span>
+
+                        </label>
+
+
+                        <input type="file" id="classSectionFile" name="file" accept=".xlsx" required>
+
+
+                        <span class="import-upload__filename">
+
+                            Chưa chọn tập tin
+
+                        </span>
+
+                    </div>
+
+
+                    <small class="import-upload__hint">
+
+                        Dung lượng tối đa:
+
+                        <strong>
+                            128 MiB
+                        </strong>
+
+                    </small>
+
+                </div>
+
+
+                <!-- FILE PREVIEW -->
+                <div class="import-file-preview" hidden>
+
+                    <div class="import-file-preview__icon">
+
+                        <i class="fa-light fa-file-excel"></i>
+
+                    </div>
+
+
+                    <div class="import-file-preview__content">
+
+                        <strong class="import-file-preview__name">
+                            -
+                        </strong>
+
+
+                        <span class="import-file-preview__size">
+                            -
+                        </span>
+
+                    </div>
+
+
+                    <button type="button" class="import-file-preview__remove" title="Xóa tập tin">
+
+                        <i class="fa-light fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+
+                <!-- NOTE -->
+                <div class="import-note">
+
+                    <i class="fa-light fa-circle-info"></i>
+
+
+                    <div>
+
+                        <strong>
+                            Định dạng dữ liệu
+                        </strong>
+
+
+                        <p>
+
+                            File Excel phải chứa đúng các cột:
+
+                            <code>Tên môn</code>,
+
+                            <code>Nhóm</code>,
+
+                            <code>Tên giảng viên</code>,
+
+                            <code>Học kỳ</code>,
+
+                            <code>Năm học</code>,
+
+                            <code>Ngày bắt đầu</code>,
+
+                            <code>Ngày kết thúc</code>.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OPTIONS -->
+            <div class="import-options">
+
+                <div class="import-field">
+
+                    <label>
+
+                        <i class="fa-light fa-language"></i>
+
+                        Bảng mã của tập tin
+
+                    </label>
+
+
+                    <select name="charset">
+
+                        <option value="utf-8" selected>
+                            UTF-8
+                        </option>
+
+                        <option value="utf-16">
+                            UTF-16
+                        </option>
+
+                    </select>
+
+
+                    <small>
+                        Khuyến nghị UTF-8 để hỗ trợ tiếng Việt.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION -->
+            <div class="import-actions">
+
+                <button type="submit" class="import-btn">
+
+                    <span class="import-btn__normal">
+
+                        <i class="fa-light fa-file-arrow-up"></i>
+
+                        <span>
+                            Nhập lớp học phần
+                        </span>
+
+                    </span>
+
+
+                    <span class="import-btn__loading" hidden>
+
+                        <i class="fa-light fa-spinner fa-spin"></i>
+
+                        <span>
+                            Đang nhập...
+                        </span>
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- ERROR RESULT -->
+        {{#if error}}
+
+        <div class="import-result">
+
+            <div class="import-result__status is-error">
+
+                <div class="import-result__status-icon">
+                    <i class="fa-light fa-circle-exclamation"></i>
+                </div>
+
+                <div class="import-result__status-content">
+
+                    <strong>
+                        Import lớp học phần thất bại
+                    </strong>
+
+                    <span>
+                        {{error}}
+                    </span>
+
+                </div>
+
+                <button type="button" class="import-result__close" title="Đóng thông báo">
+                    <i class="fa-light fa-xmark"></i>
+                </button>
+
+            </div>
+
+            <div class="import-result__footer">
+
+                <span>
+
+                    <i class="fa-light fa-circle-info"></i>
+
+                    Kiểm tra lại dữ liệu trong file Excel.
+
+                </span>
+
+                <button type="button" class="import-result__reset">
+                    <i class="fa-light fa-rotate-right"></i>
+
+                    Nhập lại
+
+                </button>
+
+            </div>
+
+        </div>
+
+        {{/if}}
+
+
+        <!-- SUCCESS RESULT -->
+        {{#if importSuccess}}
+
+        <div class="import-result">
+
+            <div class="import-result__status is-success">
+
+                <div class="import-result__status-icon">
+                    <i class="fa-light fa-circle-check"></i>
+                </div>
+
+                <div class="import-result__status-content">
+
+                    <strong>
+                        Import lớp học phần thành công
+                    </strong>
+
+                    <span>
+                        {{importMessage}}
+                    </span>
+
+                </div>
+
+                <button type="button" class="import-result__close" title="Đóng thông báo">
+                    <i class="fa-light fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <!-- IMPORT STATISTICS -->
+            <div class="import-result__stats">
+
+                <!-- CREATED -->
+                <div class="import-stat import-stat--success">
+
+                    <div class="import-stat__icon">
+                        <i class="fa-light fa-chalkboard"></i>
+                    </div>
+
+                    <div class="import-stat__content">
+
+                        <span>
+                            Đã thêm mới
+                        </span>
+
+                        <strong>
+                            {{importCount}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SKIPPED -->
+                <div class="import-stat import-stat--update">
+
+                    <div class="import-stat__icon">
+                        <i class="fa-light fa-forward"></i>
+                    </div>
+
+                    <div class="import-stat__content">
+
+                        <span>
+                            Đã bỏ qua trùng
+                        </span>
+
+                        <strong>
+                            {{skippedCount}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULT FOOTER -->
+            <div class="import-result__footer">
+
+                <span>
+
+                    {{#if skippedCount}}
+
+                    <i class="fa-light fa-circle-info"></i>
+
+                    Một số lớp học phần đã tồn tại
+                    và được bỏ qua.
+
+                    {{else}}
+
+                    <i class="fa-light fa-circle-check"></i>
+
+                    Tất cả lớp học phần trong file
+                    đã được thêm mới.
+
+                    {{/if}}
+
+                </span>
+
+
+                <button type="button" class="import-result__reset">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    Nhập file khác
+
+                </button>
+
+            </div>
+
+        </div>
+
+        {{/if}}
+
+    </div>
+
+</div>

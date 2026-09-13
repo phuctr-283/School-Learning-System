@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/font.awesome.css">
+    <link rel="stylesheet" href="/css/light.css">
+    <link rel="stylesheet" href="/css/style_partial.css">
+    {{#if authentication}}
+    <link rel="stylesheet" href="/css/style_authentication.css">
+    {{/if}}
+    {{#if isAuthenticated}}
+    {{#if isSuperAdmin}}
+    <link rel="stylesheet" href="/css/style_super_admin.css">
+    {{/if}}
+    {{#if isSchoolAdmin}}
+    <link rel="stylesheet" href="/css/style_school_admin.css">
+    {{/if}}
+    {{#if isTeacher}}
+    <link rel="stylesheet" href="/css/style_teacher.css">
+    {{/if}}
+    {{#if isStudent}}
+    <link rel="stylesheet" href="/css/style_student.css">
+    {{/if}}
+    {{/if}}
+    <title>{{title}}</title>
+</head>
+
+<body>
+    {{#if authentication}}
+    {{{body}}}
+    {{else}}
+    {{>sidebar}}
+    <div class="overplay" id="overplay"></div>
+    <div class="layout">
+        {{>header}}
+        <main class="content-wrapper">
+            {{{body}}}
+        </main>
+    </div>
+    {{/if}}
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    {{#if authentication}}
+    <script src="/js/authentication.js"></script>
+    {{else}}
+    <script src="/js/main.js"></script>
+    <script src="/js/import.js"></script>
+    <script src="/js/school_admin/create_subject.js"></script>
+    <script src="/js/school_admin/list_lesson.js"></script>
+    <script src="/js/school_admin/create_lesson.js"></script>
+    <script src="/js/school_admin/create_semester_lesson_plan.js"></script>
+    <script src="/js/school_admin/create_subject_lesson_plan.js"></script>
+    {{/if}}
+
+</body>
+
+</html>

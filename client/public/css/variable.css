@@ -1,0 +1,121 @@
+:root {
+    /* =========================================
+       BRAND
+    ========================================= */
+
+    --color-primary: #3b82c4;
+    --color-primary-dark: #2f6fa8;
+    --color-primary-light: #eaf4fb;
+    --color-secondary: #5aa9d6;
+    --color-accent: #6aaed6;
+
+
+    /* =========================================
+       BACKGROUND
+    ========================================= */
+
+    --color-white: #ffffff;
+    --color-black: #111827;
+    --color-bg-body: #f5f7fa;
+    --color-bg-sidebar: #2f80b7;
+    --color-bg-sidebar-hover: rgba(255, 255, 255, 0.10);
+    --color-bg-card: #ffffff;
+    --color-bg-soft: #f8fafc;
+    --color-bg-input: #f8fafc;
+    --color-bg-navbar: #ffffff;
+
+
+    /* =========================================
+       TEXT
+    ========================================= */
+
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #64748b;
+    --color-text-muted: #94a3b8;
+    --color-text-white: #ffffff;
+    --color-text-invert: #ffffff;
+    --color-text-hover: #3b82c4;
+
+
+    /* =========================================
+       BORDER
+    ========================================= */
+
+    --color-border: #e5e7eb;
+    --color-border-light: #edf0f3;
+    --color-border-dark: #d5dbe1;
+
+
+    /* =========================================
+       STATUS
+    ========================================= */
+
+    --color-success: #22a06b;
+    --color-success-bg: #eaf8f1;
+    --color-warning: #e9a23b;
+    --color-warning-bg: #fff7e8;
+    --color-danger: #e05252;
+    --color-danger-bg: #fff0f0;
+    --color-info: #3b82c4;
+    --color-info-bg: #edf6fc;
+
+    /* =========================================
+       SIDEBAR
+    ========================================= */
+
+    --sidebar-width: 300px;
+    --sidebar-collapsed-width: 75px;
+    --sidebar-bg: #2f80b7;
+    --sidebar-active-bg: #f5f7fa;
+    --sidebar-text: rgba(255, 255, 255, 0.88);
+    --sidebar-text-active: #2f80b7;
+    --sidebar-hover: rgba(255, 255, 255, 0.10);
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    --header-height: 75px;
+    --header-bg: #ffffff;
+    --header-border: #e8edf2;
+
+    /* =========================================
+       BORDER RADIUS
+    ========================================= */
+
+    --radius-xs: 6px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --radius: 30px;
+
+
+    /* =========================================
+       SHADOW
+    ========================================= */
+
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.10);
+
+
+    /* =========================================
+       TRANSITION
+    ========================================= */
+
+    --transition-fast: 0.18s ease;
+    --transition-normal: 0.28s ease;
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --cubic-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* =========================================
+       Z-INDEX
+    ========================================= */
+
+    --z-sidebar: 2000;
+    --z-header: 1000;
+    --z-dropdown: 3000;
+    --z-modal: 5000;
+}

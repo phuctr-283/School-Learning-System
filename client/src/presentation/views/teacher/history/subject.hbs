@@ -1,0 +1,68 @@
+<div class="section-title">
+
+    <i class="fa-light fa-memo"></i>
+
+    <h2>
+        Bài tập
+    </h2>
+
+</div>
+
+
+<div class="subject-grid">
+
+    {{#each subjects}}
+
+    <a
+        href="/teacher/history/subjects/{{subjectId}}/groups"
+        class="subject-item"
+    >
+
+        <div class="subject-icon">
+
+            <i class="fa-light fa-book"></i>
+
+        </div>
+
+
+        <div class="subject-content">
+
+            <div class="subject-title">
+
+                {{subjectName}}
+
+            </div>
+
+
+            <div class="subject-meta">
+
+                Môn học
+
+            </div>
+
+        </div>
+
+
+        <div class="subject-arrow">
+
+            <i class="fa-light fa-chevron-right"></i>
+
+        </div>
+
+    </a>
+
+    {{else}}
+
+    <div class="subject-empty">
+
+        <i class="fa-light fa-book-open"></i>
+
+        <span>
+            Hiện chưa có môn học nào đang hoạt động
+        </span>
+
+    </div>
+
+    {{/each}}
+
+</div>

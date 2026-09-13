@@ -1,0 +1,358 @@
+/* =========================================================
+   STUDENT LIST
+========================================================= */
+
+.data-table--student {
+  width: 100%;
+}
+
+.data-table--student th {
+  white-space: nowrap;
+}
+
+.data-table--student td {
+  vertical-align: middle;
+}
+
+/* =========================================================
+   STUDENT INFO
+========================================================= */
+
+.student-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 170px;
+}
+
+.student-info__icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+
+  font-size: 13px;
+}
+
+.student-info__content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  min-width: 0;
+}
+
+.student-info__content strong {
+  overflow: hidden;
+
+  color: var(--color-text-primary);
+
+  font-size: 12px;
+  font-weight: 650;
+
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-info__content small {
+  color: var(--color-text-muted);
+
+  font-size: 9.5px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   CLASS
+========================================================= */
+
+.student-class {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-width: 70px;
+
+  padding: 6px 9px;
+
+  border: 1px solid var(--color-border-light);
+
+  border-radius: 7px;
+
+  background: var(--color-bg-soft);
+
+  color: var(--color-text-secondary);
+
+  font-size: 10.5px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.student-class i {
+  color: var(--color-primary);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   GENDER
+========================================================= */
+
+.student-gender {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: var(--color-text-secondary);
+
+  font-size: 10.5px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.student-gender i {
+  color: var(--color-primary);
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   COHORT
+========================================================= */
+
+.student-cohort {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: var(--color-text-secondary);
+
+  font-size: 10.5px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.student-cohort i {
+  color: var(--color-primary);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   DEPARTMENT
+========================================================= */
+
+.student-department {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  min-width: 145px;
+}
+
+.student-department > i {
+  width: 29px;
+  height: 29px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+
+  font-size: 11px;
+}
+
+.student-department > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.student-department strong {
+  overflow: hidden;
+
+  color: var(--color-text-primary);
+
+  font-size: 10.5px;
+  font-weight: 600;
+
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-department small {
+  color: var(--color-text-muted);
+
+  font-size: 8.5px;
+}
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+.student-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  max-width: 190px;
+
+  color: var(--color-text-secondary);
+
+  font-size: 10px;
+  font-weight: 500;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.student-email i {
+  flex-shrink: 0;
+
+  color: var(--color-text-muted);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   ROW
+========================================================= */
+
+.data-table--student tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.data-table--student tbody tr:hover {
+  background: rgba(59, 130, 196, 0.025);
+}
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.data-table--student .data-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-height: 31px;
+
+  padding: 5px 10px;
+
+  border-radius: 7px;
+
+  color: var(--color-text-secondary);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.data-table--student .data-action:hover {
+  background: var(--color-primary-light);
+
+  color: var(--color-primary);
+
+  transform: translateY(-1px);
+}
+
+.data-table--student .data-action i {
+  font-size: 11px;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.data-table--student .data-empty {
+  min-height: 175px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 13px;
+}
+
+.data-table--student .data-empty__icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 13px;
+
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+
+  font-size: 16px;
+}
+
+.data-table--student .data-empty__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  text-align: left;
+}
+
+.data-table--student .data-empty__content strong {
+  color: var(--color-text-primary);
+
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.data-table--student .data-empty__content span {
+  color: var(--color-text-muted);
+
+  font-size: 9.5px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .data-table--student {
+    min-width: 1050px;
+  }
+}

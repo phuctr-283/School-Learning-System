@@ -1,0 +1,278 @@
+<div class="auth-page">
+
+    {{#if error}}
+    <div class="auth-alert auth-alert-danger">
+        <div class="auth-alert-icon">
+            <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <div class="auth-alert-content">
+            {{#if (eq authMode "register")}}
+            <strong>Đăng ký thất bại</strong>
+            {{else}}
+            <strong>Đăng nhập thất bại</strong>
+            {{/if}}
+            <span>{{error}}</span>
+        </div>
+        <button type="button" class="auth-alert-close" aria-label="Đóng">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+    {{/if}}
+    {{#if (eq authMode "admin-register")}}
+    <div class="auth-container auth-container-admin">
+        <div class="panel admin-register-panel">
+            <div class="form-content admin-form-content">
+                <div class="auth-heading">
+                    <span class="auth-heading-small">ADMINISTRATION</span>
+                    <h2>Đăng ký Admin</h2>
+                    <p>Tạo tài khoản quản trị viên mới cho hệ thống</p>
+                </div>
+                <form action="/admin/register" method="POST" class="register-form admin-register-form">
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="text" id="adminFullName" name="full_name" value="{{form.full_name}}"
+                                placeholder=" " autocomplete="name" />
+                            <label for="adminFullName">Họ và tên</label>
+                            <i class="fa-solid fa-id-card input-icon"></i>
+                            <i class="fa-solid fa-circle-check check-icon" id="adminFullNameCheck"></i>
+                        </div>
+                        <span class="error-text" id="adminFullNameError"></span>
+                    </div>
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="email" id="adminUsername" name="username" value="{{form.username}}"
+                                placeholder=" " autocomplete="username" />
+                            <label for="adminUsername">Tên đăng nhập</label>
+                            <span class="input-hint">
+                                example@admin.vn |
+                                example@admin.stu.edu.vn</span>
+                            <i class="fa-solid fa-user input-icon"></i>
+                            <i class="fa-solid fa-circle-check check-icon" id="adminEmailCheck"></i>
+                        </div>
+                        <span class="error-text" id="adminEmailError"></span>
+                    </div>
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="password" id="adminPassword" name="password" value="{{form.password}}"
+                                placeholder=" " autocomplete="new-password" />
+                            <label for="adminPassword">Mật khẩu</label>
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <i class="fa-solid fa-circle-check check-icon" id="adminPasswordCheck"></i>
+                        </div>
+                        <div class="password-meter-container">
+                            <div class="meter-bar-wrapper" id="adminMeterBars">
+                                <div class="meter-bar"></div>
+                                <div class="meter-bar"></div>
+                                <div class="meter-bar"></div>
+                            </div>
+                            <div class="meter-text-row">
+                                <span>Độ bảo mật:<b id="adminStrengthText">Chưa nhập</b></span>
+                                <span class="length-tip">8–20 ký tự</span>
+                            </div>
+                        </div>
+                        <span class="error-text" id="adminPasswordError"></span>
+                    </div>
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="password" id="adminConfirmPassword" name="confirmPassword"
+                                value="{{form.confirmPassword}}" placeholder=" " autocomplete="new-password" />
+                            <label for="adminConfirmPassword">Nhập lại mật khẩu</label>
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <i class="fa-solid fa-circle-check check-icon" id="adminConfirmCheck"></i>
+                        </div>
+                        <span class="error-text" id="adminConfirmPasswordError"></span>
+                    </div>
+                    <button type="submit" class="btn-login admin-register-button">
+                        <span>Đăng ký</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="auth-container" id="auth-container">
+        <div class="auth-box">
+            <div class="panel login-panel">
+                <div class="form-content">
+                    <div class="auth-heading">
+                        <span class="auth-heading-small">WELCOME BACK</span>
+                        <h2>Đăng nhập</h2>
+                        <p>Đăng nhập để tiếp tục sử dụng hệ thống</p>
+                    </div>
+                    <form action="/login" method="POST">
+                        <div class="form-control">
+                            <div class="input-group">
+                                <input type="text" id="logUsername" name="username" placeholder=" "
+                                    autocomplete="username" />
+                                <label for="logUsername">Tên đăng nhập</label>
+                                <i class="fa-solid fa-user input-icon"></i>
+                            </div>
+                            <span class="error-text" id="logUsernameError"></span>
+                        </div>
+                        <div class="form-control">
+                            <div class="input-group">
+                                <input type="password" id="logPassword" name="password" placeholder=" "
+                                    autocomplete="current-password" />
+                                <label for="logPassword">Mật khẩu</label>
+                                <i class="fa-solid fa-lock input-icon"></i>
+                            </div>
+                            <span class="error-text" id="logPasswordError"></span>
+                        </div>
+                        <button type="submit" class="btn-login">
+                            <span>Đăng nhập</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <div class="auth-divider">
+                            <strong>HOẶC</strong>
+                        </div>
+                        <button type="button" class="btn-qr-login">
+                            <i class="fa-solid fa-qrcode qr-icon"></i>
+                            <span>Đăng nhập bằng QR</span>
+                            <i class="fa-solid fa-chevron-right qr-arrow"></i>
+                        </button>
+                    </form>
+                    <div class="mobile-switch">
+                        Chưa có tài khoản?
+                        <a href="#" id="toRegisterMobile">
+                            Đăng ký ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel register-panel">
+                <div class="form-content">
+                    <div class="auth-heading">
+                        <span class="auth-heading-small">GET STARTED</span>
+                        <h2>Đăng ký</h2>
+                        <p>Tạo tài khoản mới để bắt đầu</p>
+                    </div>
+                    <form action="/register" method="POST" class="register-form">
+                        <div class="form-control">
+                            <div class="input-group">
+                                <input type="text" id="regFullName" name="full_name" placeholder=" "
+                                    autocomplete="name" />
+                                <label for="regFullName">Họ và tên</label>
+                                <i class="fa-solid fa-id-card input-icon"></i>
+                            </div>
+                            <span class="error-text" id="regFullNameError"></span>
+                        </div>
+                        <div class="form-control">
+                            <div class="input-group select-group">
+                                <select id="regUniversity" name="university_id" required>
+                                    <option value="" disabled selected>
+                                        -- Chọn trường đại học --
+                                    </option>
+                                    {{#each universities}}
+                                    <option value="{{this.universityId}}">
+                                        {{this.name}}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                                <label for="regUniversity">Trường đại học</label>
+                                <i class="fa-solid fa-building-columns input-icon"></i>
+                            </div>
+                            <span class="error-text" id="regUniversityError"></span>
+                        </div>
+                        <div class="form-control">
+                            <div class="input-group select-group">
+
+                                <select id="regDepartment" name="department_id" required disabled>
+                                    <option value="" disabled selected>
+                                        -- Chọn trường trước --
+                                    </option>
+                                </select>
+
+                                <label for="regDepartment">
+                                    Khoa
+                                </label>
+
+                                <i class="fa-solid fa-building input-icon"></i>
+                            </div>
+
+                            <span class="error-text" id="regDepartmentError"></span>
+                        </div>
+                        <div class="form-control">
+                            <div class="input-group">
+                                <input type="email" id="regEmail" name="email" placeholder=" "
+                                    autocomplete="username" />
+                                <label for="regEmail">Tên đăng nhập</label>
+                                <span class="input-hint">example@stu.edu.vn</span>
+                                <i class="fa-solid fa-user input-icon"></i>
+                                <i class="fa-solid fa-circle-check check-icon" id="emailCheck"></i>
+                            </div>
+                            <span class="error-text" id="regUsernameError"></span>
+                        </div>
+                        <div class="form-control">
+                            <div class="input-group">
+                                <input type="password" id="regPassword" name="password" placeholder=" "
+                                    autocomplete="new-password" />
+                                <label for="regPassword">Mật khẩu</label>
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <i class="fa-solid fa-circle-check check-icon" id="passwordCheck"></i>
+                            </div>
+                            <div class="password-meter-container">
+                                <div class="meter-bar-wrapper" id="meterBars">
+                                    <div class="meter-bar"></div>
+                                    <div class="meter-bar"></div>
+                                    <div class="meter-bar"></div>
+                                </div>
+                                <div class="meter-text-row">
+                                    <span>
+                                        Độ bảo mật:
+                                        <b id="strengthText">
+                                            Chưa nhập
+                                        </b>
+                                    </span>
+                                    <span class="length-tip">8–20 ký tự</span>
+                                </div>
+                            </div>
+                            <span class="error-text" id="regPasswordError"></span>
+                        </div>
+                        <div class="form-control">
+                            <div class="input-group">
+                                <input type="password" id="regConfirmPassword" name="confirmPassword" placeholder=" "
+                                    autocomplete="new-password" />
+                                <label for="regConfirmPassword">Nhập lại mật khẩu</label>
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <i class="fa-solid fa-circle-check check-icon" id="confirmCheck"></i>
+                            </div>
+                            <span class="error-text" id="regConfirmPasswordError"></span>
+                        </div>
+                        <button type="submit" class="btn-login">
+                            <span>Đăng ký ngay</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                    <div class="mobile-switch">
+                        Đã có tài khoản?
+                        <a href="#" id="toLoginMobile">
+                            Đăng nhập
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay-quad">
+            <div class="login-text overlay-content">
+                <span class="overlay-label">SCHOOL LEARNING SYSTEM</span>
+                <h3>Chào mừng<br />bạn trở lại!</h3>
+                <p>Đăng nhập để tiếp tục hành trình học tập của bạn.</p>
+                <button type="button" class="btn-toggle" id="toRegisterBtn">
+                    Tạo tài khoản
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="register-text overlay-content">
+                <span class="overlay-label">SCHOOL LEARNING SYSTEM</span>
+                <h3>Bắt đầu<br />hành trình mới!</h3>
+                <p>Tạo tài khoản và bắt đầu sử dụng hệ thống học tập.</p>
+                <button type="button" class="btn-toggle" id="toLoginBtn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Đăng nhập
+                </button>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</div>

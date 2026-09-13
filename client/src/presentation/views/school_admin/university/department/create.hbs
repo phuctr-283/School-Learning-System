@@ -1,0 +1,240 @@
+<div class="section-title">
+    <i class="fa-light fa-layer-group"></i>
+    <h2>Thêm khoa</h2>
+</div>
+
+
+<div class="department-form-page">
+
+    <!-- =========================================
+         FORM CARD
+    ========================================== -->
+
+    <div class="department-form-card">
+
+        <div class="department-form-card__header">
+
+            <div class="department-form-card__title">
+
+                <div class="department-form-card__icon">
+                    <i class="fa-light fa-layer-group"></i>
+                </div>
+
+                <div>
+
+                    <h4>Thông tin khoa</h4>
+
+                    <p>
+                        Nhập thông tin để tạo khoa mới
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             ERROR
+        ========================================== -->
+
+        {{#if error}}
+
+        <div class="department-create-alert">
+
+            <i class="fa-light fa-circle-exclamation"></i>
+
+            <span>
+                {{error}}
+            </span>
+
+        </div>
+
+        {{/if}}
+
+
+        <!-- =========================================
+             FORM
+        ========================================== -->
+
+        <form action="/school-admin/university/departments/create" method="POST" class="department-form">
+
+            <div class="department-form__body">
+
+
+                <!-- =====================================
+                     DEPARTMENT ID
+                ====================================== -->
+
+                <div class="department-form-group">
+
+                    <label for="department_id">
+                        Mã khoa
+                        <span>*</span>
+                    </label>
+
+                    <div class="department-input">
+
+                        <i class="fa-light fa-hashtag"></i>
+
+                        <input type="text" id="department_id" name="department_id" value="{{department.department_id}}"
+                            placeholder="Ví dụ: CNTT" autocomplete="off" required>
+
+                    </div>
+
+                    <small>
+                        Mã khoa duy nhất trong hệ thống.
+                    </small>
+
+                </div>
+
+
+                <!-- =====================================
+                     DEPARTMENT NUMBER
+                ====================================== -->
+
+                <div class="department-form-group">
+
+                    <label for="department_number">
+                        Mã số khoa
+                        <span>*</span>
+                    </label>
+
+                    <div class="department-input">
+
+                        <i class="fa-light fa-list-ol"></i>
+
+                        <input type="text" id="department_number" name="department_number"
+                            value="{{department.department_number}}" placeholder="Ví dụ: 05" autocomplete="off"
+                            required>
+
+                    </div>
+
+                    <small>
+                        Mã số dùng để định danh khoa theo quy ước của trường.
+                    </small>
+
+                </div>
+
+
+                <!-- =====================================
+                     NAME
+                ====================================== -->
+
+                <div class="department-form-group">
+
+                    <label for="name">
+                        Tên khoa
+                        <span>*</span>
+                    </label>
+
+                    <div class="department-input">
+
+                        <i class="fa-light fa-building"></i>
+
+                        <input type="text" id="name" name="name" value="{{department.name}}"
+                            placeholder="Ví dụ: Khoa Công nghệ thông tin" autocomplete="off" required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     HEAD
+                ====================================== -->
+
+                <div class="department-form-group">
+
+                    <label for="head_id">
+                        Trưởng khoa
+                    </label>
+
+                    <div class="department-input">
+
+                        <i class="fa-light fa-user-tie"></i>
+
+                        <input type="text" id="head_id" name="head_id" value="{{department.head_id}}"
+                            placeholder="Nhập mã giảng viên trưởng khoa" autocomplete="off">
+
+                    </div>
+
+                    <small>
+                        Có thể để trống nếu khoa chưa có trưởng khoa.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 FOOTER
+            ========================================== -->
+
+            <div class="department-form-card__footer">
+
+                <a href="/school-admin/departments" class="department-form-btn department-form-btn--cancel">
+                    <i class="fa-light fa-arrow-left"></i>
+                    <span>Quay lại</span>
+                </a>
+
+
+                <button type="reset" class="department-form-btn department-form-btn--reset">
+                    <i class="fa-light fa-rotate-left"></i>
+                    <span>Nhập lại</span>
+                </button>
+
+
+                <button type="submit" class="department-form-btn department-form-btn--submit">
+                    <i class="fa-light fa-plus"></i>
+                    <span>Tạo khoa</span>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         INFORMATION
+    ========================================== -->
+
+    <div class="department-form-info">
+
+        <div class="department-form-info__icon">
+            <i class="fa-light fa-circle-info"></i>
+        </div>
+
+        <div>
+
+            <h5>Lưu ý khi tạo khoa</h5>
+
+            <ul>
+
+                <li>
+                    Mã khoa phải là duy nhất.
+                </li>
+
+                <li>
+                    Tên khoa nên được nhập đầy đủ và chính xác.
+                </li>
+
+                <li>
+                    Trưởng khoa có thể được thiết lập sau.
+                </li>
+
+                <li>
+                    Khoa được tạo sẽ thuộc trường đại học của tài khoản quản trị hiện tại.
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>

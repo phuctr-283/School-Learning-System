@@ -1,0 +1,479 @@
+<div class="section-title semester-lesson-plan-create-title">
+
+    <div class="section-title__icon">
+        <i class="fa-light fa-calendar-range"></i>
+    </div>
+
+    <div class="section-title__content">
+
+        <span class="section-title__eyebrow">
+            QUẢN LÝ KẾ HOẠCH HỌC KỲ
+        </span>
+
+        <h2>
+            Tạo kế hoạch học kỳ
+        </h2>
+
+        <p>
+            Chọn năm học và thiết lập tổng số buổi cho từng học kỳ.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="data-card semester-lesson-plan-form-card">
+
+    <div class="data-card__body">
+
+        <div class="form-card-header semester-lesson-plan-form-header">
+
+            <div class="form-card-header__icon">
+                <i class="fa-light fa-calendar-days"></i>
+            </div>
+
+            <div class="semester-lesson-plan-form-header__content">
+
+                <h3>
+                    Cấu hình kế hoạch
+                </h3>
+
+                <p>
+                    Một năm học có thể cấu hình tối đa ba học kỳ với số buổi riêng biệt.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form action="/school-admin/university/lessons/create/semester-lesson-plan" method="POST"
+            class="form-container semester-lesson-plan-form" id="semesterLessonPlanCreateForm">
+
+            {{#if error}}
+
+            <div class="form-error semester-lesson-plan-form-error">
+
+                <div class="semester-lesson-plan-form-error__icon">
+                    <i class="fa-light fa-circle-exclamation"></i>
+                </div>
+
+                <div class="semester-lesson-plan-form-error__content">
+
+                    <strong>
+                        Không thể tạo kế hoạch
+                    </strong>
+
+                    <span>
+                        {{error}}
+                    </span>
+
+                </div>
+
+            </div>
+
+            {{/if}}
+
+
+            <!-- =========================================
+                 01. ACADEMIC YEAR
+            ========================================== -->
+
+            <div class="semester-plan-section semester-plan-academic-section">
+
+                <div class="semester-plan-section__heading">
+
+                    <div class="semester-plan-section__number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Năm học
+                        </h4>
+
+                        <p>
+                            Chọn năm học áp dụng cho kế hoạch học kỳ.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="semester-academic-year-field">
+
+                    <i class="semester-academic-year-field__icon fa-light fa-calendar-days"></i>
+
+                    <select id="academicYearId" name="academic_year_id" required>
+                        <option value="">
+                            -- Chọn năm học --
+                        </option>
+
+                        {{#each academicYears}}
+
+                        <option value="{{academicYearId}}" {{#if (eq academicYearId ../formData.academic_year_id)}}
+                            selected {{/if}}>
+                            {{academicYearName}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                    <i class="semester-academic-year-field__arrow fa-light fa-chevron-down"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 02. SEMESTERS
+            ========================================== -->
+
+            <div class="semester-plan-section semester-plan-semesters-section">
+
+                <div class="semester-plan-section__heading">
+
+                    <div class="semester-plan-section__number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h4>
+                            Cấu hình học kỳ
+                        </h4>
+
+                        <p>
+                            Thiết lập tổng số buổi học cho từng học kỳ của năm học đã chọn.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="semester-config-grid">
+
+
+                    <!-- =================================
+                         SEMESTER 1
+                    ================================== -->
+
+                    <div class="semester-config-card" data-semester-card="1">
+
+                        <input type="hidden" name="semesters[0][semester_number]" value="1">
+
+
+                        <div class="semester-config-card__header">
+
+                            <div class="semester-config-card__number">
+                                01
+                            </div>
+
+                            <div class="semester-config-card__title">
+
+                                <strong>
+                                    Học kỳ 1
+                                </strong>
+
+                                <span class="semester-config-card__semester-name" data-semester-name="1">
+                                    Chưa chọn năm học
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="semester-config-card__body">
+
+                            <label for="semester1TotalLessons" class="semester-config-card__label">
+                                Tổng số buổi học
+
+                                <span class="required">
+                                    *
+                                </span>
+                            </label>
+
+
+                            <div class="semester-lessons-input">
+
+                                <input type="number" id="semester1TotalLessons" name="semesters[0][total_lessons]"
+                                    min="1" max="100" placeholder="15" value="{{formData.semesters.[0].total_lessons}}">
+
+                                <span>
+                                    buổi
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="semester-config-card__footer">
+
+                            <i class="fa-light fa-circle-info"></i>
+
+                            <span>
+                                Từ 1 đến 100 buổi
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         SEMESTER 2
+                    ================================== -->
+
+                    <div class="semester-config-card" data-semester-card="2">
+
+                        <input type="hidden" name="semesters[1][semester_number]" value="2">
+
+
+                        <div class="semester-config-card__header">
+
+                            <div class="semester-config-card__number">
+                                02
+                            </div>
+
+                            <div class="semester-config-card__title">
+
+                                <strong>
+                                    Học kỳ 2
+                                </strong>
+
+                                <span class="semester-config-card__semester-name" data-semester-name="2">
+                                    Chưa chọn năm học
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="semester-config-card__body">
+
+                            <label for="semester2TotalLessons" class="semester-config-card__label">
+                                Tổng số buổi học
+
+                                <span class="required">
+                                    *
+                                </span>
+                            </label>
+
+
+                            <div class="semester-lessons-input">
+
+                                <input type="number" id="semester2TotalLessons" name="semesters[1][total_lessons]"
+                                    min="1" max="100" placeholder="15" value="{{formData.semesters.[1].total_lessons}}">
+
+                                <span>
+                                    buổi
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="semester-config-card__footer">
+
+                            <i class="fa-light fa-circle-info"></i>
+
+                            <span>
+                                Từ 1 đến 100 buổi
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         SEMESTER 3
+                    ================================== -->
+
+                    <div class="semester-config-card" data-semester-card="3">
+
+                        <input type="hidden" name="semesters[2][semester_number]" value="3">
+
+
+                        <div class="semester-config-card__header">
+
+                            <div class="semester-config-card__number">
+                                03
+                            </div>
+
+                            <div class="semester-config-card__title">
+
+                                <strong>
+                                    Học kỳ 3
+                                </strong>
+
+                                <span class="semester-config-card__semester-name" data-semester-name="3">
+                                    Chưa chọn năm học
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="semester-config-card__body">
+
+                            <label for="semester3TotalLessons" class="semester-config-card__label">
+                                Tổng số buổi học
+
+                                <span class="required">
+                                    *
+                                </span>
+                            </label>
+
+
+                            <div class="semester-lessons-input">
+
+                                <input type="number" id="semester3TotalLessons" name="semesters[2][total_lessons]"
+                                    min="1" max="100" placeholder="15" value="{{formData.semesters.[2].total_lessons}}">
+
+                                <span>
+                                    buổi
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="semester-config-card__footer">
+
+                            <i class="fa-light fa-circle-info"></i>
+
+                            <span>
+                                Từ 1 đến 100 buổi
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 SUMMARY
+            ========================================== -->
+
+            <div class="semester-plan-summary">
+
+                <div class="semester-plan-summary__header">
+
+                    <div class="semester-plan-summary__icon">
+                        <i class="fa-light fa-calendar-check"></i>
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Xem trước kế hoạch
+                        </strong>
+
+                        <span>
+                            Kiểm tra thông tin trước khi tạo.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="semester-plan-summary__details">
+
+                    <div class="semester-plan-summary__item">
+
+                        <span>
+                            Năm học
+                        </span>
+
+                        <strong id="summaryAcademicYear">
+                            Chưa chọn
+                        </strong>
+
+                    </div>
+
+
+                    <div class="semester-plan-summary__item">
+
+                        <span>
+                            Học kỳ
+                        </span>
+
+                        <strong id="summarySemester">
+                            Chưa cấu hình
+                        </strong>
+
+                    </div>
+
+
+                    <div class="semester-plan-summary__item">
+
+                        <span>
+                            Tổng số buổi
+                        </span>
+
+                        <strong id="summaryLessons">
+                            0 buổi
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 ACTIONS
+            ========================================== -->
+
+            <div class="semester-plan-form-actions">
+
+                <a href="/school-admin/university/semester-lesson-plans" class="data-btn semester-plan-btn-back">
+
+                    <i class="fa-light fa-arrow-left"></i>
+
+                    <span>
+                        Quay lại
+                    </span>
+
+                </a>
+
+
+                <button type="submit" class="data-btn data-btn--primary semester-plan-btn-submit">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Tạo kế hoạch
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<script>
+    window.semesterContents = {{{json semesters}}};
+</script>

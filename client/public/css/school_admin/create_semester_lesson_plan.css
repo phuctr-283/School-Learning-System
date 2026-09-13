@@ -1,0 +1,785 @@
+/* =========================================================
+   SEMESTER LESSON PLAN CREATE
+========================================================= */
+
+.semester-lesson-plan-create-title {
+    margin-bottom: 20px;
+}
+
+
+.semester-lesson-plan-create-title .section-title__icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    margin-top: 2px;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-primary-light);
+    color: var(--color-primary);
+
+    font-size: 17px;
+}
+
+
+.semester-lesson-plan-create-title .section-title__content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.semester-lesson-plan-create-title .section-title__eyebrow {
+    color: var(--color-primary);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: .9px;
+}
+
+
+.semester-lesson-plan-create-title h2 {
+    margin: 0;
+
+    color: var(--color-text-primary);
+
+    font-size: 21px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+.semester-lesson-plan-create-title p {
+    margin: 3px 0 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 11.5px;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.semester-lesson-plan-form-card {
+    overflow: hidden;
+}
+
+
+.semester-lesson-plan-form-header {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 30px;
+}
+
+
+.semester-lesson-plan-form-header__content {
+    min-width: 0;
+}
+
+
+.semester-lesson-plan-form-header__content h3 {
+    margin: 0 0 4px;
+}
+
+
+.semester-lesson-plan-form-header__content p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.semester-lesson-plan-form-error {
+    margin-bottom: 26px;
+}
+
+
+/* =========================================================
+   FORM SECTION
+========================================================= */
+
+.semester-plan-section {
+    margin-bottom: 34px;
+}
+
+
+.semester-plan-section__heading {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 11px;
+
+    margin-bottom: 15px;
+}
+
+
+.semester-plan-section__number {
+    flex: 0 0 auto;
+
+    min-width: 29px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 7px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 7px;
+
+    background: var(--color-bg-soft);
+
+    color: var(--color-primary);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+
+.semester-plan-section__heading h4 {
+    margin: 0 0 3px;
+
+    color: var(--color-text-primary);
+
+    font-size: 12px;
+    font-weight: 650;
+}
+
+
+.semester-plan-section__heading p {
+    margin: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ACADEMIC YEAR
+========================================================= */
+
+.semester-academic-year-field {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.semester-academic-year-field select {
+    width: 100%;
+    height: 48px;
+
+    display: block;
+
+    box-sizing: border-box;
+
+    padding: 0 44px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-sm);
+
+    background: var(--color-bg-input);
+
+    color: var(--color-text-primary);
+
+    font-size: 12px;
+    font-weight: 500;
+
+    outline: none;
+
+    cursor: pointer;
+
+    appearance: none;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.semester-academic-year-field select:hover {
+    border-color: var(--color-border-dark);
+
+    background: var(--color-white);
+}
+
+
+.semester-academic-year-field select:focus {
+    border-color: var(--color-primary);
+
+    background: var(--color-white);
+
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 196, .10);
+}
+
+
+.semester-academic-year-field__icon {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    width: 16px;
+    height: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    color: var(--color-primary);
+
+    font-size: 13px;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+.semester-academic-year-field__arrow {
+    position: absolute;
+
+    right: 16px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--color-text-muted);
+
+    font-size: 10px;
+
+    pointer-events: none;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   SEMESTER CONFIG GRID
+========================================================= */
+
+.semester-config-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   SEMESTER CONFIG CARD
+========================================================= */
+
+.semester-config-card {
+    position: relative;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-white);
+
+    box-shadow: var(--shadow-xs);
+
+    transition:
+        border-color var(--transition-normal),
+        box-shadow var(--transition-normal),
+        transform var(--transition-normal);
+}
+
+
+.semester-config-card:hover {
+    border-color: #cfd9e3;
+
+    box-shadow: var(--shadow-sm);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SEMESTER CARD HEADER
+========================================================= */
+
+.semester-config-card__header {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 15px;
+
+    border-bottom: 1px solid var(--color-border-light);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--color-primary-light),
+            var(--color-white)
+        );
+}
+
+
+.semester-config-card__number {
+    width: 39px;
+    height: 39px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 39px;
+
+    border-radius: 11px;
+
+    background: var(--color-primary);
+
+    color: var(--color-white);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    box-shadow:
+        0 5px 12px rgba(59, 130, 196, .16);
+}
+
+
+.semester-config-card__title {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+
+.semester-config-card__title strong {
+    color: var(--color-text-primary);
+
+    font-size: 12px;
+    font-weight: 650;
+}
+
+
+.semester-config-card__title span {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   SEMESTER CARD BODY
+========================================================= */
+
+.semester-config-card__body {
+    padding: 17px 15px 15px;
+}
+
+
+.semester-config-card__label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--color-text-primary);
+
+    font-size: 10px;
+    font-weight: 650;
+}
+
+
+.semester-config-card__label .required {
+    color: var(--color-danger);
+}
+
+
+/* =========================================================
+   LESSON INPUT
+========================================================= */
+
+.semester-lessons-input {
+    position: relative;
+
+    width: 100%;
+}
+
+
+.semester-lessons-input input {
+    width: 100%;
+    height: 43px;
+
+    box-sizing: border-box;
+
+    padding: 0 53px 0 13px;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 9px;
+
+    background: var(--color-bg-input);
+
+    color: var(--color-text-primary);
+
+    font-size: 13px;
+    font-weight: 650;
+
+    outline: none;
+
+    transition:
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.semester-lessons-input input:hover {
+    border-color: var(--color-border-dark);
+
+    background: var(--color-white);
+}
+
+
+.semester-lessons-input input:focus {
+    border-color: var(--color-primary);
+
+    background: var(--color-white);
+
+    box-shadow:
+        0 0 0 3px rgba(59, 130, 196, .10);
+}
+
+
+.semester-lessons-input input::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+.semester-lessons-input > span {
+    position: absolute;
+
+    right: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+    font-weight: 600;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.semester-config-card__footer {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 9px 15px;
+
+    border-top: 1px solid var(--color-border-light);
+
+    background: var(--color-bg-soft);
+
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+.semester-config-card__footer i {
+    color: var(--color-info);
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.semester-plan-summary {
+    margin-bottom: 28px;
+
+    padding: 16px;
+
+    border: 1px solid #dcecf7;
+
+    border-radius: var(--radius-md);
+
+    background: var(--color-info-bg);
+}
+
+
+.semester-plan-summary__header {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    margin-bottom: 14px;
+}
+
+
+.semester-plan-summary__icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 36px;
+
+    border-radius: 10px;
+
+    background: var(--color-white);
+
+    color: var(--color-primary);
+
+    font-size: 14px;
+
+    box-shadow: var(--shadow-xs);
+}
+
+
+.semester-plan-summary__header > div:last-child {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.semester-plan-summary__header strong {
+    color: var(--color-text-primary);
+
+    font-size: 11px;
+    font-weight: 650;
+}
+
+
+.semester-plan-summary__header span {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   SUMMARY DETAILS
+========================================================= */
+
+.semester-plan-summary__details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 10px;
+
+    background: var(--color-border);
+}
+
+
+.semester-plan-summary__item {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    min-width: 0;
+
+    padding: 11px 13px;
+
+    background: var(--color-white);
+}
+
+
+.semester-plan-summary__item span {
+    color: var(--color-text-muted);
+
+    font-size: 9px;
+}
+
+
+.semester-plan-summary__item strong {
+    overflow: hidden;
+
+    color: var(--color-text-primary);
+
+    font-size: 11px;
+    font-weight: 650;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.semester-plan-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid var(--color-border-light);
+}
+
+
+.semester-plan-btn-back,
+.semester-plan-btn-submit {
+    min-height: 38px;
+
+    padding: 8px 14px;
+
+    gap: 7px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+
+.semester-plan-btn-back:hover,
+.semester-plan-btn-submit:hover {
+    transform: translateY(-1px);
+}
+
+
+.semester-plan-btn-back i,
+.semester-plan-btn-submit i {
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .semester-config-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .semester-config-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .semester-plan-summary__details {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .semester-plan-section__heading {
+        gap: 8px;
+    }
+
+
+    .semester-plan-section__number {
+        min-width: 26px;
+        height: 23px;
+
+        font-size: 8px;
+    }
+
+
+    .semester-config-card__header {
+        padding: 14px;
+    }
+
+
+    .semester-config-card__body {
+        padding: 15px 14px;
+    }
+
+
+    .semester-config-card__footer {
+        padding: 9px 14px;
+    }
+
+
+    .semester-plan-form-actions {
+        align-items: stretch;
+
+        flex-direction: column-reverse;
+    }
+
+
+    .semester-plan-btn-back,
+    .semester-plan-btn-submit {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+}

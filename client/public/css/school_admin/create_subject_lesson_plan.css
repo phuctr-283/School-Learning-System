@@ -1,0 +1,1086 @@
+/* =========================================================
+   SUBJECT LESSON PLAN CREATE
+========================================================= */
+
+.subject-lesson-plan-create-title {
+  margin-bottom: 18px;
+}
+
+.subject-lesson-plan-create-title .section-title__icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  margin-top: 2px;
+
+  border-radius: var(--radius-sm);
+
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+
+  font-size: 17px;
+}
+
+.subject-lesson-plan-create-title .section-title__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.subject-lesson-plan-create-title .section-title__eyebrow {
+  color: var(--color-primary);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.9px;
+}
+
+.subject-lesson-plan-create-title h2 {
+  margin: 0;
+
+  color: var(--color-text-primary);
+
+  font-size: 21px;
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+.subject-lesson-plan-create-title p {
+  margin: 3px 0 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: 11.5px;
+}
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.subject-lesson-plan-form-card {
+  overflow: hidden;
+}
+
+.subject-lesson-plan-form-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 30px;
+}
+
+.subject-lesson-plan-form-header__content {
+  min-width: 0;
+}
+
+.subject-lesson-plan-form-header__content h3 {
+  margin: 0 0 4px;
+}
+
+.subject-lesson-plan-form-header__content p {
+  margin: 0;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.subject-lesson-plan-form-error {
+  margin-bottom: 26px;
+}
+
+/* =========================================================
+   LESSON TYPE SECTION
+========================================================= */
+
+.subject-lesson-type-section {
+  margin-bottom: 32px;
+
+  padding: 18px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  background: var(--color-bg-soft);
+}
+
+.subject-lesson-type-section:last-of-type {
+  margin-bottom: 28px;
+}
+
+/* =========================================================
+   LESSON TYPE HEADER
+========================================================= */
+
+.subject-lesson-type-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 18px;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.subject-lesson-type-header__main {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.subject-lesson-type-header__icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 42px;
+
+  border-radius: 11px;
+
+  background: var(--color-white);
+
+  color: var(--color-primary);
+
+  font-size: 15px;
+
+  box-shadow: var(--shadow-xs);
+}
+
+.subject-lesson-type-header__main > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.subject-lesson-type-header__eyebrow {
+  color: var(--color-primary);
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+.subject-lesson-type-header h4 {
+  margin: 0;
+
+  color: var(--color-text-primary);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.subject-lesson-type-header p {
+  margin: 2px 0 0;
+
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RULE COUNT
+========================================================= */
+
+.subject-lesson-type-header__badge {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  flex-shrink: 0;
+
+  padding: 7px 10px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 8px;
+
+  background: var(--color-white);
+
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+.subject-lesson-type-header__badge i {
+  color: var(--color-primary);
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   RULE LIST
+========================================================= */
+
+.subject-rule-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+/* =========================================================
+   RULE CARD
+========================================================= */
+
+.subject-rule-card {
+  display: grid;
+
+  grid-template-columns: 34px minmax(0, 1fr);
+
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-sm);
+
+  background: var(--color-white);
+
+  box-shadow: var(--shadow-xs);
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.subject-rule-card:hover {
+  border-color: var(--color-border-dark);
+
+  box-shadow: var(--shadow-sm);
+}
+
+/* =========================================================
+   RULE NUMBER
+========================================================= */
+
+.subject-rule-card__number {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: var(--color-primary-light);
+
+  color: var(--color-primary);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+}
+
+/* =========================================================
+   RULE CONTENT
+========================================================= */
+
+.subject-rule-card__content {
+  min-width: 0;
+}
+
+.subject-rule-card__header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 13px;
+}
+
+.subject-rule-card__header > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.subject-rule-card__header strong {
+  color: var(--color-text-primary);
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.subject-rule-card__header span {
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   REMOVE RULE
+========================================================= */
+
+.subject-rule-remove {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 7px;
+
+  background: var(--color-white);
+
+  color: var(--color-text-muted);
+
+  font-size: 10px;
+
+  cursor: pointer;
+
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.subject-rule-remove:hover {
+  border-color: var(--color-danger);
+
+  background: var(--color-danger-bg);
+
+  color: var(--color-danger);
+}
+
+/* =========================================================
+   RULE FIELDS
+========================================================= */
+
+.subject-rule-fields {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  gap: 10px;
+}
+
+.subject-rule-field {
+  min-width: 0;
+}
+
+.subject-rule-field label {
+  display: block;
+
+  margin: 0 0 6px;
+
+  color: var(--color-text-primary);
+
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.subject-rule-field .required {
+  color: var(--color-danger);
+}
+
+/* =========================================================
+   RULE INPUT
+========================================================= */
+
+.subject-rule-input-wrapper {
+  position: relative;
+}
+
+.subject-rule-input-wrapper > i {
+  position: absolute;
+
+  left: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--color-primary);
+
+  font-size: 10px;
+
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+.subject-rule-input-wrapper input {
+  width: 100%;
+  height: 40px;
+
+  box-sizing: border-box;
+
+  padding: 0 13px 0 34px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 8px;
+
+  background: var(--color-bg-input);
+
+  color: var(--color-text-primary);
+
+  font-size: 11px;
+  font-weight: 550;
+
+  outline: none;
+
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.subject-rule-input-wrapper input:hover {
+  border-color: var(--color-border-dark);
+
+  background: var(--color-white);
+}
+
+.subject-rule-input-wrapper input:focus {
+  border-color: var(--color-primary);
+
+  background: var(--color-white);
+
+  box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.1);
+}
+
+.subject-rule-input-wrapper input::placeholder {
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   LESSON INPUT
+========================================================= */
+
+.subject-rule-field--lessons .subject-rule-input-wrapper input {
+  padding-right: 48px;
+}
+
+.subject-rule-input-wrapper > span {
+  position: absolute;
+
+  right: 11px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--color-text-muted);
+
+  font-size: 8px;
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   RULE EXAMPLE
+========================================================= */
+
+.subject-rule-example {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 6px;
+
+  margin-top: 9px;
+
+  color: var(--color-text-muted);
+
+  font-size: 8.5px;
+
+  line-height: 1.5;
+}
+
+.subject-rule-example i {
+  margin-top: 1px;
+
+  flex-shrink: 0;
+
+  color: var(--color-info);
+
+  font-size: 9px;
+}
+
+.subject-rule-example strong {
+  color: var(--color-text-secondary);
+
+  font-weight: 650;
+}
+
+/* =========================================================
+   ADD RULE BUTTON
+========================================================= */
+
+.subject-add-rule-btn {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 38px;
+
+  margin-top: 10px;
+
+  padding: 8px 12px;
+
+  border: 1px dashed var(--color-border-dark);
+
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: var(--color-primary);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.subject-add-rule-btn:hover {
+  border-color: var(--color-primary);
+
+  background: var(--color-primary-light);
+
+  color: var(--color-primary-dark);
+}
+
+.subject-add-rule-btn i {
+  font-size: 10px;
+}
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.subject-lesson-plan-summary {
+  margin-bottom: 28px;
+
+  padding: 16px;
+
+  border: 1px solid #dcecf7;
+
+  border-radius: var(--radius-md);
+
+  background: var(--color-info-bg);
+}
+
+.subject-lesson-plan-summary__header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-bottom: 14px;
+}
+
+.subject-lesson-plan-summary__icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 36px;
+
+  border-radius: 10px;
+
+  background: var(--color-white);
+
+  color: var(--color-primary);
+
+  font-size: 14px;
+
+  box-shadow: var(--shadow-xs);
+}
+
+.subject-lesson-plan-summary__header > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.subject-lesson-plan-summary__header strong {
+  color: var(--color-text-primary);
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.subject-lesson-plan-summary__header span {
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   SUMMARY DETAILS
+========================================================= */
+
+.subject-lesson-plan-summary__details {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 1px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 10px;
+
+  background: var(--color-border);
+}
+
+.subject-summary-item {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+
+  padding: 11px 13px;
+
+  background: var(--color-white);
+}
+
+.subject-summary-item span {
+  color: var(--color-text-muted);
+
+  font-size: 9px;
+}
+
+.subject-summary-item strong {
+  color: var(--color-text-primary);
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.subject-lesson-plan-form-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid var(--color-border-light);
+}
+
+.subject-lesson-plan-btn-back,
+.subject-lesson-plan-btn-submit {
+  min-height: 38px;
+
+  padding: 8px 14px;
+
+  gap: 7px;
+
+  border-radius: 9px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+.subject-lesson-plan-btn-back:hover,
+.subject-lesson-plan-btn-submit:hover {
+  transform: translateY(-1px);
+}
+
+.subject-lesson-plan-btn-back i,
+.subject-lesson-plan-btn-submit i {
+  font-size: 11px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+  .subject-rule-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .subject-rule-field--lessons {
+    grid-column: 1 / -1;
+  }
+
+  .subject-lesson-plan-summary__details {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .subject-lesson-type-section {
+    padding: 14px;
+  }
+
+  .subject-lesson-type-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .subject-lesson-type-header__badge {
+    align-self: flex-start;
+  }
+
+  .subject-rule-card {
+    grid-template-columns: 1fr;
+  }
+
+  .subject-rule-card__number {
+    width: 30px;
+    height: 30px;
+  }
+
+  .subject-rule-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .subject-rule-field--lessons {
+    grid-column: auto;
+  }
+
+  .subject-lesson-plan-form-actions {
+    align-items: stretch;
+
+    flex-direction: column-reverse;
+  }
+
+  .subject-lesson-plan-btn-back,
+  .subject-lesson-plan-btn-submit {
+    width: 100%;
+
+    justify-content: center;
+  }
+}
+/* =========================================================
+   SEMESTER
+========================================================= */
+
+.subject-semester-section {
+  margin-bottom: 32px;
+}
+
+.subject-semester-section__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+
+  margin-bottom: 14px;
+}
+
+.subject-semester-section__number {
+  flex: 0 0 auto;
+
+  min-width: 28px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 7px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 7px;
+
+  background: var(--color-bg-soft);
+
+  color: var(--color-primary);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+.subject-semester-section__heading h4 {
+  margin: 0 0 3px;
+
+  color: var(--color-text-primary);
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.subject-semester-section__heading p {
+  margin: 0;
+
+  color: var(--color-text-muted);
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   SEMESTER GRID
+========================================================= */
+
+.subject-semester-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.subject-semester-card {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  cursor: pointer;
+}
+
+.subject-semester-card input {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+.subject-semester-card__content {
+  width: 100%;
+  min-height: 122px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  background: var(--color-bg-soft);
+
+  transition:
+    border-color var(--transition-normal),
+    background var(--transition-normal),
+    box-shadow var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.subject-semester-card:hover .subject-semester-card__content {
+  border-color: var(--color-primary);
+
+  background: var(--color-primary-light);
+
+  transform: translateY(-2px);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.subject-semester-card.is-active .subject-semester-card__content {
+  border-color: var(--color-primary);
+
+  background: var(--color-primary-light);
+
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 196, 0.08),
+    var(--shadow-sm);
+}
+
+/* =========================================================
+   SEMESTER CARD TOP
+========================================================= */
+
+.subject-semester-card__top {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.subject-semester-card__icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: var(--color-white);
+
+  color: var(--color-primary);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  box-shadow: var(--shadow-xs);
+
+  transition:
+    background var(--transition-normal),
+    color var(--transition-normal),
+    transform var(--transition-normal);
+}
+
+.subject-semester-card.is-active .subject-semester-card__icon {
+  background: var(--color-primary);
+
+  color: var(--color-white);
+
+  transform: scale(1.04);
+}
+
+/* =========================================================
+   CHECK
+========================================================= */
+
+.subject-semester-card__check {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 50%;
+
+  background: var(--color-white);
+
+  color: transparent;
+
+  font-size: 9px;
+
+  transition:
+    background var(--transition-normal),
+    border-color var(--transition-normal),
+    color var(--transition-normal);
+}
+
+.subject-semester-card.is-active .subject-semester-card__check {
+  border-color: var(--color-primary);
+
+  background: var(--color-primary);
+
+  color: var(--color-white);
+}
+
+/* =========================================================
+   SEMESTER CARD TEXT
+========================================================= */
+
+.subject-semester-card__text {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.subject-semester-card__text strong {
+  color: var(--color-text-primary);
+
+  font-size: 12px;
+  font-weight: 650;
+
+  line-height: 1.4;
+}
+
+.subject-semester-card__text small {
+  color: var(--color-text-muted);
+
+  font-size: 10px;
+  font-weight: 400;
+
+  line-height: 1.4;
+}

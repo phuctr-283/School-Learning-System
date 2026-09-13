@@ -1,0 +1,228 @@
+<div class="section-title">
+    <i class="fa-light fa-user-shield"></i>
+    <h2>Quản trị viên</h2>
+</div>
+
+<div class="data-card">
+    <div class="data-card__body">
+
+        <!-- =========================================
+             TOOLBAR
+        ========================================== -->
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+                <h5>Danh sách quản trị viên</h5>
+                <span>Quản lý tài khoản quản trị các trường đại học</span>
+            </div>
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchAdmin" placeholder="Tìm theo họ tên hoặc email...">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             TABLE
+        ========================================== -->
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--admin">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Đại học
+                        </th>
+
+                        <th>
+                            Họ tên
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each admins}}
+
+                    <tr>
+
+                        <!-- =================================
+                             UNIVERSITY
+                        ================================== -->
+                        <td>
+
+                            <div class="admin-university">
+
+                                <div class="admin-university__icon">
+                                    <i class="fa-light fa-building-columns"></i>
+                                </div>
+
+                                <div class="admin-university__content">
+
+                                    <span class="admin-university__name">
+                                        {{universityName}}
+                                    </span>
+
+                                    {{#if universityId}}
+                                    <span class="admin-university__code">
+                                        {{universityId}}
+                                    </span>
+                                    {{/if}}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================
+                             FULL NAME
+                        ================================== -->
+                        <td>
+
+                            <div class="admin-user">
+
+                                <div class="admin-user__avatar">
+                                    <i class="fa-light fa-user"></i>
+                                </div>
+
+                                <span class="admin-user__name">
+                                    {{fullName}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================
+                             EMAIL
+                        ================================== -->
+                        <td>
+
+                            <div class="admin-email">
+
+                                <i class="fa-light fa-envelope"></i>
+
+                                <span>
+                                    {{email}}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- =================================
+                             STATUS
+                        ================================== -->
+                        <td class="text-center">
+
+                            <span class="
+                                    data-status
+                                    {{#if (eq status " active")}} data-status--active {{else}} data-status--inactive
+                                {{/if}} "
+                            >
+
+                                <span class=" data-status__dot"></span>
+
+                            {{#if (eq status "active")}}
+                            Đang hoạt động
+                            {{else}}
+                            Không hoạt động
+                            {{/if}}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- =================================
+                             ACTION
+                        ================================== -->
+                        <td class="text-center">
+
+                            <a href="/admin/admin/edit/{{adminId}}" class="data-action" title="Chỉnh sửa quản trị viên">
+
+                                <i class="fa-light fa-pen-to-square"></i>
+
+                                <span>
+                                    Sửa
+                                </span>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {{else}}
+
+                    <!-- =================================
+                         EMPTY
+                    ================================== -->
+                    <tr>
+
+                        <td colspan="5" class="text-center">
+
+                            <div class="data-empty">
+
+                                <div class="data-empty__icon">
+                                    <i class="fa-light fa-user-shield"></i>
+                                </div>
+
+                                <div class="data-empty__content">
+
+                                    <strong>
+                                        Chưa có quản trị viên
+                                    </strong>
+
+                                    <span>
+                                        Hiện chưa có quản trị viên nào trong hệ thống.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,344 @@
+<div class="section-title">
+    <i class="fa-light fa-chalkboard-user"></i>
+    <h2>Giảng viên</h2>
+</div>
+
+<div class="data-card teacher-page">
+    <div class="data-card__body">
+
+        <!-- =========================================
+             TOOLBAR
+        ========================================== -->
+        <div class="data-toolbar">
+
+            <div class="data-toolbar__title">
+
+                <div class="teacher-page-title">
+
+                    <div class="teacher-page-title__icon">
+                        <i class="fa-light fa-chalkboard-user"></i>
+                    </div>
+
+                    <div>
+                        <h5>Danh sách giảng viên</h5>
+
+                        <span>
+                            Quản lý đội ngũ giảng viên của trường
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="data-toolbar__actions">
+
+                <div class="data-search">
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchTeacher" placeholder="Tìm theo mã, tên hoặc email..." />
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- =========================================
+             TABLE
+        ========================================== -->
+        <div class="data-table-wrap">
+
+            <table class="data-table data-table--teacher">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="text-center">
+                            Mã giảng viên
+                        </th>
+
+                        <th>
+                            Họ tên
+                        </th>
+
+                        <th>
+                            Khoa
+                        </th>
+
+                        <th class="text-center">
+                            Giới tính
+                        </th>
+
+                        <th>
+                            Liên hệ
+                        </th>
+
+                        <th class="text-center">
+                            Trạng thái
+                        </th>
+
+                        <th class="text-center">
+                            Hoạt động
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {{#each teachers}}
+
+                    <tr>
+
+                        <!-- =================================
+                             TEACHER ID
+                        ================================== -->
+                        <td class="text-center">
+
+                            <span class="teacher-code">
+                                {{this.teacherId}}
+                            </span>
+
+                        </td>
+
+                        <!-- =================================
+                             FULL NAME
+                        ================================== -->
+                        <td>
+
+                            <div class="teacher-profile">
+
+                                <div class="teacher-avatar">
+                                    <i class="fa-light fa-user"></i>
+                                </div>
+
+                                <div class="teacher-profile__content">
+
+                                    <span class="teacher-profile__name">
+                                        {{this.fullName}}
+                                    </span>
+
+                                    {{#if this.dateOfBirth}}
+
+                                    <span class="teacher-profile__dob">
+                                        <i class="fa-light fa-calendar"></i>
+                                        {{this.dateOfBirth}}
+                                    </span>
+
+                                    {{/if}}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- =================================
+                             DEPARTMENT
+                        ================================== -->
+                        <td>
+
+                            <div class="teacher-department">
+
+                                <div class="teacher-department__icon">
+                                    <i class="fa-light fa-layer-group"></i>
+                                </div>
+
+                                <div class="teacher-department__content">
+
+                                    <span>
+                                        {{#if this.departmentName}}
+                                        {{this.departmentName}}
+                                        {{else}}
+                                        Chưa phân khoa
+                                        {{/if}}
+                                    </span>
+
+                                    {{#if this.departmentId}}
+
+                                    <small>
+                                        {{this.departmentId}}
+                                    </small>
+
+                                    {{/if}}
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <!-- =================================
+                             GENDER
+                        ================================== -->
+                        <td class="text-center">
+
+                            {{#if (eq this.gender "male")}}
+
+                            <span class="teacher-gender teacher-gender--male">
+                                <i class="fa-light fa-mars"></i>
+                                Nam
+                            </span>
+
+                            {{else if (eq this.gender "female")}}
+
+                            <span class="teacher-gender teacher-gender--female">
+                                <i class="fa-light fa-venus"></i>
+                                Nữ
+                            </span>
+
+                            {{else}}
+
+                            <span class="teacher-gender teacher-gender--empty">
+                                —
+                            </span>
+
+                            {{/if}}
+
+                        </td>
+
+                        <!-- =================================
+                             CONTACT
+                        ================================== -->
+                        <td>
+
+                            <div class="teacher-contact">
+
+                                {{#if this.email}}
+
+                                <div class="teacher-contact__item">
+
+                                    <i class="fa-light fa-envelope"></i>
+
+                                    <span>
+                                        {{this.email}}
+                                    </span>
+
+                                </div>
+
+                                {{/if}}
+
+                                {{#if this.phone}}
+
+                                <div class="teacher-contact__item">
+
+                                    <i class="fa-light fa-phone"></i>
+
+                                    <span>
+                                        {{this.phone}}
+                                    </span>
+
+                                </div>
+
+                                {{/if}}
+
+                                {{#unless this.email}}
+
+                                {{#unless this.phone}}
+
+                                <span class="teacher-contact__empty">
+                                    Chưa cập nhật
+                                </span>
+
+                                {{/unless}}
+
+                                {{/unless}}
+
+                            </div>
+
+                        </td>
+
+                        <!-- =================================
+                             STATUS
+                        ================================== -->
+                        <td class="text-center">
+
+                            {{#if (eq this.status "active")}}
+
+                            <span class="data-status data-status--active">
+
+                                <span class="data-status__dot"></span>
+
+                                Đang hoạt động
+
+                            </span>
+
+                            {{else}}
+
+                            <span class="data-status data-status--inactive">
+
+                                <span class="data-status__dot"></span>
+
+                                Ngừng hoạt động
+
+                            </span>
+
+                            {{/if}}
+
+                        </td>
+
+                        <!-- =================================
+                             ACTION
+                        ================================== -->
+                        <td class="text-center">
+
+                            <a href="/school-admin/teachers/{{this.teacherId}}" class="data-action"
+                                title="Chỉnh sửa giảng viên">
+
+                                <i class="fa-light fa-pen-to-square"></i>
+
+                                <span>
+                                    Sửa
+                                </span>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {{else}}
+
+                    <!-- =================================
+                         EMPTY STATE
+                    ================================== -->
+                    <tr>
+
+                        <td colspan="7" class="text-center">
+
+                            <div class="teacher-empty">
+
+                                <div class="teacher-empty__icon">
+                                    <i class="fa-light fa-chalkboard-user"></i>
+                                </div>
+
+                                <div class="teacher-empty__content">
+
+                                    <strong>
+                                        Chưa có giảng viên
+                                    </strong>
+
+                                    <span>
+                                        Hiện chưa có dữ liệu giảng viên trong trường.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>

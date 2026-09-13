@@ -1,0 +1,5960 @@
+@import url(./variable.css);
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 30px 0 20px;
+}
+
+.section-title i {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf7fb;
+  color: #4187b6;
+
+  border-radius: 9px;
+
+  font-size: 16px;
+}
+
+.section-title h2 {
+  margin: 0;
+
+  color: #303841;
+
+  font-size: 22px;
+  font-weight: 600;
+}
+/* =========================================================
+   TITLE
+========================================================= */
+
+.title {
+  margin: 0 0 26px 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.subject-name {
+  position: relative;
+
+  margin: 0;
+  padding-left: 16px;
+
+  color: #303841;
+
+  font-size: 24px;
+  font-weight: 650;
+
+  line-height: 1.4;
+}
+
+.subject-name::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 4px;
+
+  width: 4px;
+  height: calc(100% - 8px);
+
+  background: #4187b6;
+  border-radius: 10px;
+}
+
+.group-name {
+  margin: 0;
+  padding-left: 16px;
+
+  color: #8a939d;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   DATA CARD
+========================================================= */
+
+.data-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e9edf1;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 3px 12px rgba(35, 55, 70, 0.035),
+    0 10px 28px rgba(35, 55, 70, 0.025);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.data-card:hover {
+  border-color: #dfe7ec;
+
+  box-shadow:
+    0 5px 18px rgba(35, 55, 70, 0.055),
+    0 14px 32px rgba(35, 55, 70, 0.035);
+}
+
+.data-card-body {
+  width: 100%;
+  padding: 20px 22px;
+}
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.data-table-wrap {
+  width: 100%;
+
+  overflow-x: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5dc transparent;
+}
+
+.data-table-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.data-table-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.data-table-wrap::-webkit-scrollbar-thumb {
+  background: #cbd5dc;
+  border-radius: 20px;
+}
+
+/* =========================================================
+   BASE TABLE
+========================================================= */
+
+.data-table {
+  width: 100%;
+  min-width: 650px;
+
+  border-collapse: separate;
+  border-spacing: 0 7px;
+
+  table-layout: auto;
+}
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.data-table thead th {
+  padding: 7px 14px 10px;
+
+  border: none;
+
+  color: #89939e;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.45px;
+
+  white-space: nowrap;
+
+  vertical-align: middle;
+}
+
+/* =========================================================
+   TABLE BODY ROW
+========================================================= */
+
+.data-table tbody tr {
+  background: #ffffff;
+
+  box-shadow: 0 1px 6px rgba(40, 55, 70, 0.035);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.data-table tbody tr:hover {
+  background: #fbfdfe;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 15px rgba(40, 55, 70, 0.075);
+}
+
+/* =========================================================
+   TABLE CELL
+========================================================= */
+
+.data-table tbody td {
+  padding: 14px;
+
+  border: none;
+
+  color: #444b53;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ROW RADIUS
+========================================================= */
+
+.data-table tbody tr td:first-child {
+  border-radius: 11px 0 0 11px;
+}
+
+.data-table tbody tr td:last-child {
+  border-radius: 0 11px 11px 0;
+}
+
+/* =========================================================
+   STUDENT ID
+========================================================= */
+
+.student-id {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 29px;
+
+  padding: 5px 10px;
+
+  background: #f1f7fb;
+  color: #4187b6;
+
+  border: 1px solid #e4f0f6;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.data-table tbody tr:hover .student-id {
+  background: #eaf5fa;
+  border-color: #d7eaf3;
+}
+
+/* =========================================================
+   STUDENT NAME
+========================================================= */
+
+.student-name {
+  color: #303841;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  transition: color 0.18s ease;
+}
+
+.data-table tbody tr:hover .student-name {
+  color: #4187b6;
+}
+
+/* =========================================================
+   STUDENT CLASS
+========================================================= */
+
+.student-class {
+  color: #626b74;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CLASS BADGE
+   Dùng cho bảng tổng kết
+========================================================= */
+
+.class-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 29px;
+
+  padding: 5px 10px;
+
+  background: #f4f7f9;
+  color: #59636d;
+
+  border: 1px solid #e7ecef;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   SCORE
+========================================================= */
+
+.score {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 44px;
+  height: 31px;
+
+  padding: 0 9px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  border: 1px solid transparent;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+/* =========================================================
+   SCORE LOW
+   <= 5.0
+========================================================= */
+
+.score.score-low {
+  background: #fdeeee;
+  color: #dc3545;
+
+  border-color: #f5dada;
+}
+
+/* =========================================================
+   SCORE MEDIUM
+   > 5.0 && <= 8.0
+========================================================= */
+
+.score.score-medium {
+  background: #fff7e4;
+  color: #b77900;
+
+  border-color: #f5e8c6;
+}
+
+/* =========================================================
+   SCORE HIGH
+   > 8.0
+========================================================= */
+
+.score.score-high {
+  background: #eaf7ef;
+  color: #198754;
+
+  border-color: #d8efdf;
+}
+
+/* =========================================================
+   HOVER SCORE
+========================================================= */
+
+.data-table tbody tr:hover .score {
+  transform: translateY(-1px);
+}
+/* =========================================================
+   FINAL SCORE
+========================================================= */
+
+.final-score {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 46px;
+  height: 32px;
+
+  padding: 0 10px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  border: 1px solid transparent;
+}
+.final-score.score-low {
+  background: #fdeeee;
+  color: #dc3545;
+  border-color: #f5dada;
+}
+
+.final-score.score-medium {
+  background: #fff7e4;
+  color: #b77900;
+  border-color: #f5e8c6;
+}
+
+.final-score.score-high {
+  background: #eaf7ef;
+  color: #198754;
+  border-color: #d7efdf;
+}
+
+/* =========================================================
+   DATA LINK
+========================================================= */
+
+.data-link {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 72px;
+  min-height: 31px;
+
+  padding: 5px 12px;
+
+  background: #f0f7fb;
+  color: #4187b6;
+
+  border: 1px solid #e0edf3;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  text-decoration: none;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.data-link:hover {
+  background: #4187b6;
+  color: #ffffff;
+
+  border-color: #4187b6;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 10px rgba(65, 135, 182, 0.18);
+}
+
+/* =========================================================
+   LESSON TABLE
+========================================================= */
+
+.lesson-name {
+  color: #303841;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+.data-table tbody tr:hover .lesson-name {
+  color: #4187b6;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.data-status {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 29px;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+/* Active */
+
+.data-status.active {
+  background: #eaf7ef;
+  color: #198754;
+
+  border: 1px solid #d8efdf;
+}
+
+.data-status.active::before {
+  content: "";
+
+  width: 6px;
+  height: 6px;
+
+  margin-right: 6px;
+
+  background: #198754;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   SCORE TABLE
+========================================================= */
+
+.score-table {
+  min-width: 1000px;
+}
+
+/* Header */
+
+.score-table thead th {
+  text-align: center;
+}
+
+.score-table thead th:first-child,
+.score-table thead th:nth-child(2) {
+  text-align: left;
+}
+
+/* =========================================================
+   SCORE TABLE COLUMNS
+========================================================= */
+
+.score-table th:nth-child(1),
+.score-table td:nth-child(1) {
+  width: 13%;
+}
+
+.score-table th:nth-child(2),
+.score-table td:nth-child(2) {
+  width: 20%;
+}
+
+.score-table th:nth-child(3),
+.score-table td:nth-child(3) {
+  width: 13%;
+}
+
+.score-table th:nth-child(4),
+.score-table td:nth-child(4),
+.score-table th:nth-child(5),
+.score-table td:nth-child(5),
+.score-table th:nth-child(6),
+.score-table td:nth-child(6) {
+  width: 7%;
+}
+
+.score-table th:nth-child(7),
+.score-table td:nth-child(7) {
+  width: 9%;
+}
+
+.score-table th:nth-child(8),
+.score-table td:nth-child(8) {
+  width: 10%;
+}
+
+/* =========================================================
+   SCORE TABLE OVERRIDE
+========================================================= */
+
+.score-table .student-id {
+  background: #f5f7f9;
+  color: #3e4851;
+
+  border-color: #e8edf0;
+}
+
+.score-table .student-name {
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.score-table tbody tr:hover .student-name {
+  color: #4187b6;
+}
+
+/* =========================================================
+   EMPTY TABLE
+========================================================= */
+
+.data-empty {
+  padding: 38px 14px !important;
+
+  text-align: center;
+
+  color: #9aa3ab !important;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+  .data-card-body {
+    padding: 18px;
+  }
+
+  .data-table {
+    min-width: 650px;
+  }
+
+  .score-table {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 576px) {
+  .data-card {
+    border-radius: 13px;
+  }
+
+  .data-card-body {
+    padding: 14px;
+  }
+
+  .data-table {
+    min-width: 620px;
+  }
+
+  .data-table thead th {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  .data-table tbody td {
+    padding: 12px 11px;
+  }
+}
+/*==========================================================================================
+                                IMPORT
+==========================================================================================*/
+
+/* =========================================================
+   IMPORT OPTION LIST
+========================================================= */
+.import-option-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+}
+/* =========================================================
+   IMPORT OPTION CARD
+========================================================= */
+.import-option-card {
+  position: relative;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 30px;
+  background: #fff;
+  border: 1px solid #edf0f3;
+  border-radius: 18px;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.045);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+/* =========================================================
+   DECORATION
+========================================================= */
+.import-option-card::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: -70px;
+  right: -60px;
+  background: #edf7fb;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+.import-option-card:hover::before {
+  transform: scale(1.25);
+}
+/* =========================================================
+   HOVER
+========================================================= */
+.import-option-card:hover {
+  transform: translateY(-5px);
+  border-color: #dcecf4;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+/* =========================================================
+   ICON
+========================================================= */
+.import-option-card__icon {
+  position: relative;
+  z-index: 1;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: #edf7fb;
+  color: #4187b6;
+  border: 1px solid #e1eff5;
+  border-radius: 18px;
+  font-size: 30px;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+.import-option-card:hover .import-option-card__icon {
+  background: #4187b6;
+  color: #fff;
+  transform: translateY(-3px);
+}
+/* =========================================================
+   CONTENT
+========================================================= */
+.import-option-card__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+/* =========================================================
+   TITLE
+========================================================= */
+.import-option-card__title {
+  margin: 0;
+  color: #303841;
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+.import-option-card:hover .import-option-card__title {
+  color: #4187b6;
+}
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+.import-option-card__description {
+  max-width: 300px;
+  margin: 7px 0 0;
+  color: #929aa3;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+/* =========================================================
+   ARROW
+========================================================= */
+.import-option-card__arrow {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f8fa;
+  color: #8b98a3;
+  border-radius: 9px;
+  font-size: 14px;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+.import-option-card:hover .import-option-card__arrow {
+  background: #4187b6;
+  color: #fff;
+  transform: translateX(3px);
+}
+/* =========================================================
+   IMPORT CARD
+========================================================= */
+.import-card {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #edf0f3;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+.import-card__body {
+  padding: 26px;
+}
+/* =========================================================
+   IMPORT HEADER
+========================================================= */
+.import-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #edf0f3;
+  margin-bottom: 24px;
+}
+.import-header__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.import-header__icon i {
+  font-size: 21px;
+}
+.import-header__content h5 {
+  margin: 0;
+  color: #303841;
+  font-size: 18px;
+  font-weight: 600;
+}
+.import-header__content span {
+  display: block;
+  margin-top: 4px;
+  color: #929aa3;
+  font-size: 13px;
+}
+/* =========================================================
+   SECTION
+========================================================= */
+.import-section {
+  width: 100%;
+}
+.import-section__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #303841;
+  font-size: 14px;
+  font-weight: 600;
+}
+.import-section__title i {
+  color: #4187b6;
+  font-size: 15px;
+}
+/* =========================================================
+   UPLOAD BOX
+========================================================= */
+.import-upload {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  background: #f9fbfc;
+  border: 1px dashed #cbd9e2;
+  border-radius: 12px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.import-upload:hover {
+  background: #f6fafc;
+  border-color: #4187b6;
+}
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+.import-upload__icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 12px;
+}
+.import-upload__icon i {
+  font-size: 23px;
+}
+/* =========================================================
+   UPLOAD CONTENT
+========================================================= */
+.import-upload__content h6 {
+  margin: 0;
+  color: #303841;
+  font-size: 14px;
+  font-weight: 600;
+}
+.import-upload__content p {
+  margin: 5px 0 0;
+  color: #929aa3;
+  font-size: 12px;
+}
+.import-upload__content strong {
+  color: #4187b6;
+  font-weight: 600;
+}
+/* =========================================================
+   FILE INPUT
+========================================================= */
+.import-upload__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.import-upload__input input {
+  display: none;
+}
+.import-upload__button {
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #dce4e9;
+  border-radius: 8px;
+  color: #4187b6;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.import-upload__button:hover {
+  background: #4187b6;
+  border-color: #4187b6;
+  color: #fff;
+}
+.import-upload__button i {
+  font-size: 13px;
+}
+.import-upload__filename {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #929aa3;
+  font-size: 12px;
+}
+/* =========================================================
+   UPLOAD HINT
+========================================================= */
+.import-upload__hint {
+  position: absolute;
+  left: 22px;
+  bottom: -24px;
+  color: #929aa3;
+  font-size: 11px;
+}
+.import-upload__hint strong {
+  color: #555;
+  font-weight: 600;
+}
+/* =========================================================
+   NOTE
+========================================================= */
+.import-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 13px 15px;
+  background: #f8fafb;
+  border: 1px solid #edf0f3;
+  border-radius: 9px;
+}
+.import-note > i {
+  margin-top: 2px;
+  color: #4187b6;
+  font-size: 15px;
+}
+.import-note strong {
+  display: block;
+  color: #4b5560;
+  font-size: 12px;
+  font-weight: 600;
+}
+.import-note p {
+  margin: 3px 0 0;
+  color: #929aa3;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.import-note code {
+  padding: 2px 5px;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 4px;
+  font-size: 11px;
+}
+/* =========================================================
+   OPTIONS
+========================================================= */
+.import-options {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid #edf0f3;
+}
+.import-field {
+  max-width: 360px;
+}
+.import-field label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+}
+.import-field label i {
+  color: #4187b6;
+}
+.import-field select {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  background: #f8fafb;
+  border: 1px solid #e1e7eb;
+  border-radius: 8px;
+  outline: none;
+  color: #444;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.import-field select:focus {
+  background: #fff;
+  border-color: #4187b6;
+  box-shadow: 0 0 0 3px rgba(65, 135, 182, 0.1);
+}
+.import-field small {
+  display: block;
+  margin-top: 6px;
+  color: #9aa3ab;
+  font-size: 11px;
+}
+/* =========================================================
+   ACTIONS
+========================================================= */
+.import-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #edf0f3;
+}
+/* =========================================================
+   IMPORT BUTTON
+========================================================= */
+
+.import-btn {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  background: #4187b6;
+  border: 1px solid #4187b6;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.import-btn:hover {
+  background: #35759f;
+  border-color: #35759f;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(65, 135, 182, 0.2);
+}
+.import-btn i {
+  font-size: 14px;
+}
+/* =========================================================
+   ALERT COMMON
+========================================================= */
+.import-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 10px;
+}
+.import-alert__icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.import-alert__icon i {
+  font-size: 15px;
+}
+.import-alert__content {
+  min-width: 0;
+}
+.import-alert__content strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+.import-alert__content > span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+}
+/* =========================================================
+   SUCCESS
+========================================================= */
+.import-alert--success {
+  background: #f0faf4;
+  border: 1px solid #d8f0e1;
+  color: #198754;
+}
+.import-alert--success .import-alert__icon {
+  background: #dff4e7;
+  color: #198754;
+}
+/* =========================================================
+   ERROR
+========================================================= */
+.import-alert--error {
+  background: #fff5f5;
+  border: 1px solid #f3dddd;
+  color: #dc3545;
+}
+.import-alert--error .import-alert__icon {
+  background: #fde6e6;
+  color: #dc3545;
+}
+.import-alert--error ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.import-alert--error li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+  color: #6c757d;
+  font-size: 12px;
+}
+.import-alert--error li span:first-child {
+  min-width: 55px;
+  color: #dc3545;
+  font-weight: 600;
+}
+/* =========================================================
+   STUDENT
+========================================================= */
+.import-card--student .import-header__icon {
+  background: #edf7fb;
+  color: #4187b6;
+}
+/* =========================================================
+   TEACHER
+========================================================= */
+.import-card--teacher .import-header__icon {
+  background: #f3f1fb;
+  color: #6c63a8;
+}
+.import-card--teacher .import-section__title i,
+.import-card--teacher .import-upload__icon,
+.import-card--teacher .import-field label i {
+  color: #6c63a8;
+}
+.import-card--teacher .import-upload__icon {
+  background: #f3f1fb;
+}
+.import-card--teacher .import-upload:hover {
+  border-color: #6c63a8;
+}
+.import-card--teacher .import-upload__content strong {
+  color: #6c63a8;
+}
+/* =========================================================
+   IMPORT CARD
+========================================================= */
+.import-card {
+  width: 100%;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid #e8edf2;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(30, 45, 60, 0.055);
+  --import-primary: #4187b6;
+  --import-primary-light: #eef6fb;
+  --import-primary-border: #dcecf5;
+}
+.import-card--teacher {
+  --import-primary: #4187b6;
+  --import-primary-light: #eef6fb;
+  --import-primary-border: #dcecf5;
+}
+.import-card--student {
+  --import-primary: #6c63c9;
+  --import-primary-light: #f2f0fc;
+  --import-primary-border: #e4e1f7;
+}
+/* =========================================================
+   BODY
+========================================================= */
+.import-card__body {
+  padding: 24px 26px 22px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.import-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #edf0f3;
+}
+.import-header__icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border: 1px solid var(--import-primary-border);
+  border-radius: 12px;
+}
+.import-header__icon i {
+  font-size: 20px;
+}
+.import-header__content {
+  min-width: 0;
+}
+.import-header__content h5 {
+  margin: 0;
+  color: #303841;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.import-header__content span {
+  display: block;
+  margin-top: 4px;
+  color: #8b969f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+/* =========================================================
+   FORM
+========================================================= */
+.import-form {
+  width: 100%;
+}
+/* =========================================================
+   SECTION
+========================================================= */
+.import-section {
+  width: 100%;
+}
+.import-section__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #414b54;
+  font-size: 13px;
+  font-weight: 650;
+}
+.import-section__title i {
+  color: var(--import-primary);
+  font-size: 14px;
+}
+/* =========================================================
+   UPLOAD
+========================================================= */
+.import-upload {
+  width: 100%;
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fbfcfd;
+  border: 1px dashed #dce3e8;
+  border-radius: 12px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.import-upload:hover {
+  background: var(--import-primary-light);
+  border-color: var(--import-primary);
+}
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+.import-upload__icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border: 1px solid var(--import-primary-border);
+  border-radius: 11px;
+}
+.import-upload__icon i {
+  font-size: 19px;
+}
+/* =========================================================
+   UPLOAD CONTENT
+========================================================= */
+.import-upload__content {
+  min-width: 0;
+  flex: 1;
+}
+.import-upload__content h6 {
+  margin: 0;
+  color: #39434c;
+  font-size: 13px;
+  font-weight: 650;
+}
+.import-upload__content p {
+  margin: 4px 0 0;
+  color: #99a2aa;
+  font-size: 11px;
+}
+.import-upload__content strong {
+  color: var(--import-primary);
+  font-weight: 650;
+}
+/* =========================================================
+   FILE INPUT AREA
+========================================================= */
+.import-upload__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.import-upload__input input[type="file"] {
+  display: none;
+}
+/* =========================================================
+   CHOOSE FILE BUTTON
+========================================================= */
+.import-upload__button {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 13px;
+  background: #ffffff;
+  color: var(--import-primary);
+  border: 1px solid #dfe6eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+.import-upload__button i {
+  font-size: 12px;
+}
+.import-upload__button:hover {
+  background: var(--import-primary);
+  color: #ffffff;
+  border-color: var(--import-primary);
+  box-shadow: 0 4px 10px rgba(65, 135, 182, 0.15);
+}
+/* =========================================================
+   FILE NAME
+========================================================= */
+.import-upload__filename {
+  display: block;
+
+  max-width: 260px;
+
+  margin-top: 8px;
+
+  color: var(--color-text-muted);
+
+  font-size: 12px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition:
+    color var(--transition-fast),
+    font-weight var(--transition-fast);
+}
+
+.import-upload__filename.has-file {
+  color: var(--color-primary);
+
+  font-weight: 600;
+}
+/* =========================================================
+   FILE SIZE
+========================================================= */
+.import-upload__hint {
+  display: block;
+  color: #a0a8af;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.import-upload__hint strong {
+  color: #68737c;
+
+  font-weight: 650;
+}
+/* =========================================================
+   NOTE
+========================================================= */
+.import-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #f8fafb;
+  border: 1px solid #edf1f4;
+  border-radius: 9px;
+}
+.import-note > i {
+  margin-top: 2px;
+  color: var(--import-primary);
+  font-size: 13px;
+}
+.import-note strong {
+  display: block;
+  margin-bottom: 2px;
+  color: #56616a;
+  font-size: 11px;
+  font-weight: 650;
+}
+.import-note p {
+  margin: 0;
+  color: #9aa3ab;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.import-note code {
+  padding: 2px 5px;
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 10px;
+}
+/* =========================================================
+   OPTIONS
+========================================================= */
+.import-options {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #edf0f3;
+}
+.import-field {
+  width: 320px;
+  max-width: 100%;
+}
+.import-field label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: #4d5861;
+  font-size: 12px;
+  font-weight: 650;
+}
+.import-field label i {
+  color: var(--import-primary);
+  font-size: 13px;
+}
+.import-field select {
+  width: 100%;
+  height: 36px;
+  padding: 0 11px;
+  background: #ffffff;
+  color: #59636b;
+  border: 1px solid #dfe5e9;
+  border-radius: 8px;
+  outline: none;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.import-field select:focus {
+  border-color: var(--import-primary);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--import-primary) 10%, transparent);
+}
+.import-field small {
+  display: block;
+  margin-top: 6px;
+  color: #a1a9b0;
+  font-size: 10px;
+}
+/* =========================================================
+   ACTION
+========================================================= */
+.import-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+
+  border-top: 1px solid #edf0f3;
+}
+.import-btn {
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 16px;
+  background: var(--import-primary);
+  color: #ffffff;
+  border: 1px solid var(--import-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 650;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.import-btn i {
+  font-size: 12px;
+}
+.import-btn:hover {
+  color: #ffffff;
+  filter: brightness(0.92);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px
+    color-mix(in srgb, var(--import-primary) 22%, transparent);
+}
+.import-btn:active {
+  transform: translateY(0);
+}
+/* =========================================================
+   TEACHER - GIẢNG VIÊN
+========================================================= */
+.import-card--teacher {
+  --import-primary: #4187b6;
+  --import-primary-light: #eef6fb;
+  --import-primary-border: #dcecf5;
+}
+/* =========================================================
+   STUDENT - SINH VIÊN
+========================================================= */
+.import-card--student {
+  --import-primary: #6c63c9;
+  --import-primary-light: #f2f0fc;
+  --import-primary-border: #e4e1f7;
+}
+/* =========================================================
+   SUBJECT - MÔN HỌC
+========================================================= */
+.import-card--subject {
+  --import-primary: #4f8fbd;
+  --import-primary-light: #edf7fb;
+  --import-primary-border: #dcecf5;
+}
+/* =========================================================
+   DEPARTMENT - KHOA
+========================================================= */
+.import-card--department {
+  --import-primary: #5f8f73;
+  --import-primary-light: #eef7f1;
+  --import-primary-border: #dceee1;
+}
+/* =========================================================
+   CLASS - LỚP HỌC PHẦN
+========================================================= */
+.import-card--class {
+  --import-primary: #8a6fba;
+  --import-primary-light: #f3eff9;
+  --import-primary-border: #e5ddf0;
+}
+/* =========================================================
+   HEADER ICON
+========================================================= */
+.import-card .import-header__icon {
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border-color: var(--import-primary-border);
+}
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+.import-card .import-section__title i {
+  color: var(--import-primary);
+}
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+.import-card .import-upload__icon {
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border-color: var(--import-primary-border);
+}
+/* =========================================================
+   UPLOAD HOVER
+========================================================= */
+.import-card .import-upload:hover {
+  background: var(--import-primary-light);
+  border-color: var(--import-primary);
+}
+/* =========================================================
+   FILE TYPE
+========================================================= */
+.import-card .import-upload__content strong {
+  color: var(--import-primary);
+}
+/* =========================================================
+   CHOOSE FILE BUTTON
+========================================================= */
+.import-card .import-upload__button {
+  color: var(--import-primary);
+}
+.import-card .import-upload__button:hover {
+  background: var(--import-primary);
+  border-color: var(--import-primary);
+  color: #fff;
+}
+/* =========================================================
+   NOTE
+========================================================= */
+.import-card .import-note > i {
+  color: var(--import-primary);
+}
+.import-card .import-note code {
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+}
+/* =========================================================
+   OPTION LABEL
+========================================================= */
+.import-card .import-field label i {
+  color: var(--import-primary);
+}
+/* =========================================================
+   SELECT FOCUS
+========================================================= */
+.import-card .import-field select:focus {
+  border-color: var(--import-primary);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--import-primary) 10%, transparent);
+}
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+.import-card .import-btn {
+  background: var(--import-primary);
+  border-color: var(--import-primary);
+}
+.import-card .import-btn:hover {
+  background: var(--import-primary);
+  border-color: var(--import-primary);
+  filter: brightness(0.92);
+  box-shadow: 0 5px 12px
+    color-mix(in srgb, var(--import-primary) 22%, transparent);
+}
+/* =========================================================
+   IMPORT RESULT
+========================================================= */
+
+.import-result {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid #edf0f3;
+
+  animation: importResultIn 0.35s ease;
+}
+
+@keyframes importResultIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   RESULT STATUS
+========================================================= */
+
+.import-result__status {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px 15px;
+
+  border-radius: 12px;
+}
+
+.import-result__status.is-success {
+  --result-color: #198754;
+  --result-bg: #f0faf4;
+  --result-border: #d8f0e1;
+
+  background: var(--result-bg);
+  border: 1px solid var(--result-border);
+}
+
+.import-result__status.is-error {
+  --result-color: #dc3545;
+  --result-bg: #fff5f5;
+  --result-border: #f3dddd;
+
+  background: var(--result-bg);
+  border: 1px solid var(--result-border);
+}
+
+/* =========================================================
+   STATUS ICON
+========================================================= */
+
+.import-result__status-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: rgba(255, 255, 255, 0.75);
+
+  color: var(--result-color);
+
+  border-radius: 11px;
+}
+
+.import-result__status-icon i {
+  font-size: 19px;
+}
+
+/* =========================================================
+   STATUS CONTENT
+========================================================= */
+
+.import-result__status-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.import-result__status-content strong {
+  display: block;
+
+  color: #3f4951;
+
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.import-result__status-content span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #8d979f;
+
+  font-size: 11px;
+
+  line-height: 1.55;
+}
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.import-result__close {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #9ba4ab;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.import-result__close:hover {
+  background: rgba(0, 0, 0, 0.05);
+
+  color: #59636b;
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.import-result__stats {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.import-stat {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+
+  padding: 13px;
+
+  background: #fafbfc;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 10px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.import-stat:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 16px rgba(30, 45, 60, 0.06);
+}
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.import-stat__icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+}
+
+.import-stat__icon i {
+  font-size: 15px;
+}
+
+/* =========================================================
+   STAT CONTENT
+========================================================= */
+
+.import-stat__content {
+  min-width: 0;
+}
+
+.import-stat__content span {
+  display: block;
+
+  color: #9aa3ab;
+
+  font-size: 10px;
+}
+
+.import-stat__content strong {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #424c55;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   SUCCESS STAT
+========================================================= */
+
+.import-stat--success {
+  background: #f7fcf9;
+
+  border-color: #e3f2e8;
+}
+
+.import-stat--success .import-stat__icon {
+  background: #e4f5ea;
+
+  color: #198754;
+}
+
+.import-stat--success .import-stat__content strong {
+  color: #198754;
+}
+
+/* =========================================================
+   UPDATE / STATUS STAT
+========================================================= */
+
+.import-stat--update {
+  background: #f8f7fc;
+
+  border-color: #e9e6f3;
+}
+
+.import-stat--update .import-stat__icon {
+  background: #ece9f7;
+
+  color: #7665a8;
+}
+
+.import-stat--update .import-stat__content strong {
+  color: #7665a8;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.import-result__footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 13px;
+
+  color: #a0a8af;
+
+  font-size: 10px;
+}
+
+.import-result__footer > span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.import-result__footer i {
+  font-size: 11px;
+}
+
+/* =========================================================
+   RESET BUTTON
+========================================================= */
+
+.import-result__reset {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 11px;
+
+  background: transparent;
+
+  color: var(--import-primary);
+
+  border: 1px solid var(--import-primary-border);
+
+  border-radius: 7px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.import-result__reset:hover {
+  background: var(--import-primary);
+
+  border-color: var(--import-primary);
+
+  color: #fff;
+}
+
+/* =========================================================
+   FILE PREVIEW
+========================================================= */
+
+.import-file-preview {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 10px;
+
+  padding: 10px 12px;
+
+  background: #fafbfc;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 10px;
+
+  animation: importPreviewIn 0.25s ease;
+}
+
+@keyframes importPreviewIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+.import-file-preview__icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: var(--import-primary-light);
+
+  color: var(--import-primary);
+
+  border: 1px solid var(--import-primary-border);
+
+  border-radius: 8px;
+}
+
+.import-file-preview__icon i {
+  font-size: 15px;
+}
+
+.import-file-preview__content {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.import-file-preview__content strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #4a555e;
+
+  font-size: 11px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.import-file-preview__content span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #9aa3ab;
+
+  font-size: 10px;
+}
+
+.import-file-preview__remove {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #9ba4ab;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+}
+
+.import-file-preview__remove:hover {
+  background: #fff0f0;
+
+  color: #dc3545;
+}
+
+/* =========================================================
+   BUTTON LOADING
+========================================================= */
+
+.import-btn__normal,
+.import-btn__loading {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+}
+
+.import-btn:disabled {
+  cursor: wait;
+
+  opacity: 0.8;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+  .import-upload {
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+  }
+
+  .import-upload__input {
+    grid-column: 1 / -1;
+
+    width: 100%;
+  }
+
+  .import-upload__input .import-upload__button {
+    flex: 0 0 auto;
+  }
+
+  .import-upload__filename {
+    max-width: none;
+
+    flex: 1;
+  }
+
+  .import-upload__hint {
+    position: static;
+
+    grid-column: 1 / -1;
+
+    margin-top: -4px;
+  }
+
+  .import-result__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .import-result__footer {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+}
+.subject-name {
+  position: relative;
+
+  margin: 0 0 24px;
+  padding-left: 14px;
+
+  color: #303841;
+
+  font-size: 24px;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+.subject-name::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 3px;
+
+  width: 4px;
+  height: calc(100% - 6px);
+
+  background: #4187b6;
+
+  border-radius: 4px;
+}
+/* =========================================================
+   GROUP GRID
+========================================================= */
+
+.group-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+/* =========================================================
+   GROUP ITEM
+========================================================= */
+
+.group-item {
+  position: relative;
+
+  min-height: 200px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: linear-gradient(145deg, #ffffff 0%, #fbfdff 100%);
+
+  border: 1px solid #e7edf2;
+  border-radius: 18px;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  box-shadow: 0 5px 18px rgba(30, 55, 80, 0.045);
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+/* =========================================================
+   DECORATIVE CIRCLE
+========================================================= */
+
+.group-item::before {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  top: -75px;
+  right: -65px;
+
+  border-radius: 50%;
+
+  background: #edf7fb;
+
+  opacity: 0.75;
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease;
+}
+
+.group-item::after {
+  content: "";
+
+  position: absolute;
+
+  width: 90px;
+  height: 90px;
+
+  bottom: -55px;
+  left: -40px;
+
+  border-radius: 50%;
+
+  background: #f5f9fc;
+
+  transition: transform 0.35s ease;
+}
+
+/* =========================================================
+   GROUP ICON
+========================================================= */
+
+.group-icon {
+  position: relative;
+  z-index: 2;
+
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf7fb;
+  color: #4187b6;
+
+  border: 1px solid #dcecf4;
+  border-radius: 16px;
+
+  font-size: 23px;
+
+  box-shadow: 0 5px 12px rgba(65, 135, 182, 0.08);
+
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.group-content {
+  position: relative;
+  z-index: 2;
+
+  margin-top: 20px;
+
+  padding-right: 45px;
+}
+
+.group-title {
+  color: #303841;
+
+  font-size: 18px;
+  font-weight: 650;
+
+  line-height: 1.4;
+
+  letter-spacing: -0.2px;
+
+  transition: color 0.25s ease;
+}
+
+.group-meta {
+  margin-top: 6px;
+
+  color: #929aa3;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.group-arrow {
+  position: absolute;
+  z-index: 3;
+
+  right: 22px;
+  bottom: 22px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f8fa;
+  color: #7d8993;
+
+  border: 1px solid #e8edf1;
+  border-radius: 50%;
+
+  font-size: 13px;
+
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease,
+    border-color 0.28s ease;
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.group-item:hover {
+  border-color: #cfe3ee;
+
+  transform: translateY(-6px);
+
+  box-shadow: 0 16px 34px rgba(30, 55, 80, 0.1);
+}
+
+.group-item:hover::before {
+  transform: scale(1.25);
+
+  background: #e4f2f8;
+}
+
+.group-item:hover::after {
+  transform: scale(1.25);
+}
+
+.group-item:hover .group-icon {
+  background: #4187b6;
+  color: #ffffff;
+
+  transform: translateY(-3px) scale(1.04);
+
+  box-shadow: 0 8px 18px rgba(65, 135, 182, 0.2);
+}
+
+.group-item:hover .group-title {
+  color: #4187b6;
+}
+
+.group-item:hover .group-arrow {
+  background: #4187b6;
+  color: #ffffff;
+
+  border-color: #4187b6;
+
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.group-item:active {
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.group-item:focus-visible {
+  outline: none;
+
+  border-color: #4187b6;
+
+  box-shadow:
+    0 0 0 4px rgba(65, 135, 182, 0.12),
+    0 12px 28px rgba(30, 55, 80, 0.08);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .group-grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .group-item {
+    min-height: 180px;
+
+    padding: 22px;
+  }
+
+  .group-icon {
+    width: 54px;
+    height: 54px;
+
+    font-size: 21px;
+  }
+
+  .group-title {
+    font-size: 17px;
+  }
+}
+/* =========================================================
+   SUBJECT GRID
+========================================================= */
+
+.subject-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+/* =========================================================
+   SUBJECT ITEM
+========================================================= */
+
+.subject-item {
+  position: relative;
+
+  min-height: 190px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: linear-gradient(145deg, #ffffff 0%, #fbfdff 100%);
+
+  border: 1px solid #e7edf2;
+  border-radius: 18px;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  box-shadow: 0 5px 18px rgba(30, 55, 80, 0.045);
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+/* =========================================================
+   DECORATIVE BACKGROUND
+========================================================= */
+
+.subject-item::before {
+  content: "";
+
+  position: absolute;
+
+  width: 155px;
+  height: 155px;
+
+  top: -80px;
+  right: -65px;
+
+  border-radius: 50%;
+
+  background: #edf7fb;
+
+  opacity: 0.8;
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease;
+}
+
+.subject-item::after {
+  content: "";
+
+  position: absolute;
+
+  width: 90px;
+  height: 90px;
+
+  left: -45px;
+  bottom: -55px;
+
+  border-radius: 50%;
+
+  background: #f5f9fc;
+
+  transition: transform 0.35s ease;
+}
+
+/* =========================================================
+   SUBJECT ICON
+========================================================= */
+
+.subject-icon {
+  position: relative;
+  z-index: 2;
+
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf7fb;
+  color: #4187b6;
+
+  border: 1px solid #dcecf4;
+  border-radius: 16px;
+
+  font-size: 23px;
+
+  box-shadow: 0 5px 12px rgba(65, 135, 182, 0.07);
+
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+/* =========================================================
+   SUBJECT CONTENT
+========================================================= */
+
+.subject-content {
+  position: relative;
+  z-index: 2;
+
+  margin-top: 20px;
+
+  padding-right: 45px;
+
+  min-width: 0;
+}
+
+.subject-title {
+  color: #303841;
+
+  font-size: 17px;
+  font-weight: 650;
+
+  line-height: 1.45;
+
+  letter-spacing: -0.15px;
+
+  transition: color 0.25s ease;
+}
+
+.subject-meta {
+  margin-top: 6px;
+
+  color: #929aa3;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.subject-arrow {
+  position: absolute;
+  z-index: 3;
+
+  right: 22px;
+  bottom: 22px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f8fa;
+  color: #7d8993;
+
+  border: 1px solid #e8edf1;
+  border-radius: 50%;
+
+  font-size: 13px;
+
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    color 0.28s ease,
+    border-color 0.28s ease;
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.subject-item:hover {
+  border-color: #cfe3ee;
+
+  transform: translateY(-6px);
+
+  box-shadow: 0 16px 34px rgba(30, 55, 80, 0.1);
+}
+
+.subject-item:hover::before {
+  transform: scale(1.25);
+
+  background: #e4f2f8;
+}
+
+.subject-item:hover::after {
+  transform: scale(1.25);
+}
+
+.subject-item:hover .subject-icon {
+  background: #4187b6;
+  color: #ffffff;
+
+  transform: translateY(-3px) scale(1.04);
+
+  box-shadow: 0 8px 18px rgba(65, 135, 182, 0.2);
+}
+
+.subject-item:hover .subject-title {
+  color: #4187b6;
+}
+
+.subject-item:hover .subject-arrow {
+  background: #4187b6;
+  color: #ffffff;
+
+  border-color: #4187b6;
+
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   ACTIVE
+========================================================= */
+
+.subject-item:active {
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.subject-item:focus-visible {
+  outline: none;
+
+  border-color: #4187b6;
+
+  box-shadow:
+    0 0 0 4px rgba(65, 135, 182, 0.12),
+    0 12px 28px rgba(30, 55, 80, 0.08);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .subject-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .subject-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .subject-item {
+    min-height: 180px;
+    padding: 22px;
+  }
+
+  .subject-icon {
+    width: 54px;
+    height: 54px;
+
+    font-size: 21px;
+  }
+
+  .subject-title {
+    font-size: 16px;
+  }
+}
+/* =========================================================
+   GROUP NAME
+========================================================= */
+
+.group-name {
+  margin: 0 0 22px;
+  padding-left: 14px;
+
+  color: #7b858f;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   LESSON GRID
+========================================================= */
+
+.lesson-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+/* =========================================================
+   LESSON CARD
+========================================================= */
+
+.lesson-card {
+  position: relative;
+
+  min-height: 100px;
+
+  padding: 18px 20px;
+
+  display: flex;
+  align-items: center;
+
+  background: #fff;
+
+  border: 1px solid #edf0f3;
+  border-radius: 14px;
+
+  color: inherit;
+  text-decoration: none;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* =========================================================
+   LEFT LINE
+========================================================= */
+
+.lesson-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 4px;
+  height: 100%;
+
+  background: #4187b6;
+
+  transform: scaleY(0);
+  transform-origin: bottom;
+
+  transition: transform 0.2s ease;
+}
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.lesson-icon {
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  margin-right: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #edf7fb;
+
+  color: #4187b6;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.lesson-content {
+  min-width: 0;
+  flex: 1;
+}
+
+/* =========================================================
+   LESSON NAME
+========================================================= */
+
+.lesson-name {
+  color: #303841;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+/* =========================================================
+   LESSON META
+========================================================= */
+
+.lesson-meta {
+  margin-top: 5px;
+
+  color: #929aa3;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.lesson-arrow {
+  flex: 0 0 auto;
+
+  width: 30px;
+  height: 30px;
+
+  margin-left: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #aab2ba;
+
+  border-radius: 50%;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.lesson-card:hover {
+  color: inherit;
+
+  transform: translateY(-4px);
+
+  border-color: #dceaf3;
+
+  box-shadow: 0 10px 24px rgba(65, 135, 182, 0.12);
+}
+
+.lesson-card:hover::before {
+  transform: scaleY(1);
+}
+
+.lesson-card:hover .lesson-arrow {
+  background: #edf7fb;
+
+  color: #4187b6;
+
+  transform: translateX(3px);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+  .lesson-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .subject-name {
+    font-size: 21px;
+  }
+
+  .group-name {
+    margin-bottom: 18px;
+  }
+
+  .lesson-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .lesson-card {
+    min-height: 90px;
+    padding: 16px;
+  }
+}
+/* =========================================================
+   SUBJECT TITLE
+========================================================= */
+
+.subject-name {
+  position: relative;
+
+  margin: 0 0 10px;
+  padding-left: 14px;
+
+  color: #303841;
+
+  font-size: 24px;
+  font-weight: 600;
+
+  line-height: 1.4;
+}
+
+.subject-name::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 4px;
+
+  width: 4px;
+  height: calc(100% - 8px);
+
+  background: #4187b6;
+
+  border-radius: 4px;
+}
+
+/* =========================================================
+   GROUP NAME
+========================================================= */
+
+.group-name {
+  margin: 0 0 22px;
+  padding-left: 14px;
+
+  color: #697580;
+
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+
+  position: relative;
+}
+
+.group-name::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 50%;
+
+  width: 4px;
+  height: 18px;
+
+  background: #4187b6;
+  border-radius: 10px;
+
+  transform: translateY(-50%);
+}
+
+/* =========================================================
+   STUDENT CARD
+========================================================= */
+
+.student-card {
+  position: relative;
+
+  width: 100%;
+
+  margin-bottom: 28px;
+  padding: 26px 30px 26px 34px;
+
+  background: linear-gradient(135deg, #ffffff 0%, #fbfdff 100%);
+
+  border: 1px solid #e7edf2;
+  border-radius: 18px;
+
+  box-shadow: 0 6px 22px rgba(30, 55, 80, 0.055);
+
+  overflow: hidden;
+
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* Thanh màu bên trái */
+
+.student-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 5px;
+  height: 100%;
+
+  background: linear-gradient(180deg, #4187b6, #63a4ca);
+}
+
+/* Trang trí góc */
+
+.student-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 170px;
+  height: 170px;
+
+  top: -105px;
+  right: -70px;
+
+  border-radius: 50%;
+
+  background: #edf7fb;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   INFORMATION LIST
+========================================================= */
+
+.information-list {
+  position: relative;
+  z-index: 2;
+
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 18px 28px;
+}
+
+/* =========================================================
+   INFORMATION ITEM
+========================================================= */
+
+.information-list > li {
+  min-width: 0;
+
+  margin: 0;
+  padding: 15px 17px;
+
+  background: rgba(248, 250, 252, 0.85);
+
+  border: 1px solid #edf1f4;
+  border-radius: 12px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.information-list > li:hover {
+  background: #ffffff;
+
+  border-color: #dceaf2;
+
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   INFORMATION INNER LIST
+========================================================= */
+
+.information-list > li > ol {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+/* =========================================================
+   INFORMATION LABEL
+========================================================= */
+
+.information-list > li > ol > li:first-child {
+  color: #929ca5;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  line-height: 1.4;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   INFORMATION VALUE
+========================================================= */
+
+.information-list > li > ol > li:last-child {
+  color: #303841;
+
+  font-size: 15px;
+  font-weight: 650;
+
+  line-height: 1.45;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   LESSON LIST
+========================================================= */
+
+.lesson-list {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+/* =========================================================
+   LESSON LINK
+========================================================= */
+
+.lesson-list > a {
+  display: block;
+
+  min-width: 0;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   LESSON CARD
+========================================================= */
+
+.lesson-card {
+  position: relative;
+
+  min-height: 145px;
+
+  padding: 21px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: #ffffff;
+
+  border: 1px solid #e7edf2;
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: 0 5px 16px rgba(30, 55, 80, 0.045);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* =========================================================
+   TOP ACCENT
+========================================================= */
+
+.lesson-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(90deg, #4187b6, #65a8cd);
+
+  transform: scaleX(0);
+
+  transform-origin: left;
+
+  transition: transform 0.3s ease;
+}
+
+/* =========================================================
+   DECORATIVE CIRCLE
+========================================================= */
+
+.lesson-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 75px;
+  height: 75px;
+
+  right: -35px;
+  top: -35px;
+
+  border-radius: 50%;
+
+  background: #f1f8fb;
+
+  opacity: 0.8;
+
+  transition: transform 0.3s ease;
+}
+
+/* =========================================================
+   LESSON HOVER
+========================================================= */
+
+.lesson-list > a:hover .lesson-card {
+  transform: translateY(-5px);
+
+  border-color: #d5e7f0;
+
+  box-shadow: 0 12px 28px rgba(65, 135, 182, 0.11);
+}
+
+.lesson-list > a:hover .lesson-card::before {
+  transform: scaleX(1);
+}
+
+.lesson-list > a:hover .lesson-card::after {
+  transform: scale(1.25);
+}
+
+/* =========================================================
+   LESSON NAME
+========================================================= */
+
+.lesson-name {
+  position: relative;
+  z-index: 2;
+
+  color: #303841;
+
+  font-size: 16px;
+  font-weight: 650;
+
+  line-height: 1.45;
+
+  transition: color 0.2s ease;
+}
+
+.lesson-list > a:hover .lesson-name {
+  color: #4187b6;
+}
+
+/* =========================================================
+   LESSON PROGRESS
+========================================================= */
+
+.lesson-progress {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  margin-top: 24px;
+}
+
+/* =========================================================
+   PROGRESS INFO
+========================================================= */
+
+.progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+
+  color: #78838d;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.progress-info span:last-child {
+  color: #4187b6;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   PROGRESS BAR
+========================================================= */
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+
+  background: #edf1f4;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   PROGRESS FILL
+========================================================= */
+
+.progress-fill {
+  height: 100%;
+
+  background: linear-gradient(90deg, #4187b6, #63a5ca);
+
+  border-radius: 20px;
+
+  transition: width 0.4s ease;
+}
+
+/* =========================================================
+   100% COMPLETED
+========================================================= */
+
+.progress-fill[style*="100%"] {
+  background: linear-gradient(90deg, #3f9b72, #55b88a);
+}
+
+.progress-fill[style*="100%"] ~ * {
+  color: #3f9b72;
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .information-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lesson-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+  .student-card {
+    padding: 20px;
+    padding-left: 24px;
+  }
+
+  .information-list {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .information-list > li {
+    padding: 13px 15px;
+  }
+
+  .lesson-list {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .lesson-card {
+    min-height: 135px;
+
+    padding: 19px;
+  }
+}
+/*==========================================================================================
+                                ASSIGNMENT
+==========================================================================================*/
+
+/* =========================================================
+   ASSIGNMENT MENU
+========================================================= */
+
+.assignment-menu {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+
+  padding: 0 10px;
+}
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+.assignment-menu__item {
+  --menu-primary: #4187b6;
+  --menu-light: #edf7fb;
+  --menu-border: #dcecf5;
+
+  position: relative;
+
+  min-height: 270px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px;
+
+  background: #ffffff;
+
+  border: 1px solid #edf0f3;
+  border-radius: 20px;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.045);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* =========================================================
+   DECORATIVE CIRCLE
+========================================================= */
+
+.assignment-menu__item::before {
+  content: "";
+
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  top: -95px;
+  right: -80px;
+
+  background: var(--menu-light);
+
+  border-radius: 50%;
+
+  transition: transform 0.3s ease;
+}
+
+.assignment-menu__item::after {
+  content: "";
+
+  position: absolute;
+
+  width: 120px;
+  height: 120px;
+
+  bottom: -70px;
+  left: -50px;
+
+  background: #f7fafb;
+
+  border-radius: 50%;
+
+  transition: transform 0.3s ease;
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.assignment-menu__item:hover {
+  transform: translateY(-6px);
+
+  border-color: var(--menu-border);
+
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+.assignment-menu__item:hover::before {
+  transform: scale(1.25);
+}
+
+.assignment-menu__item:hover::after {
+  transform: scale(1.2);
+}
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.assignment-menu__icon {
+  position: relative;
+  z-index: 2;
+
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  background: var(--menu-light);
+
+  color: var(--menu-primary);
+
+  border: 1px solid var(--menu-border);
+
+  border-radius: 20px;
+
+  font-size: 32px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.assignment-menu__item:hover .assignment-menu__icon {
+  background: var(--menu-primary);
+
+  color: #ffffff;
+
+  border-color: var(--menu-primary);
+
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.assignment-menu__content {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.assignment-menu__title {
+  position: relative;
+  z-index: 2;
+
+  margin: 0;
+
+  color: #303841;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  text-align: center;
+
+  transition: color 0.2s ease;
+}
+
+.assignment-menu__item:hover .assignment-menu__title {
+  color: var(--menu-primary);
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.assignment-menu__description {
+  margin: 7px 0 0;
+
+  color: #929ba4;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.assignment-menu__arrow {
+  position: absolute;
+  z-index: 2;
+
+  right: 20px;
+  bottom: 20px;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f8fa;
+
+  color: #8b98a3;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.assignment-menu__item:hover .assignment-menu__arrow {
+  background: var(--menu-primary);
+
+  color: #ffffff;
+
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   01. ASSIGNMENT - BLUE
+========================================================= */
+
+.assignment-menu__item--assignment {
+  --menu-primary: #4187b6;
+  --menu-light: #edf7fb;
+  --menu-border: #d7eaf3;
+}
+
+/* =========================================================
+   02. SUBJECT - PURPLE
+========================================================= */
+
+.assignment-menu__item--subject {
+  --menu-primary: #7568b5;
+  --menu-light: #f3f1fa;
+  --menu-border: #e3dff2;
+}
+/*==========================================================================================
+                                EXAM
+==========================================================================================*/
+
+/* =========================================================
+   EXAM MENU
+========================================================= */
+
+.exam-menu {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+
+  padding: 0 10px;
+}
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+.exam-menu__item {
+  --menu-primary: #4187b6;
+  --menu-light: #edf7fb;
+  --menu-border: #dcecf5;
+
+  position: relative;
+
+  min-height: 270px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 35px;
+
+  background: #ffffff;
+
+  border: 1px solid #edf0f3;
+  border-radius: 20px;
+
+  text-decoration: none;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.045);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* =========================================================
+   DECORATIVE CIRCLE
+========================================================= */
+
+.exam-menu__item::before {
+  content: "";
+
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  top: -95px;
+  right: -80px;
+
+  background: var(--menu-light);
+
+  border-radius: 50%;
+
+  transition: transform 0.3s ease;
+}
+
+.exam-menu__item::after {
+  content: "";
+
+  position: absolute;
+
+  width: 120px;
+  height: 120px;
+
+  bottom: -70px;
+  left: -50px;
+
+  background: #f7fafb;
+
+  border-radius: 50%;
+
+  transition: transform 0.3s ease;
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.exam-menu__item:hover {
+  transform: translateY(-6px);
+
+  border-color: var(--menu-border);
+
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+.exam-menu__item:hover::before {
+  transform: scale(1.25);
+}
+
+.exam-menu__item:hover::after {
+  transform: scale(1.2);
+}
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.exam-menu__icon {
+  position: relative;
+  z-index: 2;
+
+  width: 82px;
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  background: var(--menu-light);
+
+  color: var(--menu-primary);
+
+  border: 1px solid var(--menu-border);
+
+  border-radius: 20px;
+
+  font-size: 32px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.exam-menu__item:hover .exam-menu__icon {
+  background: var(--menu-primary);
+
+  color: #ffffff;
+
+  border-color: var(--menu-primary);
+
+  transform: translateY(-4px);
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.exam-menu__content {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.exam-menu__title {
+  position: relative;
+  z-index: 2;
+
+  margin: 0;
+
+  color: #303841;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  text-align: center;
+
+  transition: color 0.2s ease;
+}
+
+.exam-menu__item:hover .exam-menu__title {
+  color: var(--menu-primary);
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.exam-menu__description {
+  margin: 7px 0 0;
+
+  color: #929ba4;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  text-align: center;
+
+  transition: color 0.2s ease;
+}
+
+.exam-menu__item:hover .exam-menu__description {
+  color: #7f8992;
+}
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.exam-menu__arrow {
+  position: absolute;
+  z-index: 2;
+
+  right: 20px;
+  bottom: 20px;
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f5f8fa;
+
+  color: #8b98a3;
+
+  border-radius: 9px;
+
+  font-size: 13px;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.exam-menu__item:hover .exam-menu__arrow {
+  background: var(--menu-primary);
+
+  color: #ffffff;
+
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   01. EXAM LIBRARY - BLUE
+========================================================= */
+
+.exam-menu__item--library {
+  --menu-primary: #4187b6;
+  --menu-light: #edf7fb;
+  --menu-border: #d7eaf3;
+}
+
+/* =========================================================
+   02. SUBJECTS & CLASS SECTIONS - PURPLE
+========================================================= */
+
+.exam-menu__item--subjects {
+  --menu-primary: #7568b5;
+  --menu-light: #f3f1fa;
+  --menu-border: #e3dff2;
+}
+/*==========================================================================================
+                                IMPORT
+==========================================================================================*/
+
+/* =========================================================
+   IMPORT OPTION LIST
+========================================================= */
+.import-option-list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0 10px;
+}
+/* =========================================================
+   IMPORT OPTION CARD
+========================================================= */
+.import-option-card {
+  position: relative;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 35px 30px;
+  background: #fff;
+  border: 1px solid #edf0f3;
+  border-radius: 18px;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.045);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+/* =========================================================
+   DECORATION
+========================================================= */
+.import-option-card::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: -70px;
+  right: -60px;
+  background: #edf7fb;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+.import-option-card:hover::before {
+  transform: scale(1.25);
+}
+/* =========================================================
+   HOVER
+========================================================= */
+.import-option-card:hover {
+  transform: translateY(-5px);
+  border-color: #dcecf4;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+/* =========================================================
+   ICON
+========================================================= */
+.import-option-card__icon {
+  position: relative;
+  z-index: 1;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: #edf7fb;
+  color: #4187b6;
+  border: 1px solid #e1eff5;
+  border-radius: 18px;
+  font-size: 30px;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+.import-option-card:hover .import-option-card__icon {
+  background: #4187b6;
+  color: #fff;
+  transform: translateY(-3px);
+}
+/* =========================================================
+   CONTENT
+========================================================= */
+.import-option-card__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+/* =========================================================
+   TITLE
+========================================================= */
+.import-option-card__title {
+  margin: 0;
+  color: #303841;
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+.import-option-card:hover .import-option-card__title {
+  color: #4187b6;
+}
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+.import-option-card__description {
+  max-width: 300px;
+  margin: 7px 0 0;
+  color: #929aa3;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+/* =========================================================
+   ARROW
+========================================================= */
+.import-option-card__arrow {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f8fa;
+  color: #8b98a3;
+  border-radius: 9px;
+  font-size: 14px;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+.import-option-card:hover .import-option-card__arrow {
+  background: #4187b6;
+  color: #fff;
+  transform: translateX(3px);
+}
+/* =========================================================
+   IMPORT CARD
+========================================================= */
+.import-card {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #edf0f3;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+.import-card__body {
+  padding: 26px;
+}
+/* =========================================================
+   IMPORT HEADER
+========================================================= */
+.import-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #edf0f3;
+  margin-bottom: 24px;
+}
+.import-header__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.import-header__icon i {
+  font-size: 21px;
+}
+.import-header__content h5 {
+  margin: 0;
+  color: #303841;
+  font-size: 18px;
+  font-weight: 600;
+}
+.import-header__content span {
+  display: block;
+  margin-top: 4px;
+  color: #929aa3;
+  font-size: 13px;
+}
+/* =========================================================
+   SECTION
+========================================================= */
+.import-section {
+  width: 100%;
+}
+.import-section__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #303841;
+  font-size: 14px;
+  font-weight: 600;
+}
+.import-section__title i {
+  color: #4187b6;
+  font-size: 15px;
+}
+/* =========================================================
+   UPLOAD BOX
+========================================================= */
+.import-upload {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  background: #f9fbfc;
+  border: 1px dashed #cbd9e2;
+  border-radius: 12px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.import-upload:hover {
+  background: #f6fafc;
+  border-color: #4187b6;
+}
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+.import-upload__icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 12px;
+}
+.import-upload__icon i {
+  font-size: 23px;
+}
+/* =========================================================
+   UPLOAD CONTENT
+========================================================= */
+.import-upload__content h6 {
+  margin: 0;
+  color: #303841;
+  font-size: 14px;
+  font-weight: 600;
+}
+.import-upload__content p {
+  margin: 5px 0 0;
+  color: #929aa3;
+  font-size: 12px;
+}
+.import-upload__content strong {
+  color: #4187b6;
+  font-weight: 600;
+}
+/* =========================================================
+   FILE INPUT
+========================================================= */
+.import-upload__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.import-upload__input input {
+  display: none;
+}
+.import-upload__button {
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 14px;
+  background: #fff;
+  border: 1px solid #dce4e9;
+  border-radius: 8px;
+  color: #4187b6;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.import-upload__button:hover {
+  background: #4187b6;
+  border-color: #4187b6;
+  color: #fff;
+}
+.import-upload__button i {
+  font-size: 13px;
+}
+.import-upload__filename {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #929aa3;
+  font-size: 12px;
+}
+/* =========================================================
+   UPLOAD HINT
+========================================================= */
+.import-upload__hint {
+  position: absolute;
+  left: 22px;
+  bottom: -24px;
+  color: #929aa3;
+  font-size: 11px;
+}
+.import-upload__hint strong {
+  color: #555;
+  font-weight: 600;
+}
+/* =========================================================
+   NOTE
+========================================================= */
+.import-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 32px;
+  padding: 13px 15px;
+  background: #f8fafb;
+  border: 1px solid #edf0f3;
+  border-radius: 9px;
+}
+.import-note > i {
+  margin-top: 2px;
+  color: #4187b6;
+  font-size: 15px;
+}
+.import-note strong {
+  display: block;
+  color: #4b5560;
+  font-size: 12px;
+  font-weight: 600;
+}
+.import-note p {
+  margin: 3px 0 0;
+  color: #929aa3;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.import-note code {
+  padding: 2px 5px;
+  background: #edf7fb;
+  color: #4187b6;
+  border-radius: 4px;
+  font-size: 11px;
+}
+/* =========================================================
+   OPTIONS
+========================================================= */
+.import-options {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid #edf0f3;
+}
+.import-field {
+  max-width: 360px;
+}
+.import-field label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: #555;
+  font-size: 13px;
+  font-weight: 600;
+}
+.import-field label i {
+  color: #4187b6;
+}
+.import-field select {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  background: #f8fafb;
+  border: 1px solid #e1e7eb;
+  border-radius: 8px;
+  outline: none;
+  color: #444;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.import-field select:focus {
+  background: #fff;
+  border-color: #4187b6;
+  box-shadow: 0 0 0 3px rgba(65, 135, 182, 0.1);
+}
+.import-field small {
+  display: block;
+  margin-top: 6px;
+  color: #9aa3ab;
+  font-size: 11px;
+}
+/* =========================================================
+   ACTIONS
+========================================================= */
+.import-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #edf0f3;
+}
+/* =========================================================
+   IMPORT BUTTON
+========================================================= */
+
+.import-btn {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 18px;
+  background: #4187b6;
+  border: 1px solid #4187b6;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.import-btn:hover {
+  background: #35759f;
+  border-color: #35759f;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(65, 135, 182, 0.2);
+}
+.import-btn i {
+  font-size: 14px;
+}
+/* =========================================================
+   ALERT COMMON
+========================================================= */
+.import-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border-radius: 10px;
+}
+.import-alert__icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.import-alert__icon i {
+  font-size: 15px;
+}
+.import-alert__content {
+  min-width: 0;
+}
+.import-alert__content strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+}
+.import-alert__content > span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+}
+/* =========================================================
+   SUCCESS
+========================================================= */
+.import-alert--success {
+  background: #f0faf4;
+  border: 1px solid #d8f0e1;
+  color: #198754;
+}
+.import-alert--success .import-alert__icon {
+  background: #dff4e7;
+  color: #198754;
+}
+/* =========================================================
+   ERROR
+========================================================= */
+.import-alert--error {
+  background: #fff5f5;
+  border: 1px solid #f3dddd;
+  color: #dc3545;
+}
+.import-alert--error .import-alert__icon {
+  background: #fde6e6;
+  color: #dc3545;
+}
+.import-alert--error ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.import-alert--error li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+  color: #6c757d;
+  font-size: 12px;
+}
+.import-alert--error li span:first-child {
+  min-width: 55px;
+  color: #dc3545;
+  font-weight: 600;
+}
+/* =========================================================
+   STUDENT
+========================================================= */
+.import-card--student .import-header__icon {
+  background: #edf7fb;
+  color: #4187b6;
+}
+/* =========================================================
+   TEACHER
+========================================================= */
+.import-card--teacher .import-header__icon {
+  background: #f3f1fb;
+  color: #6c63a8;
+}
+.import-card--teacher .import-section__title i,
+.import-card--teacher .import-upload__icon,
+.import-card--teacher .import-field label i {
+  color: #6c63a8;
+}
+.import-card--teacher .import-upload__icon {
+  background: #f3f1fb;
+}
+.import-card--teacher .import-upload:hover {
+  border-color: #6c63a8;
+}
+.import-card--teacher .import-upload__content strong {
+  color: #6c63a8;
+}
+/* =========================================================
+   IMPORT CARD
+========================================================= */
+.import-card {
+  width: 100%;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid #e8edf2;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(30, 45, 60, 0.055);
+  --import-primary: #4187b6;
+  --import-primary-light: #eef6fb;
+  --import-primary-border: #dcecf5;
+}
+.import-card--teacher {
+  --import-primary: #4187b6;
+  --import-primary-light: #eef6fb;
+  --import-primary-border: #dcecf5;
+}
+.import-card--student {
+  --import-primary: #6c63c9;
+  --import-primary-light: #f2f0fc;
+  --import-primary-border: #e4e1f7;
+}
+/* =========================================================
+   BODY
+========================================================= */
+.import-card__body {
+  padding: 24px 26px 22px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.import-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #edf0f3;
+}
+.import-header__icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border: 1px solid var(--import-primary-border);
+  border-radius: 12px;
+}
+.import-header__icon i {
+  font-size: 20px;
+}
+.import-header__content {
+  min-width: 0;
+}
+.import-header__content h5 {
+  margin: 0;
+  color: #303841;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.import-header__content span {
+  display: block;
+  margin-top: 4px;
+  color: #8b969f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+/* =========================================================
+   FORM
+========================================================= */
+.import-form {
+  width: 100%;
+}
+/* =========================================================
+   SECTION
+========================================================= */
+.import-section {
+  width: 100%;
+}
+.import-section__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: #414b54;
+  font-size: 13px;
+  font-weight: 650;
+}
+.import-section__title i {
+  color: var(--import-primary);
+  font-size: 14px;
+}
+/* =========================================================
+   UPLOAD
+========================================================= */
+.import-upload {
+  width: 100%;
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fbfcfd;
+  border: 1px dashed #dce3e8;
+  border-radius: 12px;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.import-upload:hover {
+  background: var(--import-primary-light);
+  border-color: var(--import-primary);
+}
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+.import-upload__icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border: 1px solid var(--import-primary-border);
+  border-radius: 11px;
+}
+.import-upload__icon i {
+  font-size: 19px;
+}
+/* =========================================================
+   UPLOAD CONTENT
+========================================================= */
+.import-upload__content {
+  min-width: 0;
+  flex: 1;
+}
+.import-upload__content h6 {
+  margin: 0;
+  color: #39434c;
+  font-size: 13px;
+  font-weight: 650;
+}
+.import-upload__content p {
+  margin: 4px 0 0;
+  color: #99a2aa;
+  font-size: 11px;
+}
+.import-upload__content strong {
+  color: var(--import-primary);
+  font-weight: 650;
+}
+/* =========================================================
+   FILE INPUT AREA
+========================================================= */
+.import-upload__input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.import-upload__input input[type="file"] {
+  display: none;
+}
+/* =========================================================
+   CHOOSE FILE BUTTON
+========================================================= */
+.import-upload__button {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 13px;
+  background: #ffffff;
+  color: var(--import-primary);
+  border: 1px solid #dfe6eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+.import-upload__button i {
+  font-size: 12px;
+}
+.import-upload__button:hover {
+  background: var(--import-primary);
+  color: #ffffff;
+  border-color: var(--import-primary);
+  box-shadow: 0 4px 10px rgba(65, 135, 182, 0.15);
+}
+/* =========================================================
+   FILE NAME
+========================================================= */
+.import-upload__filename {
+  display: block;
+
+  max-width: 260px;
+
+  margin-top: 8px;
+
+  color: var(--color-text-muted);
+
+  font-size: 12px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition:
+    color var(--transition-fast),
+    font-weight var(--transition-fast);
+}
+
+.import-upload__filename.has-file {
+  color: var(--color-primary);
+
+  font-weight: 600;
+}
+/* =========================================================
+   FILE SIZE
+========================================================= */
+.import-upload__hint {
+  display: block;
+  color: #a0a8af;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.import-upload__hint strong {
+  color: #68737c;
+
+  font-weight: 650;
+}
+/* =========================================================
+   NOTE
+========================================================= */
+.import-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #f8fafb;
+  border: 1px solid #edf1f4;
+  border-radius: 9px;
+}
+.import-note > i {
+  margin-top: 2px;
+  color: var(--import-primary);
+  font-size: 13px;
+}
+.import-note strong {
+  display: block;
+  margin-bottom: 2px;
+  color: #56616a;
+  font-size: 11px;
+  font-weight: 650;
+}
+.import-note p {
+  margin: 0;
+  color: #9aa3ab;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.import-note code {
+  padding: 2px 5px;
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 10px;
+}
+/* =========================================================
+   OPTIONS
+========================================================= */
+.import-options {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #edf0f3;
+}
+.import-field {
+  width: 320px;
+  max-width: 100%;
+}
+.import-field label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: #4d5861;
+  font-size: 12px;
+  font-weight: 650;
+}
+.import-field label i {
+  color: var(--import-primary);
+  font-size: 13px;
+}
+.import-field select {
+  width: 100%;
+  height: 36px;
+  padding: 0 11px;
+  background: #ffffff;
+  color: #59636b;
+  border: 1px solid #dfe5e9;
+  border-radius: 8px;
+  outline: none;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.import-field select:focus {
+  border-color: var(--import-primary);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--import-primary) 10%, transparent);
+}
+.import-field small {
+  display: block;
+  margin-top: 6px;
+  color: #a1a9b0;
+  font-size: 10px;
+}
+/* =========================================================
+   ACTION
+========================================================= */
+.import-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+
+  border-top: 1px solid #edf0f3;
+}
+.import-btn {
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 16px;
+  background: var(--import-primary);
+  color: #ffffff;
+  border: 1px solid var(--import-primary);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 650;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.import-btn i {
+  font-size: 12px;
+}
+.import-btn:hover {
+  color: #ffffff;
+  filter: brightness(0.92);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px
+    color-mix(in srgb, var(--import-primary) 22%, transparent);
+}
+.import-btn:active {
+  transform: translateY(0);
+}
+/* =========================================================
+   TEACHER - GIẢNG VIÊN
+========================================================= */
+.import-card--teacher {
+  --import-primary: #4187b6;
+  --import-primary-light: #eef6fb;
+  --import-primary-border: #dcecf5;
+}
+/* =========================================================
+   STUDENT - SINH VIÊN
+========================================================= */
+.import-card--student {
+  --import-primary: #6c63c9;
+  --import-primary-light: #f2f0fc;
+  --import-primary-border: #e4e1f7;
+}
+/* =========================================================
+   SUBJECT - MÔN HỌC
+========================================================= */
+.import-card--subject {
+  --import-primary: #4f8fbd;
+  --import-primary-light: #edf7fb;
+  --import-primary-border: #dcecf5;
+}
+/* =========================================================
+   DEPARTMENT - KHOA
+========================================================= */
+.import-card--department {
+  --import-primary: #5f8f73;
+  --import-primary-light: #eef7f1;
+  --import-primary-border: #dceee1;
+}
+/* =========================================================
+   CLASS - LỚP HỌC PHẦN
+========================================================= */
+.import-card--class {
+  --import-primary: #8a6fba;
+  --import-primary-light: #f3eff9;
+  --import-primary-border: #e5ddf0;
+}
+/* =========================================================
+   HEADER ICON
+========================================================= */
+.import-card .import-header__icon {
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border-color: var(--import-primary-border);
+}
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+.import-card .import-section__title i {
+  color: var(--import-primary);
+}
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+.import-card .import-upload__icon {
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+  border-color: var(--import-primary-border);
+}
+/* =========================================================
+   UPLOAD HOVER
+========================================================= */
+.import-card .import-upload:hover {
+  background: var(--import-primary-light);
+  border-color: var(--import-primary);
+}
+/* =========================================================
+   FILE TYPE
+========================================================= */
+.import-card .import-upload__content strong {
+  color: var(--import-primary);
+}
+/* =========================================================
+   CHOOSE FILE BUTTON
+========================================================= */
+.import-card .import-upload__button {
+  color: var(--import-primary);
+}
+.import-card .import-upload__button:hover {
+  background: var(--import-primary);
+  border-color: var(--import-primary);
+  color: #fff;
+}
+/* =========================================================
+   NOTE
+========================================================= */
+.import-card .import-note > i {
+  color: var(--import-primary);
+}
+.import-card .import-note code {
+  background: var(--import-primary-light);
+  color: var(--import-primary);
+}
+/* =========================================================
+   OPTION LABEL
+========================================================= */
+.import-card .import-field label i {
+  color: var(--import-primary);
+}
+/* =========================================================
+   SELECT FOCUS
+========================================================= */
+.import-card .import-field select:focus {
+  border-color: var(--import-primary);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--import-primary) 10%, transparent);
+}
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+.import-card .import-btn {
+  background: var(--import-primary);
+  border-color: var(--import-primary);
+}
+.import-card .import-btn:hover {
+  background: var(--import-primary);
+  border-color: var(--import-primary);
+  filter: brightness(0.92);
+  box-shadow: 0 5px 12px
+    color-mix(in srgb, var(--import-primary) 22%, transparent);
+}
+/* =========================================================
+   IMPORT RESULT
+========================================================= */
+
+.import-result {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid #edf0f3;
+
+  animation: importResultIn 0.35s ease;
+}
+
+@keyframes importResultIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   RESULT STATUS
+========================================================= */
+
+.import-result__status {
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px 15px;
+
+  border-radius: 12px;
+
+}
+
+
+.import-result__status.is-success {
+
+  --result-color: #198754;
+  --result-bg: #f0faf4;
+  --result-border: #d8f0e1;
+
+  background: var(--result-bg);
+  border: 1px solid var(--result-border);
+
+}
+
+
+.import-result__status.is-error {
+
+  --result-color: #dc3545;
+  --result-bg: #fff5f5;
+  --result-border: #f3dddd;
+
+  background: var(--result-bg);
+  border: 1px solid var(--result-border);
+
+}
+
+
+/* =========================================================
+   STATUS ICON
+========================================================= */
+
+.import-result__status-icon {
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: rgba(255, 255, 255, 0.75);
+
+  color: var(--result-color);
+
+  border-radius: 11px;
+
+}
+
+
+.import-result__status-icon i {
+
+  font-size: 19px;
+
+}
+
+
+/* =========================================================
+   STATUS CONTENT
+========================================================= */
+
+.import-result__status-content {
+
+  min-width: 0;
+  flex: 1;
+
+}
+
+
+.import-result__status-content strong {
+
+  display: block;
+
+  color: #3f4951;
+
+  font-size: 13px;
+  font-weight: 650;
+
+}
+
+
+.import-result__status-content span {
+
+  display: block;
+
+  margin-top: 4px;
+
+  color: #8d979f;
+
+  font-size: 11px;
+
+  line-height: 1.55;
+
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.import-result__close {
+
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #9ba4ab;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+
+}
+
+
+.import-result__close:hover {
+
+  background: rgba(0, 0, 0, 0.05);
+
+  color: #59636b;
+
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.import-result__stats {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 12px;
+
+}
+
+
+.import-stat {
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+
+  padding: 13px;
+
+  background: #fafbfc;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 10px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+}
+
+
+.import-stat:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 6px 16px rgba(30, 45, 60, 0.06);
+
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.import-stat__icon {
+
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+}
+
+
+.import-stat__icon i {
+
+  font-size: 15px;
+
+}
+
+
+/* =========================================================
+   STAT CONTENT
+========================================================= */
+
+.import-stat__content {
+
+  min-width: 0;
+
+}
+
+
+.import-stat__content span {
+
+  display: block;
+
+  color: #9aa3ab;
+
+  font-size: 10px;
+
+}
+
+
+.import-stat__content strong {
+
+  display: block;
+
+  margin-top: 2px;
+
+  color: #424c55;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+}
+
+
+/* =========================================================
+   SUCCESS STAT
+========================================================= */
+
+.import-stat--success {
+
+  background: #f7fcf9;
+
+  border-color: #e3f2e8;
+
+}
+
+
+.import-stat--success
+.import-stat__icon {
+
+  background: #e4f5ea;
+
+  color: #198754;
+
+}
+
+
+.import-stat--success
+.import-stat__content strong {
+
+  color: #198754;
+
+}
+
+
+/* =========================================================
+   UPDATE / STATUS STAT
+========================================================= */
+
+.import-stat--update {
+
+  background: #f8f7fc;
+
+  border-color: #e9e6f3;
+
+}
+
+
+.import-stat--update
+.import-stat__icon {
+
+  background: #ece9f7;
+
+  color: #7665a8;
+
+}
+
+
+.import-stat--update
+.import-stat__content strong {
+
+  color: #7665a8;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.import-result__footer {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 13px;
+
+  color: #a0a8af;
+
+  font-size: 10px;
+
+}
+
+
+.import-result__footer > span {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+}
+
+
+.import-result__footer i {
+
+  font-size: 11px;
+
+}
+
+
+/* =========================================================
+   RESET BUTTON
+========================================================= */
+
+.import-result__reset {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 11px;
+
+  background: transparent;
+
+  color: var(--import-primary);
+
+  border: 1px solid var(--import-primary-border);
+
+  border-radius: 7px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+
+}
+
+
+.import-result__reset:hover {
+
+  background: var(--import-primary);
+
+  border-color: var(--import-primary);
+
+  color: #fff;
+
+}
+
+
+/* =========================================================
+   FILE PREVIEW
+========================================================= */
+
+.import-file-preview {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 10px;
+
+  padding: 10px 12px;
+
+  background: #fafbfc;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 10px;
+
+  animation: importPreviewIn 0.25s ease;
+
+}
+
+
+@keyframes importPreviewIn {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(-4px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+
+.import-file-preview__icon {
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: var(--import-primary-light);
+
+  color: var(--import-primary);
+
+  border: 1px solid var(--import-primary-border);
+
+  border-radius: 8px;
+
+}
+
+
+.import-file-preview__icon i {
+
+  font-size: 15px;
+
+}
+
+
+.import-file-preview__content {
+
+  min-width: 0;
+
+  flex: 1;
+
+}
+
+
+.import-file-preview__content strong {
+
+  display: block;
+
+  overflow: hidden;
+
+  color: #4a555e;
+
+  font-size: 11px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+}
+
+
+.import-file-preview__content span {
+
+  display: block;
+
+  margin-top: 2px;
+
+  color: #9aa3ab;
+
+  font-size: 10px;
+
+}
+
+
+.import-file-preview__remove {
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: transparent;
+
+  border: 0;
+
+  color: #9ba4ab;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+}
+
+
+.import-file-preview__remove:hover {
+
+  background: #fff0f0;
+
+  color: #dc3545;
+
+}
+
+
+/* =========================================================
+   BUTTON LOADING
+========================================================= */
+
+.import-btn__normal,
+.import-btn__loading {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+}
+
+
+.import-btn:disabled {
+
+  cursor: wait;
+
+  opacity: 0.8;
+
+}
+/* =========================================================
+   ASSIGNMENT - BÀI TẬP
+========================================================= */
+
+.import-card--assignment {
+  --import-primary: #d97706;
+  --import-primary-light: #fff7ed;
+  --import-primary-border: #fed7aa;
+}
+
+
+/* =========================================================
+   EXAM - BÀI THI
+========================================================= */
+
+.import-card--exam {
+  --import-primary: #dc2626;
+  --import-primary-light: #fef2f2;
+  --import-primary-border: #fecaca;
+}
+/* =========================================================
+   EXCEL FORMAT
+========================================================= */
+
+.import-excel-format {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 8px;
+    padding: 6px;
+
+    background: #ffffff;
+    border: 1px solid #edf1f4;
+    border-radius: 7px;
+
+    width: fit-content;
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   EXCEL FORMAT ROW
+========================================================= */
+
+.import-excel-format__row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    flex: 0 0 auto;
+
+    padding: 5px 7px;
+
+    background: #fafbfc;
+    border: 1px solid #f0f2f4;
+    border-radius: 5px;
+}
+
+
+.import-excel-format__row span {
+    flex: 0 0 auto;
+
+    color: #7c8790;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.import-excel-format__row code {
+    display: block;
+
+    color: var(--import-primary);
+
+    background: var(--import-primary-light);
+    border: 1px solid var(--import-primary-border);
+    border-radius: 4px;
+
+    padding: 2px 5px;
+
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}

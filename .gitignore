@@ -1,0 +1,39 @@
+ 
+# ==========================================
+# 1. BỎ QUA CÁC FILE BẢO MẬT & MÔI TRƯỜNG (QUAN TRỌNG)
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.env
+db.sqlite3
+
+# ==========================================
+# 2. BỎ QUA CHO NODE.JS (Thư mục client)
+# ==========================================
+client/node_modules/
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/.pnpm-debug.log*
+
+# ==========================================
+# 3. BỎ QUA CHO DJANGO / PYTHON (Thư mục server)
+# ==========================================
+server/__pycache__/
+server/*.py[cod]
+server/*$py.class
+server/.pytest_cache/
+server/.venv/
+server/venv/
+server/ENV/
+server/env/
+
+# ==========================================
+# 4. BỎ QUA FILE RÁC CỦA HỆ ĐIỀU HÀNH & IDE
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

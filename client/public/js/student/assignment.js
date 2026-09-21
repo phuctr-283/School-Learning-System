@@ -5,42 +5,36 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeAssignment() {
   const page = document.querySelector(".exercise-page");
 
-  if (!page) {
+  if (!page || page.dataset.initialized === "true") {
     return;
   }
 
-  const form = document.getElementById("assignmentForm");
+  page.dataset.initialized = "true";
 
-  const cards = Array.from(document.querySelectorAll(".question-card"));
+  const cards = Array.from(page.querySelectorAll(".question-card"));
 
   const savedAnswers = readSavedAnswers();
 
-  let remainingSeconds = Number(page.dataset.remainingSeconds || 0);
+  let remainingSeconds = Math.max(
+    0,
+    Number(page.dataset.remainingSeconds || 0),
+  );
 
-  let attemptId = page.dataset.attemptId || "";
+  const attemptId = page.dataset.attemptId || "";
 
   let submitted = false;
-
   let saveTimer = null;
-
   let saveRequest = null;
-
   let timerInterval = null;
 
   initializeQuestionCards(cards, savedAnswers);
-
   initializeNavigation(cards);
-
   initializeMarkButtons(cards);
-
-  initializeSubmit(page, form);
-
+  initializeCurrentQuestion(cards);
+  initializeSubmit();
   initializeFullscreen();
 
-  initializeBackButton(page);
-
   updateProgress(cards);
-
   startTimer();
 
   window.addEventListener("pagehide", saveBeforeLeave);
@@ -54,31 +48,33 @@ function initializeAssignment() {
   function startTimer() {
     renderTimer();
 
+    if (remainingSeconds <= 0) {
+      handleTimeout();
+      return;
+    }
+
     timerInterval = setInterval(async () => {
       if (submitted) {
         return;
       }
 
-      remainingSeconds -= 1;
+      remainingSeconds = Math.max(0, remainingSeconds - 1);
 
-      if (remainingSeconds <= 0) {
-        remainingSeconds = 0;
+      renderTimer();
 
-        renderTimer();
-
+      if (remainingSeconds === 0) {
         clearInterval(timerInterval);
 
         await handleTimeout();
-
-        return;
       }
-
-      renderTimer();
     }, 1000);
   }
-
+  function normalizeDisplayText(value) {
+    return String(value ?? "").replace(/^\s+/, "");
+  }
   function renderTimer() {
-    const timerText = document.getElementById("timerText");
+    const timerText = page.querySelector("#timerText");
+    const timer = page.querySelector("#exerciseTimer");
 
     if (!timerText) {
       return;
@@ -88,13 +84,38 @@ function initializeAssignment() {
 
     const seconds = remainingSeconds % 60;
 
-    timerText.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    timerText.textContent =
+      `${String(minutes).padStart(2, "0")}:` +
+      `${String(seconds).padStart(2, "0")}`;
 
-    const timer = document.getElementById("exerciseTimer");
+    timer?.classList.toggle(
+      "is-warning",
+      remainingSeconds <= 300 && remainingSeconds > 60,
+    );
 
-    if (remainingSeconds <= 60) {
-      timer?.classList.add("is-danger");
+    timer?.classList.toggle("is-danger", remainingSeconds <= 60);
+  }
+
+  function setSaveStatus(type, text) {
+    const status = page.querySelector("#saveStatus");
+
+    if (!status) {
+      return;
     }
+
+    status.className = `exercise-save-status is-${type}`;
+
+    const icon =
+      type === "saving"
+        ? "fa-spinner fa-spin"
+        : type === "error"
+          ? "fa-cloud-xmark"
+          : "fa-cloud-check";
+
+    status.innerHTML = `
+      <i class="fa-light ${icon}"></i>
+      <span>${text}</span>
+    `;
   }
 
   async function handleTimeout() {
@@ -102,7 +123,7 @@ function initializeAssignment() {
       return;
     }
 
-    const modal = document.getElementById("timeoutModal");
+    const modal = page.querySelector("#timeoutModal");
 
     if (modal) {
       modal.hidden = false;
@@ -110,24 +131,17 @@ function initializeAssignment() {
 
     try {
       await saveAnswers();
-
-      await submitAssignment(true);
     } catch (error) {
-      console.error("AUTO SUBMIT ERROR:", error);
-
-      await submitAssignment(true);
+      console.error("TIMEOUT SAVE ERROR:", error);
     }
+
+    await submitAssignment(true);
   }
 
-  async function saveBeforeLeave() {
+  function saveBeforeLeave() {
     if (submitted) {
       return;
     }
-
-    const payload = JSON.stringify({
-      attempt_id: attemptId,
-      answers: collectAnswers(),
-    });
 
     const saveUrl = page.dataset.saveUrl;
 
@@ -136,6 +150,11 @@ function initializeAssignment() {
     }
 
     try {
+      const payload = JSON.stringify({
+        attempt_id: attemptId,
+        answers: collectAnswers(),
+      });
+
       const blob = new Blob([payload], {
         type: "application/json",
       });
@@ -160,14 +179,13 @@ function initializeAssignment() {
     if (saveRequest) {
       try {
         await saveRequest;
-      } catch (_) {
-        // ignore
-      }
+      } catch (_) {}
     }
+
+    setSaveStatus("saving", "Đang lưu...");
 
     const payload = {
       attempt_id: attemptId,
-
       answers: collectAnswers(),
     };
 
@@ -182,19 +200,12 @@ function initializeAssignment() {
       .then(async (response) => {
         const raw = await response.text();
 
-        console.log("SAVE STATUS:", response.status);
-        console.log("SAVE CONTENT-TYPE:", response.headers.get("content-type"));
-        console.log("SAVE URL:", response.url);
-        console.log("SAVE RESPONSE:", raw);
-
         let data = null;
 
         if (raw) {
           try {
             data = JSON.parse(raw);
-          } catch (error) {
-            console.error("SAVE RESPONSE KHÔNG PHẢI JSON:", raw);
-
+          } catch (_) {
             throw new Error(
               `API lưu bài trả về ${response.status} nhưng không phải JSON.`,
             );
@@ -209,13 +220,22 @@ function initializeAssignment() {
           );
         }
 
-        if (data?.data?.remaining_seconds !== undefined) {
-          remainingSeconds = Number(data.data.remaining_seconds);
+        const remaining = data?.data?.remaining_seconds;
+
+        if (remaining !== undefined && remaining !== null) {
+          remainingSeconds = Math.max(0, Number(remaining));
 
           renderTimer();
         }
 
+        setSaveStatus("saved", "Đã lưu");
+
         return data;
+      })
+      .catch((error) => {
+        setSaveStatus("error", "Lưu thất bại");
+
+        throw error;
       })
       .finally(() => {
         saveRequest = null;
@@ -285,14 +305,17 @@ function initializeAssignment() {
       return;
     }
 
-    const rawTemplate = template.textContent || "";
-
+    const rawTemplate = normalizeDisplayText(template.textContent);
     renderTemplateWithGaps(template, rawTemplate);
 
     const gaps = Array.from(template.querySelectorAll(".blank-gap"));
 
     options.forEach((option) => {
       option.addEventListener("click", () => {
+        if (option.classList.contains("is-used")) {
+          return;
+        }
+
         const gap = gaps.find((item) => !item.dataset.optionId);
 
         if (!gap) {
@@ -300,8 +323,6 @@ function initializeAssignment() {
         }
 
         setGapValue(gap, option);
-
-        updateDragState(card);
 
         updateProgress(cards);
 
@@ -312,8 +333,6 @@ function initializeAssignment() {
     gaps.forEach((gap) => {
       gap.addEventListener("click", () => {
         clearGapValue(gap, card);
-
-        updateDragState(card);
 
         updateProgress(cards);
 
@@ -336,7 +355,6 @@ function initializeAssignment() {
         const gap = document.createElement("button");
 
         gap.type = "button";
-
         gap.className = "blank-gap";
 
         gap.dataset.gapIndex = String(index);
@@ -380,9 +398,7 @@ function initializeAssignment() {
       `.drag-option[data-option-id="${cssEscape(optionId)}"]`,
     );
 
-    if (option) {
-      option.classList.remove("is-used");
-    }
+    option?.classList.remove("is-used");
 
     delete gap.dataset.optionId;
 
@@ -393,12 +409,6 @@ function initializeAssignment() {
         Chọn đáp án
       </span>
     `;
-  }
-
-  function updateDragState(card) {
-    // Chỉ dùng để trigger state update.
-    // Answer thực tế luôn được lấy trực tiếp
-    // từ các blank khi save.
   }
 
   function restoreDragAnswer(card, rawAnswer) {
@@ -442,31 +452,26 @@ function initializeAssignment() {
       return;
     }
 
-    const shouldShuffle = card.dataset.shuffleOptions === "true";
+    source.addEventListener("click", (event) => {
+      const item = event.target.closest(".ordering-item");
 
-    if (shouldShuffle) {
-      shuffleChildren(source);
-    }
+      if (!item || !source.contains(item)) {
+        return;
+      }
 
-    Array.from(source.querySelectorAll(".ordering-item")).forEach((item) => {
-      item.addEventListener("click", () => {
-        answer.appendChild(item);
+      answer.appendChild(item);
 
-        answer.classList.add("has-items");
+      updateOrderingNumbers(card);
 
-        updateOrderingNumbers(card);
+      updateProgress(cards);
 
-        updateProgress(cards);
-
-        scheduleSave();
-      });
+      scheduleSave();
     });
 
-    // Event delegation
     answer.addEventListener("click", (event) => {
       const item = event.target.closest(".ordering-item");
 
-      if (!item) {
+      if (!item || !answer.contains(item)) {
         return;
       }
 
@@ -523,7 +528,13 @@ function initializeAssignment() {
 
     const items = Array.from(answer.querySelectorAll(".ordering-item"));
 
+    const empty = answer.querySelector(".ordering-empty");
+
     answer.classList.toggle("has-items", items.length > 0);
+
+    if (empty) {
+      empty.hidden = items.length > 0;
+    }
 
     items.forEach((item, index) => {
       const number = item.querySelector(".ordering-item__number");
@@ -567,26 +578,68 @@ function initializeAssignment() {
   }
 
   function initializeNavigation(cards) {
-    const navigation = document.getElementById("questionNavigation");
+    const navigation = page.querySelector("#questionNavigation");
 
     if (!navigation) {
       return;
     }
 
-    const buttons = Array.from(
-      navigation.querySelectorAll(".question-nav-item"),
-    );
-
-    buttons.forEach((button) => {
+    navigation.querySelectorAll(".question-nav-item").forEach((button) => {
       button.addEventListener("click", () => {
         const index = Number(button.dataset.index);
 
-        cards[index]?.scrollIntoView({
+        const card = cards[index];
+
+        if (!card) {
+          return;
+        }
+
+        card.scrollIntoView({
           behavior: "smooth",
           block: "center",
         });
       });
     });
+  }
+
+  function initializeCurrentQuestion(cards) {
+    if (!("IntersectionObserver" in window)) {
+      cards[0]?.classList.add("is-current");
+
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        const card = visible[0]?.target;
+
+        if (!card) {
+          return;
+        }
+
+        cards.forEach((item) => {
+          item.classList.toggle("is-current", item === card);
+        });
+
+        const nav = page.querySelector(
+          `.question-nav-item[data-index="${card.dataset.index}"]`,
+        );
+
+        page.querySelectorAll(".question-nav-item").forEach((item) => {
+          item.classList.toggle("is-current", item === nav);
+        });
+      },
+      {
+        threshold: [0.25, 0.5, 0.75],
+        rootMargin: "-90px 0px -30% 0px",
+      },
+    );
+
+    cards.forEach((card) => observer.observe(card));
   }
 
   function updateProgress(cards) {
@@ -623,7 +676,7 @@ function initializeAssignment() {
 
       card.classList.toggle("is-answered", isAnswered);
 
-      const nav = document.querySelector(
+      const nav = page.querySelector(
         `.question-nav-item[data-index="${card.dataset.index}"]`,
       );
 
@@ -636,13 +689,13 @@ function initializeAssignment() {
 
     const total = cards.length;
 
-    const progressText = document.getElementById("progressText");
+    const progressText = page.querySelector("#progressText");
 
     if (progressText) {
       progressText.textContent = `${answered}/${total}`;
     }
 
-    const progressBar = document.getElementById("progressBar");
+    const progressBar = page.querySelector("#progressBar");
 
     if (progressBar) {
       const percent = total === 0 ? 0 : (answered / total) * 100;
@@ -660,84 +713,68 @@ function initializeAssignment() {
       }
 
       button.addEventListener("click", () => {
-        button.classList.toggle("is-marked");
+        const marked = button.classList.toggle("is-marked");
+
+        button.setAttribute("aria-pressed", String(marked));
 
         const icon = button.querySelector("i");
 
-        if (button.classList.contains("is-marked")) {
-          icon?.classList.remove("fa-light");
+        icon?.classList.toggle("fa-light", !marked);
 
-          icon?.classList.add("fa-solid");
-        } else {
-          icon?.classList.remove("fa-solid");
-
-          icon?.classList.add("fa-light");
-        }
+        icon?.classList.toggle("fa-solid", marked);
       });
     });
   }
 
-  function initializeSubmit(page, form) {
-    const submitButton = document.getElementById("btnSubmit");
-    const confirmButton = document.getElementById("btnConfirmSubmit");
-    const modal = document.getElementById("confirmModal");
+  function initializeSubmit() {
+    const submitButton = page.querySelector("#btnSubmit");
 
-    if (!submitButton) {
-      console.error("Không tìm thấy #btnSubmit");
-      return;
-    }
+    const confirmButton = page.querySelector("#btnConfirmSubmit");
 
-    if (!modal) {
-      console.error("Không tìm thấy #confirmModal");
+    const modal = page.querySelector("#confirmModal");
+
+    if (!submitButton || !modal) {
       return;
     }
 
     submitButton.addEventListener("click", (event) => {
       event.preventDefault();
-      console.log("CLICK NỘP BÀI");
 
       if (submitted) {
-        console.log("Đã submitted");
         return;
       }
 
       modal.hidden = false;
     });
 
-    document.querySelectorAll("[data-close-modal]").forEach((button) => {
+    page.querySelectorAll("[data-close-modal]").forEach((button) => {
       button.addEventListener("click", (event) => {
         event.preventDefault();
 
-        const currentModal = button.closest(".exercise-modal");
-
-        if (currentModal) {
-          currentModal.hidden = true;
-        }
+        button.closest(".exercise-modal").hidden = true;
       });
     });
 
-    const overlay = modal.querySelector(".exercise-modal__overlay");
-
-    overlay?.addEventListener("click", () => {
-      modal.hidden = true;
-    });
-
-    if (confirmButton) {
-      confirmButton.addEventListener("click", async (event) => {
-        event.preventDefault();
-
-        if (submitted) {
-          return;
-        }
-
+    modal
+      .querySelector(".exercise-modal__overlay")
+      ?.addEventListener("click", () => {
         modal.hidden = true;
-
-        await submitAssignment(false);
       });
-    }
 
-    document.querySelector("#btnResultBack")?.addEventListener("click", () => {
-      window.location.href = page.dataset.backUrl || "/";
+    confirmButton?.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      if (submitted) {
+        return;
+      }
+
+      modal.hidden = true;
+
+      await submitAssignment(false);
+    });
+
+    page.querySelector("#btnResultBack")?.addEventListener("click", () => {
+      window.location.href = "/student/assignment/qr";
     });
   }
 
@@ -747,7 +784,7 @@ function initializeAssignment() {
     }
 
     if (automatic) {
-      const timeoutModal = document.getElementById("timeoutModal");
+      const timeoutModal = page.querySelector("#timeoutModal");
 
       if (timeoutModal) {
         timeoutModal.hidden = false;
@@ -763,30 +800,23 @@ function initializeAssignment() {
     const submitUrl = page.dataset.submitUrl;
 
     if (!submitUrl) {
-      console.error("Không có submit URL.");
       return;
     }
 
-    const answers = collectAnswers();
-
     const payload = {
       attempt_id: attemptId,
-      answers: answers,
+      answers: collectAnswers(),
     };
 
-    console.log("SUBMIT URL:", submitUrl);
-    console.log("SUBMIT PAYLOAD:", payload);
-    console.log("SUBMIT JSON:", JSON.stringify(payload));
-
-    const button = document.getElementById("btnSubmit");
+    const button = page.querySelector("#btnSubmit");
 
     if (button) {
       button.disabled = true;
 
       button.innerHTML = `
-      <i class="fa-light fa-spinner fa-spin"></i>
-      Đang nộp...
-    `;
+        <i class="fa-light fa-spinner fa-spin"></i>
+        <span>Đang nộp...</span>
+      `;
     }
 
     try {
@@ -801,19 +831,12 @@ function initializeAssignment() {
 
       const raw = await response.text();
 
-      console.log("SUBMIT STATUS:", response.status);
-      console.log("SUBMIT CONTENT-TYPE:", response.headers.get("content-type"));
-      console.log("SUBMIT URL:", response.url);
-      console.log("SUBMIT RAW RESPONSE:", raw);
-
       let data = null;
 
       if (raw) {
         try {
           data = JSON.parse(raw);
-        } catch (parseError) {
-          console.error("SUBMIT RESPONSE KHÔNG PHẢI JSON:", raw);
-
+        } catch (_) {
           throw new Error(
             `API nộp bài trả về ${response.status} nhưng không phải JSON.`,
           );
@@ -832,15 +855,9 @@ function initializeAssignment() {
         throw new Error("Server không trả về dữ liệu.");
       }
 
-      if (!response.ok) {
-        throw new Error(data?.message || data?.error || "Không thể nộp bài.");
-      }
-
-      if (!data) {
-        throw new Error("Server không trả về dữ liệu.");
-      }
-
       submitted = true;
+
+      page.querySelector("#timeoutModal")?.setAttribute("hidden", "");
 
       renderResult(data.data);
     } catch (error) {
@@ -852,73 +869,40 @@ function initializeAssignment() {
         button.disabled = false;
 
         button.innerHTML = `
-        <i class="fa-light fa-paper-plane"></i>
-        Nộp bài
-      `;
+          <i class="fa-light fa-paper-plane"></i>
+          <span>Nộp bài</span>
+        `;
       }
 
-      const timeoutModal = document.getElementById("timeoutModal");
-
-      if (timeoutModal) {
-        timeoutModal.hidden = true;
-      }
+      page.querySelector("#timeoutModal")?.setAttribute("hidden", "");
 
       alert(error.message || "Không thể nộp bài.");
     }
   }
 
   function renderResult(result) {
-    const resultBox = document.getElementById("exerciseResult");
+  const resultBox = page.querySelector("#exerciseResult");
 
-    const questionList = document.querySelector(".question-list");
-
-    const submitBar = document.querySelector(".exercise-submit-bar");
-
-    if (questionList) {
-      questionList.hidden = true;
-    }
-
-    if (submitBar) {
-      submitBar.hidden = true;
-    }
-
-    if (resultBox) {
-      resultBox.hidden = false;
-    }
-
-    const score = document.getElementById("resultScore");
-
-    if (score) {
-      score.textContent = `${result.score} / ${result.total_score} điểm (${result.percentage}%)`;
-    }
-
-    const review = document.getElementById("resultReview");
-
-    if (!review) {
-      return;
-    }
-
-    review.innerHTML = "";
-
-    (result.review || []).forEach((item, index) => {
-      const element = document.createElement("div");
-
-      element.className =
-        "result-review__item " + (item.correct ? "is-correct" : "is-wrong");
-
-      element.innerHTML = `
-          <strong>
-            Câu ${index + 1}:
-            ${item.correct ? "Đúng" : "Sai"}
-          </strong>
-          `;
-
-      review.appendChild(element);
-    });
+  if (!resultBox) {
+    return;
   }
 
+  resultBox.removeAttribute("hidden");
+  resultBox.classList.add("is-visible");
+
+  const score = page.querySelector("#resultScore");
+
+  if (score) {
+    const current = result?.score ?? 0;
+    const total = result?.total_score ?? 0;
+    const percentage = result?.percentage ?? 0;
+
+    score.textContent =
+      `${current} / ${total} điểm (${percentage}%)`;
+  }
+}
   function initializeFullscreen() {
-    const button = document.getElementById("btnFullscreen");
+    const button = page.querySelector("#btnFullscreen");
 
     if (!button) {
       return;
@@ -935,24 +919,26 @@ function initializeAssignment() {
         console.error("FULLSCREEN ERROR:", error);
       }
     });
-  }
 
-  function initializeBackButton(page) {
-    document.getElementById("btnBack")?.addEventListener("click", async () => {
-      if (submitted) {
-        window.location.href = page.dataset.backUrl || "/";
+    document.addEventListener("fullscreenchange", () => {
+      const icon = button.querySelector("i");
 
+      if (!icon) {
         return;
       }
 
-      await saveAnswers();
+      const fullscreen = Boolean(document.fullscreenElement);
 
-      window.location.href = page.dataset.backUrl || "/";
+      icon.classList.toggle("fa-expand", !fullscreen);
+
+      icon.classList.toggle("fa-compress", fullscreen);
     });
   }
 
+  
+
   function readSavedAnswers() {
-    const element = document.getElementById("saved-answers-data");
+    const element = page.querySelector("#saved-answers-data");
 
     if (!element) {
       return {};

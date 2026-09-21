@@ -45,9 +45,15 @@ class AssignmentController {
       });
     } catch (error) {
       console.error("ASSIGNMENT QR ENTRY ERROR:", error);
+      return res.status(500).render("student/assignment/qr_student_code", {
+        title: "Nhập mã sinh viên",
 
-      return res.status(500).render("errors/500", {
-        title: "Lỗi hệ thống",
+        assignmentApplicationId,
+
+        classSectionId,
+
+        lessonId,
+        blank: true,
       });
     }
   }
@@ -131,40 +137,39 @@ class AssignmentController {
 
       const assignment = await getStudentAssignmentUseCase.execute(req, {
         studentId: access.studentId,
-
         assignmentApplicationId,
-
         classSectionId: access.classSectionId,
-
         lessonId: access.lessonId,
       });
 
+      console.log("ASSIGNMENT DATA:", JSON.stringify(assignment, null, 2));
+
       return res.render("student/assignment/take-assignment", {
         title: assignment.title,
-
         assignment,
-
         assignmentApplicationId,
-
         attemptId: assignment.attempt_id,
-
         remainingSeconds: assignment.remaining_seconds,
-
         savedAnswersJson: JSON.stringify(assignment.saved_answers || {}),
-
         classSectionId: access.classSectionId,
-
         lessonId: access.lessonId,
-
         blank: true,
-
         backUrl: `/student/class-section/${access.classSectionId}`,
       });
     } catch (error) {
       console.error("TAKE ASSIGNMENT ERROR:", error);
 
+      const message = error.message || "Không thể tải bài tập.";
+
+      if (message === "Bài tập này đã được nộp và không thể làm lại.") {
+        return res.status(403).render("student/assignment/assignment-locked", {
+          title: "Không thể làm bài",
+          message,
+        });
+      }
+
       return res.status(500).render("error", {
-        message: error.message || "Không thể tải bài tập.",
+        message,
       });
     }
   }

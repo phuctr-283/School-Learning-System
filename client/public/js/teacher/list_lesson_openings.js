@@ -1,68 +1,360 @@
-document.addEventListener("DOMContentLoaded", () => {
+console.log("LESSON OPENING JS LOADED");
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeLessonOpenings);
+} else {
   initializeLessonOpenings();
-});
+}
 
 function initializeLessonOpenings() {
   const container = document.querySelector(".lesson-opening-list");
 
+  console.log("INITIALIZE LESSON OPENINGS:", container);
+
   if (!container) {
+    console.error("Không tìm thấy .lesson-opening-list");
     return;
   }
 
   const classSectionId = container.dataset.classSectionId;
+
+  const classSectionLessonPlanId = container.dataset.classSectionLessonPlanId;
+
+  console.log("LESSON OPENING DATA:", {
+    classSectionId,
+    classSectionLessonPlanId,
+  });
 
   if (!classSectionId) {
     console.error("Không tìm thấy classSectionId.");
     return;
   }
 
+  if (!classSectionLessonPlanId) {
+    console.error("Không tìm thấy classSectionLessonPlanId.");
+    return;
+  }
+
+  initializeLessonOpeningStatusButtons(container, classSectionLessonPlanId);
+
   initializeContentToggles(container, classSectionId);
 }
+function initializeLessonOpeningStatusButtons(
+  container,
+  classSectionLessonPlanId,
+) {
+  container.addEventListener("click", async (event) => {
+    const button = event.target.closest(".lesson-opening-status-button");
 
-function initializeContentToggles(container, classSectionId) {
-  const buttons = container.querySelectorAll(".lesson-opening-content-toggle");
+    if (!button) {
+      return;
+    }
 
-  buttons.forEach((button) => {
-    button.addEventListener("click", async () => {
-      const lessonId = button.dataset.lessonId;
+    console.log("LESSON STATUS BUTTON CLICKED", button);
 
-      const panelId = button.getAttribute("aria-controls");
+    const lessonId = button.dataset.lessonId;
 
-      const panel = document.getElementById(panelId);
+    const currentStatus = button.dataset.status;
 
-      if (!lessonId || !panel) {
-        console.error("Không tìm thấy lessonId hoặc panel.", {
-          lessonId,
-          panelId,
-          panel,
-        });
-
-        return;
-      }
-
-      const isOpen = button.getAttribute("aria-expanded") === "true";
-
-      if (isOpen) {
-        panel.hidden = true;
-
-        button.setAttribute("aria-expanded", "false");
-
-        updateContentToggleIcon(button, false);
-
-        return;
-      }
-
-      panel.hidden = false;
-
-      button.setAttribute("aria-expanded", "true");
-
-      updateContentToggleIcon(button, true);
-
-      await loadLessonAssignments(panel, classSectionId, lessonId);
+    console.log("LESSON STATUS DATA:", {
+      lessonId,
+      currentStatus,
+      classSectionLessonPlanId,
     });
+
+    if (!lessonId) {
+      console.error("Không tìm thấy lessonId.");
+      return;
+    }
+
+    if (!classSectionLessonPlanId) {
+      console.error("Không tìm thấy classSectionLessonPlanId.");
+      return;
+    }
+
+    let nextStatus;
+
+    if (currentStatus === "open") {
+      nextStatus = "closed";
+    } else {
+      nextStatus = "open";
+    }
+
+    console.log("NEXT LESSON STATUS:", nextStatus);
+
+    await updateLessonOpeningStatus(
+      button,
+      classSectionLessonPlanId,
+      lessonId,
+      nextStatus,
+    );
   });
 }
+function initializeContentToggles(container, classSectionId) {
+  container.addEventListener("click", async (event) => {
+    const button = event.target.closest(".lesson-opening-content-toggle");
 
+    if (!button) {
+      return;
+    }
+
+    const lessonId = button.dataset.lessonId;
+
+    const panelId = button.getAttribute("aria-controls");
+
+    const panel = document.getElementById(panelId);
+
+    if (!lessonId || !panel) {
+      console.error("Không tìm thấy lessonId hoặc panel.", {
+        lessonId,
+        panelId,
+        panel,
+      });
+
+      return;
+    }
+
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+
+    if (isOpen) {
+      panel.hidden = true;
+
+      button.setAttribute("aria-expanded", "false");
+
+      updateContentToggleIcon(button, false);
+
+      return;
+    }
+
+    panel.hidden = false;
+
+    button.setAttribute("aria-expanded", "true");
+
+    updateContentToggleIcon(button, true);
+
+    await loadLessonAssignments(panel, classSectionId, lessonId);
+  });
+}
+async function updateLessonOpeningStatus(
+  button,
+  classSectionLessonPlanId,
+  lessonId,
+  status,
+) {
+  const url =
+    `/teacher/assignment/class-sections/` +
+    `${encodeURIComponent(classSectionLessonPlanId)}/` +
+    `${encodeURIComponent(lessonId)}/status`;
+
+  console.log("SENDING LESSON STATUS PATCH:", {
+    url,
+    classSectionLessonPlanId,
+    lessonId,
+    status,
+  });
+
+  try {
+    button.disabled = true;
+
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "same-origin",
+      body: JSON.stringify({
+        status,
+      }),
+    });
+
+    console.log("PATCH RESPONSE STATUS:", response.status);
+
+    const responseText = await response.text();
+
+    console.log("PATCH RESPONSE BODY:", responseText);
+
+    const contentType = response.headers.get("content-type");
+
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error(
+        `Server không trả JSON. HTTP ${response.status}: ${responseText}`,
+      );
+    }
+
+    const result = JSON.parse(responseText);
+
+    if (!response.ok || result.success !== true) {
+      throw new Error(result.message || "Không thể cập nhật trạng thái.");
+    }
+
+    button.dataset.status = status;
+
+    button.classList.toggle("is-active", status === "open");
+
+    const text = button.querySelector(".lesson-opening-status-text");
+
+    if (text) {
+      text.textContent = status === "open" ? "Đang bật" : "Đang tắt";
+    }
+
+    const row = button.closest(".lesson-opening-row");
+
+    if (row) {
+      const statusElement = row.querySelector(".lesson-opening-status");
+
+      if (statusElement) {
+        statusElement.classList.remove(
+          "lesson-opening-status--open",
+          "lesson-opening-status--closed",
+          "lesson-opening-status--locked",
+        );
+
+        statusElement.classList.add(
+          status === "open"
+            ? "lesson-opening-status--open"
+            : "lesson-opening-status--closed",
+        );
+
+        statusElement.textContent = status === "open" ? "Đang mở" : "Đã đóng";
+
+        updateLessonOpeningContent(
+          button.closest(".lesson-opening-row"),
+          status,
+        );
+      }
+    }
+  } catch (error) {
+    console.error("UPDATE LESSON OPENING STATUS ERROR:", error);
+
+    window.alert(error.message || "Không thể cập nhật trạng thái.");
+  } finally {
+    button.disabled = false;
+  }
+}
+function updateLessonOpeningUI(button, status) {
+  button.dataset.status = status;
+
+  button.classList.toggle("is-active", status === "open");
+
+  button.innerHTML = `
+    <span class="lesson-opening-status-icon">
+      <i class="fa-light fa-power-off"></i>
+    </span>
+
+    <span class="lesson-opening-status-text">
+      ${status === "open" ? "Đang bật" : "Đang tắt"}
+    </span>
+  `;
+}
+function updateLessonOpeningContent(row, status) {
+  if (!row) {
+    return;
+  }
+
+  const button = row.querySelector(".lesson-opening-status-button");
+
+  const lessonId = button?.dataset.lessonId;
+
+  if (!lessonId) {
+    return;
+  }
+
+  const contentCell = row.querySelector("td:last-child");
+
+  if (!contentCell) {
+    return;
+  }
+
+  const panelId = `lesson-content-${lessonId}`;
+
+  const oldPanel = document.getElementById(panelId);
+
+  if (status === "open") {
+    contentCell.innerHTML = `
+      <button
+        type="button"
+        class="lesson-opening-content-toggle"
+        aria-expanded="false"
+        aria-controls="${panelId}"
+        data-lesson-id="${escapeHtml(lessonId)}"
+      >
+        <span class="lesson-opening-content-icon">
+          <i class="fa-light fa-chevron-down"></i>
+        </span>
+
+        <span>
+          Xem bài tập
+        </span>
+      </button>
+    `;
+
+    if (!oldPanel) {
+      const panelRow = document.createElement("tr");
+
+      panelRow.id = panelId;
+
+      panelRow.className = "lesson-content-panel";
+
+      panelRow.hidden = true;
+
+      panelRow.innerHTML = `
+        <td colspan="4">
+          <div class="lesson-content-panel__inner">
+            <div
+              class="lesson-assignments"
+              data-class-section-id=""
+              data-lesson-id="${escapeHtml(lessonId)}"
+            >
+              <div class="assignment-loading" hidden>
+                <i class="fa-light fa-spinner fa-spin"></i>
+                Đang tải bài tập...
+              </div>
+
+              <div class="assignment-list"></div>
+
+              <div class="assignment-empty" hidden>
+                <i class="fa-light fa-inbox"></i>
+
+                <span>
+                  Buổi học này chưa có bài tập.
+                </span>
+              </div>
+
+              <div class="assignment-error" hidden></div>
+            </div>
+          </div>
+        </td>
+      `;
+
+      row.insertAdjacentElement("afterend", panelRow);
+    }
+
+    const container = row.closest(".lesson-opening-list");
+
+    const classSectionId = container?.dataset.classSectionId;
+
+    const assignmentContainer = document.querySelector(
+      `#${CSS.escape(panelId)} .lesson-assignments`,
+    );
+
+    if (assignmentContainer) {
+      assignmentContainer.dataset.classSectionId = classSectionId || "";
+    }
+
+    return;
+  }
+
+  contentCell.innerHTML = `
+    <span class="lesson-opening-content-disabled">
+      Chưa mở nội dung
+    </span>
+  `;
+
+  if (oldPanel) {
+    oldPanel.remove();
+  }
+}
 function updateContentToggleIcon(button, isOpen) {
   const icon = button.querySelector(".lesson-opening-content-icon i");
 
@@ -269,82 +561,61 @@ function initializeAssignmentStatusButtons(container, classSectionId) {
     }
   });
 }
-function initializeAssignmentQrButton(
-  item,
-  classSectionId,
-) {
-  const button =
-    item.querySelector(
-      "[data-assignment-qr-button]",
-    );
+function initializeAssignmentQrButton(item, classSectionId) {
+  const button = item.querySelector("[data-assignment-qr-button]");
 
   if (!button) {
     return;
   }
 
-  button.addEventListener(
-    "click",
-    () => {
-      const applicationId =
-        item.dataset
-          .assignmentApplicationId;
+  if (button.dataset.qrInitialized === "true") {
+    return;
+  }
 
-      const lessonId =
-        item.dataset.lessonId;
+  button.dataset.qrInitialized = "true";
 
-      if (
-        !applicationId ||
-        !classSectionId ||
-        !lessonId
-      ) {
-        console.error(
-          "Thiếu dữ liệu để tạo QR.",
-          {
-            applicationId,
-            classSectionId,
-            lessonId,
-          },
-        );
+  button.addEventListener("click", () => {
+    const applicationId =
+      item.dataset.assignmentApplicationId;
 
-        return;
-      }
+    const lessonId =
+      item.dataset.lessonId;
 
-      showAssignmentQr({
+    if (!applicationId || !classSectionId || !lessonId) {
+      console.error("Thiếu dữ liệu để tạo QR.", {
         applicationId,
         classSectionId,
         lessonId,
-        title:
-          item.querySelector(
-            ".lesson-assignment-title-text",
-          )?.textContent ||
-          "Bài tập",
       });
-    },
-  );
-}
-function showAssignmentQr({
-  applicationId,
-  classSectionId,
-  lessonId,
-  title,
-}) {
-  closeAssignmentQr();
 
-  const qrUrl =
-    buildAssignmentQrUrl({
+      return;
+    }
+
+    showAssignmentQr({
       applicationId,
       classSectionId,
       lessonId,
+      title:
+        item.querySelector(
+          ".lesson-assignment-title-text",
+        )?.textContent || "Bài tập",
     });
+  });
+}
+function showAssignmentQr({ applicationId, classSectionId, lessonId, title }) {
+  closeAssignmentQr();
 
-  const overlay =
-    document.createElement("div");
+  const qrUrl = buildAssignmentQrUrl({
+    applicationId,
+    classSectionId,
+    lessonId,
+  });
 
-  overlay.className =
-    "assignment-qr-overlay";
+  const overlay = document.createElement("div");
 
-  overlay.id =
-    "assignmentQrOverlay";
+  overlay.className = "assignment-qr-overlay";
+
+  overlay.id = "assignmentQrOverlay";
 
   overlay.innerHTML = `
     <div
@@ -416,64 +687,36 @@ function showAssignmentQr({
 
   document.body.appendChild(overlay);
 
-  document.body.classList.add(
-    "assignment-qr-open",
-  );
+  document.body.classList.add("assignment-qr-open");
 
-  const qrElement =
-    overlay.querySelector(
-      "[data-assignment-qr-code]",
-    );
+  const qrElement = overlay.querySelector("[data-assignment-qr-code]");
 
-  new QRCode(
-    qrElement,
-    {
-      text: qrUrl,
-      width: 260,
-      height: 260,
-    },
-  );
+  new QRCode(qrElement, {
+    text: qrUrl,
+    width: 260,
+    height: 260,
+  });
 
-  overlay
-    .querySelectorAll(
-      "[data-assignment-qr-close]",
-    )
-    .forEach((element) => {
-      element.addEventListener(
-        "click",
-        closeAssignmentQr,
-      );
-    });
+  overlay.querySelectorAll("[data-assignment-qr-close]").forEach((element) => {
+    element.addEventListener("click", closeAssignmentQr);
+  });
 
-  document.addEventListener(
-    "keydown",
-    handleAssignmentQrKeydown,
-  );
+  document.addEventListener("keydown", handleAssignmentQrKeydown);
 }
 
 function closeAssignmentQr() {
-  const overlay =
-    document.getElementById(
-      "assignmentQrOverlay",
-    );
+  const overlay = document.getElementById("assignmentQrOverlay");
 
   if (overlay) {
     overlay.remove();
   }
 
-  document.body.classList.remove(
-    "assignment-qr-open",
-  );
+  document.body.classList.remove("assignment-qr-open");
 
-  document.removeEventListener(
-    "keydown",
-    handleAssignmentQrKeydown,
-  );
+  document.removeEventListener("keydown", handleAssignmentQrKeydown);
 }
 
-function handleAssignmentQrKeydown(
-  event,
-) {
+function handleAssignmentQrKeydown(event) {
   if (event.key === "Escape") {
     closeAssignmentQr();
   }
@@ -561,7 +804,9 @@ async function updateAssignmentStatus(
   </span>
 `;
 
-    updateAssignmentQr(item, isActive);
+    if (isActive) {
+      initializeAssignmentQrButton(item, classSectionId);
+    }
   } catch (errorObject) {
     console.error("UPDATE ASSIGNMENT STATUS ERROR:", errorObject);
 
@@ -579,35 +824,16 @@ async function updateAssignmentStatus(
     button.disabled = false;
   }
 }
-function buildAssignmentQrUrl({
-  applicationId,
-  classSectionId,
-  lessonId,
-}) {
-  const url = new URL(
-    "/student/assignment/qr",
-    window.location.origin,
-  );
+function buildAssignmentQrUrl({ applicationId, classSectionId, lessonId }) {
+  const url = new URL("/student/assignment/qr", window.location.origin);
 
-  url.searchParams.set(
-    "assignment_application_id",
-    applicationId,
-  );
+  url.searchParams.set("assignment_application_id", applicationId);
 
-  url.searchParams.set(
-    "class_section_id",
-    classSectionId,
-  );
+  url.searchParams.set("class_section_id", classSectionId);
 
-  url.searchParams.set(
-    "lesson_id",
-    lessonId,
-  );
+  url.searchParams.set("lesson_id", lessonId);
 
-  url.searchParams.set(
-    "QR-CODE",
-    "TRUE",
-  );
+  url.searchParams.set("QR-CODE", "TRUE");
 
   return url.toString();
 }

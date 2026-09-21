@@ -76,8 +76,11 @@ const assignmentApi = {
           lesson_id: lessonId,
         },
       },
+      
     );
-
+console.log(
+    "[NODE] DJANGO ASSIGNMENT APPLICATIONS RESPONSE:",
+    response.data,);
     return response.data;
   },
   async updateClassSectionStatus(

@@ -16,6 +16,7 @@ class StudentAssignmentOptionDTO:
 class StudentAssignmentQuestionDTO:
 
     question_id: str
+    question:str
     content: str
     question_type: str
     score: Decimal

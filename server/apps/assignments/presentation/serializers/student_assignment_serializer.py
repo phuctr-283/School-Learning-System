@@ -17,7 +17,7 @@ class StudentAssignmentQuestionSerializer(
 ):
 
     question_id = serializers.CharField()
-
+    question = serializers.CharField()
     content = serializers.CharField()
 
     question_type = serializers.CharField()

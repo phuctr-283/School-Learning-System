@@ -392,10 +392,14 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             if target is None:
                 continue
 
-            if target.status != "active":
+            if target is None:
                 continue
 
-            result.append(AssignmentApplicationMapper.to_content_dto(application))
+            result.append(
+                AssignmentApplicationMapper.to_content_dto(
+                    application
+                )
+            )
 
         return result
 

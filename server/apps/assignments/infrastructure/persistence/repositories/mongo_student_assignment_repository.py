@@ -1,5 +1,5 @@
 import json
-
+import random
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
 
@@ -221,6 +221,22 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
     ):
         now = self._now()
 
+        graded_attempt = (
+        AssignmentAttemptModel.objects(
+            assignment_application=application,
+            student=student,
+            class_section=class_section,
+            status="graded",
+        )
+        .order_by("-submitted_at")
+        .first()
+    )
+
+        if graded_attempt is not None:
+            raise ValueError(
+                "Bài tập này đã được nộp và không thể làm lại."
+            )
+        
         attempt = (
             AssignmentAttemptModel.objects(
                 assignment_application=application,
@@ -395,9 +411,9 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
         return False
 
     def _build_questions(
-        self,
-        assignment,
-    ):
+    self,
+    assignment,
+):
 
         from apps.assignments.application.dto.student_assignment_dto import (
             StudentAssignmentQuestionDTO,
@@ -411,12 +427,18 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
             key=lambda item: item.order,
         ):
 
+            source_options = list(question.options or [])
+
+            if question.shuffle_options:
+                random.shuffle(source_options)
+            else:
+                source_options.sort(
+                    key=lambda item: item.order
+                )
+
             options = []
 
-            for option in sorted(
-                question.options or [],
-                key=lambda item: item.order,
-            ):
+            for option in source_options:
 
                 options.append(
                     StudentAssignmentOptionDTO(
@@ -427,20 +449,24 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
                 )
 
             questions.append(
-                StudentAssignmentQuestionDTO(
-                    question_id=str(question.question_id),
-                    content=question.content,
-                    question_type=question.question_type,
-                    score=question.score,
-                    order=question.order,
-                    shuffle_options=bool(question.shuffle_options),
-                    blank_count=int(question.blank_count or 0),
-                    options=options,
-                )
+            StudentAssignmentQuestionDTO(
+                question_id=str(question.question_id),
+                question = question.question,
+                content=question.content,
+                question_type=question.question_type,
+                score=question.score,
+                order=question.order,
+                shuffle_options=bool(
+                    question.shuffle_options
+                ),
+                blank_count=int(
+                    question.blank_count or 0
+                ),
+                options=options,
             )
+        )
 
         return questions
-
     def _build_assignment_response(
         self,
         application,
@@ -497,16 +523,17 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
         )
 
     def get_student_assignment(
-        self,
-        student_id,
-        assignment_application_id,
-        class_section_id,
-        lesson_id,
-    ):
-
+    self,
+    student_id,
+    assignment_application_id,
+    class_section_id,
+    lesson_id,
+):
         student = self._get_student(student_id)
 
-        class_section = self._get_class_section(class_section_id)
+        class_section = self._get_class_section(
+            class_section_id
+        )
 
         self._validate_enrollment(
             student,
@@ -528,12 +555,32 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
             lesson_id,
         )
 
-        self._validate_application_time(application)
-
         assignment = application.assignment
 
         if assignment is None:
-            raise ValueError("Không tìm thấy nội dung bài tập.")
+            raise ValueError(
+                "Không tìm thấy nội dung bài tập."
+            )
+
+        graded_attempt = (
+            AssignmentAttemptModel.objects(
+                assignment_application=application,
+                student=student,
+                class_section=class_section,
+                status="graded",
+            )
+            .order_by("-submitted_at")
+            .first()
+        )
+
+        if graded_attempt is not None:
+            raise ValueError(
+                "Bài tập này đã được nộp và không thể làm lại."
+            )
+
+        self._validate_application_time(
+            application
+        )
 
         attempt = self._get_or_create_attempt(
             application,
@@ -542,14 +589,24 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
         )
 
         now = self._now()
-        started_at = self._to_utc(attempt.started_at)
 
-        deadline = started_at + timedelta(minutes=int(assignment.duration_minutes))
+        started_at = self._to_utc(
+            attempt.started_at
+        )
 
-        # GET lại sau khi hết giờ
-        # => tự động chấm.
-        if attempt.status == "in_progress" and now >= deadline:
+        deadline = (
+            started_at
+            + timedelta(
+                minutes=int(
+                    assignment.duration_minutes
+                )
+            )
+        )
 
+        if (
+            attempt.status == "in_progress"
+            and now >= deadline
+        ):
             self._grade_attempt(
                 attempt,
                 assignment,
@@ -560,7 +617,6 @@ class MongoStudentAssignmentRepository(StudentAssignmentRepository):
             attempt,
             assignment,
         )
-
     def _build_correct_answer(
         self,
         question,

@@ -392,29 +392,39 @@ class LessonOpeningController {
     }
   }
   async getAssignmentApplications(req, res) {
-    try {
-      const { class_section_id, lesson_id } = req.query;
+  try {
+    const { class_section_id, lesson_id } = req.query;
 
-      const applications = await getAssignmentApplicationsUseCase.execute(req, {
+    console.log("[NODE] GET ASSIGNMENT APPLICATIONS:", {
+      class_section_id,
+      lesson_id,
+    });
+
+    const applications =
+      await getAssignmentApplicationsUseCase.execute(req, {
         classSectionId: class_section_id,
         lessonId: lesson_id,
       });
 
-      return res.status(200).json({
-        success: true,
+    console.log("[NODE] ASSIGNMENT APPLICATIONS RESULT:", applications);
+    console.log(
+      "[NODE] ASSIGNMENT APPLICATIONS COUNT:",
+      Array.isArray(applications) ? applications.length : "NOT_ARRAY",
+    );
 
-        data: applications,
-      });
-    } catch (error) {
-      console.error("GET ASSIGNMENT APPLICATIONS ERROR:", error);
+    return res.status(200).json({
+      success: true,
+      data: applications,
+    });
+  } catch (error) {
+    console.error("GET ASSIGNMENT APPLICATIONS ERROR:", error);
 
-      return res.status(400).json({
-        success: false,
-
-        message: error.message || "Không thể tải bài tập của buổi học.",
-      });
-    }
+    return res.status(400).json({
+      success: false,
+      message: error.message || "Không thể tải bài tập của buổi học.",
+    });
   }
+}
   async updateAssignmentApplicationClassSectionStatus(req, res) {
     try {
       const { applicationId, classSectionId } = req.params;

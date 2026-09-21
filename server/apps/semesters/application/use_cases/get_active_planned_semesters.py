@@ -13,9 +13,7 @@ class GetActivePlannedSemestersUseCase:
         self,
         semester_repository: SemesterRepository,
     ):
-        self.semester_repository = (
-            semester_repository
-        )
+        self.semester_repository = semester_repository
 
     def execute(
         self,
@@ -24,43 +22,21 @@ class GetActivePlannedSemestersUseCase:
 
         if not university_id:
 
-            raise ValueError(
-                "University ID không được để trống."
-            )
+            raise ValueError("University ID không được để trống.")
 
-        semesters = (
-            self.semester_repository
-            .get_active_planned(
-                university_id=university_id,
-            )
+        semesters = self.semester_repository.get_active_planned(
+            university_id=university_id,
         )
 
         return [
             SemesterContentDTO(
                 semester_id=semester.semester_id,
-
                 name=semester.name,
-
-                semester_number=(
-                    semester.semester_number
-                ),
-
-                academic_year_id=(
-                    semester.academic_year_id
-                ),
-
-                academic_year_name=(
-                    semester.academic_year_name
-                ),
-
-                university_id=(
-                    semester.university_id
-                ),
-
-                university_name=(
-                    semester.university_name
-                ),
-
+                semester_number=(semester.semester_number),
+                academic_year_id=(semester.academic_year_id),
+                academic_year_name=(semester.academic_year_name),
+                university_id=(semester.university_id),
+                university_name=(semester.university_name),
                 status=semester.status,
             )
             for semester in semesters

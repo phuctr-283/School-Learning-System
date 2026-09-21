@@ -148,13 +148,8 @@ class LessonController {
         "school_admin/university/lesson/create_semester_lesson_plan",
         {
           title: "Tạo kế hoạch học kỳ",
-
-          // Toàn bộ SemesterContentDTO
           semesters,
-
-          // Academic year duy nhất
           academicYears,
-
           formData: {},
         },
       );

@@ -23,6 +23,7 @@ from apps.users.domain.enums.account_level import (
 )
 from apps.users.application.dto.user_dto import CreateUserDTO
 
+
 class ImportStudentsUseCase:
 
     def __init__(
@@ -99,7 +100,7 @@ class ImportStudentsUseCase:
 
                 parsed = StudentIdParserService.parse(dto.student_id)
 
-                department_number = parsed["department_number"]
+                department_candidates = parsed["department_candidates"]
 
                 cohort_id = parsed["cohort_id"]
 
@@ -142,15 +143,26 @@ class ImportStudentsUseCase:
                 # Department
                 # =================================
 
-                department = self.department_repository.find_by_number(
-                    university_id=university_id,
-                    department_number=department_number,
-                )
+                department = None
+                matched_department_number = None
 
-                if not department:
+                for candidate in department_candidates:
+
+                    department = self.department_repository.find_by_number(
+                        university_id=university_id,
+                        department_number=candidate,
+                    )
+
+                    if department:
+                        matched_department_number = department.department_number
+                        break
+
+                if department is None:
+                    candidates_text = ", ".join(department_candidates)
 
                     raise ValueError(
-                        f"Không tìm thấy khoa có " f"số khoa {department_number}."
+                        f"Không tìm thấy khoa tương ứng với "
+                        f"mã khoa {candidates_text}."
                     )
 
                 # =================================
@@ -197,7 +209,7 @@ class ImportStudentsUseCase:
                         gender=gender,
                         email=email,
                         student_class=(dto.student_class.strip().upper()),
-                        department_number=(department_number),
+                        department_number=matched_department_number,
                         cohort_id=cohort_id,
                         department=department,
                     )

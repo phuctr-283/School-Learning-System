@@ -1,11 +1,12 @@
 const {
+  getTeacherActiveSubjectsUseCase,
   getTeacherSubjectsUseCase,
 } = require("../../../../infrastructure/dependencies/class_section/class_section_dependency");
 
 class SubjectController {
   async getSubjectsAssignment(req, res) {
     try {
-      const subjects = await getTeacherSubjectsUseCase.execute(req);
+      const subjects = await getTeacherActiveSubjectsUseCase.execute(req);
 
       return res.render("teacher/assignment/subject", {
         title:"Bài tập",

@@ -1,0 +1,827 @@
+<div class="exercise-page" data-duration="{{assignment.duration_minutes}}" data-remaining-seconds="{{remainingSeconds}}"
+  data-attempt-id="{{attemptId}}" data-submit-url="/student/assignment/take/{{assignmentApplicationId}}/submit"
+  data-save-url="/student/assignment/take/{{assignmentApplicationId}}/save" data-back-url="{{backUrl}}">
+
+
+  <textarea id="saved-answers-data" hidden>{{savedAnswersJson}}</textarea>
+
+
+  <!-- TOP BAR -->
+
+  <header class="exercise-topbar">
+
+    <div class="exercise-topbar__left">
+
+      <button type="button" class="exercise-back" id="btnBack">
+        <i class="fa-light fa-arrow-left"></i>
+
+        <span>Quay lại</span>
+      </button>
+
+
+      <div class="exercise-title">
+
+        <strong>
+          {{assignment.title}}
+        </strong>
+
+        <span>
+          {{assignment.subject_name}}
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="exercise-topbar__right">
+
+      <div class="exercise-type">
+
+        {{#if (eq assignment.assignment_type "exam")}}
+        <i class="fa-light fa-file-certificate"></i>
+        Bài thi
+        {{else}}
+        <i class="fa-light fa-file-lines"></i>
+        Bài tập
+        {{/if}}
+
+      </div>
+
+
+      <div class="exercise-timer" id="exerciseTimer">
+
+        <i class="fa-light fa-clock"></i>
+
+        <span id="timerText">
+          00:00
+        </span>
+
+      </div>
+
+
+      <button type="button" class="exercise-icon-button" id="btnFullscreen" title="Toàn màn hình">
+
+        <i class="fa-light fa-expand"></i>
+
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- PROGRESS -->
+
+  <div class="exercise-progress">
+
+    <div class="exercise-progress__bar" id="progressBar"></div>
+
+  </div>
+
+
+  <!-- BODY -->
+
+  <div class="exercise-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="exercise-sidebar">
+
+      <div class="exercise-sidebar__title">
+
+        <span>Câu hỏi</span>
+
+        <span id="progressText">
+          0/0
+        </span>
+
+      </div>
+
+
+      <div class="question-navigation" id="questionNavigation">
+
+        {{#each assignment.questions}}
+
+        <button type="button" class="question-nav-item" data-index="{{@index}}">
+
+          {{add @index 1}}
+
+        </button>
+
+        {{/each}}
+
+      </div>
+
+
+      <div class="exercise-sidebar__legend">
+
+        <div>
+
+          <span class="legend-dot"></span>
+
+          <span>Chưa trả lời</span>
+
+        </div>
+
+
+        <div>
+
+          <span class="legend-dot legend-dot--answered"></span>
+
+          <span>Đã trả lời</span>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="exercise-main">
+
+
+      <div class="exercise-header">
+
+        <div>
+
+          <span class="exercise-header__eyebrow">
+            {{assignment.subject_name}}
+          </span>
+
+          <h1>
+            {{assignment.title}}
+          </h1>
+
+          {{#if assignment.description}}
+
+          <p>
+            {{assignment.description}}
+          </p>
+
+          {{/if}}
+
+        </div>
+
+
+        <div class="exercise-score-info">
+
+          <span>
+            Tổng điểm
+          </span>
+
+          <strong>
+            {{assignment.total_score}}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- QUESTIONS -->
+
+      <form id="assignmentForm" autocomplete="off">
+
+        <div class="question-list">
+
+
+          {{#each assignment.questions}}
+
+          <section class="question-card" data-index="{{@index}}" data-question-id="{{question_id}}"
+            data-type="{{question_type}}" data-blank-count="{{blank_count}}">
+
+
+            <!-- QUESTION HEADER -->
+
+            <div class="question-card__header">
+
+              <div class="question-card__number">
+
+                Câu {{add @index 1}}
+
+              </div>
+
+
+              <div class="question-card__type">
+
+                {{#if (eq question_type "multiple_choice")}}
+
+                Trắc nghiệm
+
+                {{else if (eq question_type "ordering")}}
+
+                Sắp xếp
+
+                {{else if (eq question_type "drag_and_drop")}}
+
+                Điền vào chỗ trống
+
+                {{else}}
+
+                Câu hỏi
+
+                {{/if}}
+
+              </div>
+
+
+              <div class="question-card__score">
+
+                {{score}} điểm
+
+              </div>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div class="question-card__content">
+
+
+              {{#if (eq question_type "drag_and_drop")}}
+
+              <div class="question-template" data-template-source>{{content}}</div>
+
+
+              <div class="drag-options" data-drag-options>
+
+                {{#each options}}
+
+                <button type="button" class="drag-option" data-option-id="{{option_id}}">
+
+                  <span class="drag-option__text">
+                    {{content}}
+                  </span>
+
+                </button>
+
+                {{/each}}
+
+              </div>
+
+
+              {{else}}
+
+              <div class="question-text">
+
+                {{content}}
+
+              </div>
+
+              {{/if}}
+
+
+              <!-- MULTIPLE CHOICE -->
+
+              {{#if (eq question_type "multiple_choice")}}
+
+              <div class="choice-options">
+
+                {{#each options}}
+
+                <label class="choice-option">
+
+                  <input type="radio" name="question-{{../question_id}}" value="{{option_id}}" />
+
+
+                  <span class="choice-option__radio"></span>
+
+
+                  <span class="choice-option__text">
+
+                    {{content}}
+
+                  </span>
+
+                </label>
+
+                {{/each}}
+
+              </div>
+
+              {{/if}}
+
+
+              <!-- ORDERING -->
+
+              {{#if (eq question_type "ordering")}}
+
+              <div class="ordering-workspace">
+
+
+                <div class="ordering-column">
+
+                  <div class="ordering-column__title">
+
+                    <span>
+                      Nội dung
+                    </span>
+
+                    <small>
+                      Click để chọn
+                    </small>
+
+                  </div>
+
+
+                  <div class="ordering-source" data-ordering-source>
+
+                    {{#each options}}
+
+                    <button type="button" class="ordering-item" data-option-id="{{option_id}}">
+
+                      <span class="ordering-item__number">
+                        {{add @index 1}}
+                      </span>
+
+                      <span class="ordering-item__content">
+                        {{content}}
+                      </span>
+
+                    </button>
+
+                    {{/each}}
+
+                  </div>
+
+                </div>
+
+
+                <div class="ordering-column">
+
+                  <div class="ordering-column__title">
+
+                    <span>
+                      Thứ tự trả lời
+                    </span>
+
+                    <small>
+                      Click để bỏ
+                    </small>
+
+                  </div>
+
+
+                  <div class="ordering-answer" data-ordering-answer></div>
+
+                </div>
+
+
+              </div>
+
+              {{/if}}
+
+
+            </div>
+
+
+            <button type="button" class="question-mark-button" data-mark-question>
+
+              <i class="fa-light fa-flag"></i>
+
+              Đánh dấu
+
+            </button>
+
+          </section>
+
+          {{/each}}
+
+
+        </div>
+
+
+        <!-- SUBMIT -->
+
+        <div class="exercise-submit-bar">
+
+          <div>
+
+            <strong>
+              Hoàn thành bài?
+            </strong>
+
+            <span>
+              Kiểm tra lại câu trả lời trước khi nộp.
+            </span>
+
+          </div>
+
+
+          <button type="button" class="exercise-submit-button" id="btnSubmit">
+
+            <i class="fa-light fa-paper-plane"></i>
+
+            Nộp bài
+
+          </button>
+
+        </div>
+
+      </form>
+
+
+      <!-- RESULT -->
+
+      <section class="exercise-result" id="exerciseResult" hidden>
+
+        <div class="result-icon">
+
+          <i class="fa-light fa-circle-check"></i>
+
+        </div>
+
+
+        <h2>
+          Đã nộp bài
+        </h2>
+
+
+        <div class="result-score" id="resultScore"></div>
+
+
+        <div class="result-review" id="resultReview"></div>
+
+
+        <button type="button" class="exercise-submit-button" id="btnResultBack">
+
+          Quay lại
+
+        </button>
+
+      </section>
+
+
+    </main>
+
+  </div>
+
+
+  <!-- CONFIRM MODAL -->
+
+  <div class="exercise-modal" id="confirmModal" hidden>
+
+    <div class="exercise-modal__overlay"></div>
+
+
+    <div class="exercise-modal__box">
+
+      <button type="button" class="exercise-modal__close" data-close-modal>
+
+        <i class="fa-light fa-xmark"></i>
+
+      </button>
+
+
+      <div class="exercise-modal__icon">
+
+        <i class="fa-light fa-paper-plane"></i>
+
+      </div>
+
+
+      <h3>
+        Nộp bài?
+      </h3>
+
+
+      <p>
+        Sau khi nộp, bạn sẽ không thể thay đổi câu trả lời.
+      </p>
+
+
+      <div class="exercise-modal__actions">
+
+        <button type="button" class="button-secondary" data-close-modal>
+          Tiếp tục làm
+        </button>
+
+
+        <button type="button" class="exercise-submit-button" id="btnConfirmSubmit">
+          Nộp bài
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TIMEOUT MODAL -->
+
+  <div class="exercise-modal" id="timeoutModal" hidden>
+
+    <div class="exercise-modal__overlay"></div>
+
+
+    <div class="exercise-modal__box">
+
+      <div class="exercise-modal__icon">
+
+        <i class="fa-light fa-clock"></i>
+
+      </div>
+
+
+      <h3>
+        Hết thời gian
+      </h3>
+
+
+      <p>
+        Hệ thống đang tự động lưu và nộp bài của bạn.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="exercise-page" data-duration="{{assignment.duration_minutes}}" data-remaining-seconds="{{remainingSeconds}}"
+  data-attempt-id="{{attemptId}}" data-submit-url="/student/assignment/take/{{assignmentApplicationId}}/submit"
+  data-save-url="/student/assignment/take/{{assignmentApplicationId}}/save" data-back-url="{{backUrl}}">
+  <textarea id="saved-answers-data" hidden>{{savedAnswersJson}}</textarea>
+
+  <header class="exercise-topbar">
+    <div class="exercise-topbar__left">
+      <button type="button" class="exercise-icon-button" id="btnBack" title="Quay lại">
+        <i class="fa-light fa-arrow-left"></i>
+      </button>
+
+      <div class="exercise-heading">
+        <h1 class="exercise-heading__title">
+          {{assignment.title}}
+        </h1>
+
+        <div class="exercise-heading__meta">
+          <span>
+            {{assignment.subject_name}}
+          </span>
+
+          <span class="exercise-heading__separator">•</span>
+
+          <span>
+            {{assignment.duration_minutes}} phút
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise-topbar__right">
+      <div class="exercise-timer" id="exerciseTimer">
+        <i class="fa-light fa-clock"></i>
+        <span id="timerText">00:00</span>
+      </div>
+
+      <button type="button" class="exercise-icon-button" id="btnFullscreen" title="Toàn màn hình">
+        <i class="fa-light fa-expand"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="exercise-layout">
+
+    <aside class="exercise-sidebar">
+      <div class="exercise-sidebar__section">
+        <div class="exercise-sidebar__title">
+          Tiến độ
+        </div>
+
+        <div class="exercise-progress">
+          <div class="exercise-progress__header">
+            <span>Đã làm</span>
+            <strong id="progressText">0/0</strong>
+          </div>
+
+          <div class="exercise-progress__track">
+            <div class="exercise-progress__bar" id="progressBar" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exercise-sidebar__section">
+        <div class="exercise-sidebar__title">
+          Danh sách câu hỏi
+        </div>
+
+        <nav class="question-navigation" id="questionNavigation">
+          {{#each questions}}
+          <button type="button" class="question-nav-item" data-index="{{@index}}">
+            <span class="question-nav-item__number">
+              {{add @index 1}}
+            </span>
+
+            <span class="question-nav-item__status">
+              <i class="fa-light fa-check"></i>
+            </span>
+          </button>
+          {{/each}}
+        </nav>
+      </div>
+    </aside>
+
+    <main class="exercise-main">
+      <form id="assignmentForm">
+
+        <div class="question-list">
+          {{#each questions}}
+          <article class="question-card" data-index="{{@index}}" data-question-id="{{question_id}}"
+            data-type="{{question_type}}" data-shuffle-options="{{#if shuffle_options}}true{{else}}false{{/if}}">
+            <div class="question-card__header">
+              <div class="question-card__number">
+                Câu {{add @index 1}}
+              </div>
+
+              <button type="button" class="question-mark-button" data-mark-question title="Đánh dấu câu hỏi">
+                <i class="fa-light fa-bookmark"></i>
+              </button>
+            </div>
+
+            <div class="question-card__content">
+
+              <div class="question-card__title">
+                {{{question_text}}}
+              </div>
+
+              {{#ifEquals question_type "multiple_choice"}}
+              <div class="question-options">
+                {{#each options}}
+                <label class="question-option">
+                  <input type="radio" name="question_{{../question_id}}" value="{{option_id}}">
+
+                  <span class="question-option__radio"></span>
+
+                  <span class="question-option__text">
+                    {{{option_text}}}
+                  </span>
+                </label>
+                {{/each}}
+              </div>
+              {{/ifEquals}}
+
+              {{#ifEquals question_type "drag_and_drop"}}
+              <div class="drag-question">
+
+                <div class="drag-question__template" data-template-source>{{question_text}}</div>
+
+                <div class="drag-question__options">
+                  {{#each options}}
+                  <button type="button" class="drag-option" data-option-id="{{option_id}}">
+                    <span class="drag-option__text">
+                      {{{option_text}}}
+                    </span>
+                  </button>
+                  {{/each}}
+                </div>
+
+              </div>
+              {{/ifEquals}}
+
+              {{#ifEquals question_type "ordering"}}
+              <div class="ordering-question">
+
+                <div class="ordering-section">
+                  <div class="ordering-section__title">
+                    Các đáp án
+                  </div>
+
+                  <div class="ordering-source" data-ordering-source>
+                    {{#each options}}
+                    <button type="button" class="ordering-item" data-option-id="{{option_id}}">
+                      <span class="ordering-item__number">
+                        -
+                      </span>
+
+                      <span class="ordering-item__text">
+                        {{{option_text}}}
+                      </span>
+                    </button>
+                    {{/each}}
+                  </div>
+                </div>
+
+                <div class="ordering-section">
+                  <div class="ordering-section__title">
+                    Thứ tự trả lời
+                  </div>
+
+                  <div class="ordering-answer" data-ordering-answer>
+                    <div class="ordering-empty">
+                      Nhấn vào đáp án để thêm vào thứ tự
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              {{/ifEquals}}
+
+            </div>
+          </article>
+          {{/each}}
+        </div>
+
+      </form>
+
+      <div class="exercise-submit-bar">
+        <div class="exercise-submit-bar__info">
+          <i class="fa-light fa-circle-info"></i>
+          <span>
+            Kiểm tra lại câu trả lời trước khi nộp bài.
+          </span>
+        </div>
+
+        <button type="button" class="exercise-submit-button" id="btnSubmit">
+          <i class="fa-light fa-paper-plane"></i>
+          Nộp bài
+        </button>
+      </div>
+
+      <section class="exercise-result" id="exerciseResult" hidden>
+        <div class="exercise-result__icon">
+          <i class="fa-light fa-circle-check"></i>
+        </div>
+
+        <h2 class="exercise-result__title">
+          Đã nộp bài
+        </h2>
+
+        <div class="exercise-result__score" id="resultScore"></div>
+
+        <div class="result-review" id="resultReview"></div>
+
+        <button type="button" class="exercise-submit-button" id="btnResultBack">
+          <i class="fa-light fa-arrow-left"></i>
+          Quay lại
+        </button>
+      </section>
+    </main>
+
+  </div>
+
+  <div class="exercise-modal" id="confirmModal" hidden>
+    <div class="exercise-modal__overlay"></div>
+
+    <div class="exercise-modal__box" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle">
+      <button type="button" class="exercise-modal__close" data-close-modal aria-label="Đóng">
+        <i class="fa-light fa-xmark"></i>
+      </button>
+
+      <div class="exercise-modal__icon">
+        <i class="fa-light fa-paper-plane"></i>
+      </div>
+
+      <h3 id="confirmModalTitle">
+        Nộp bài?
+      </h3>
+
+      <p>
+        Bạn có chắc chắn muốn nộp bài không?
+        Sau khi nộp, bạn sẽ không thể thay đổi câu trả lời.
+      </p>
+
+      <div class="exercise-modal__actions">
+        <button type="button" class="button-secondary" data-close-modal>
+          Tiếp tục làm
+        </button>
+
+        <button type="button" class="exercise-submit-button" id="btnConfirmSubmit">
+          <i class="fa-light fa-paper-plane"></i>
+          Nộp bài
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="exercise-modal" id="timeoutModal" hidden>
+    <div class="exercise-modal__overlay"></div>
+
+    <div class="exercise-modal__box" role="dialog" aria-modal="true" aria-labelledby="timeoutModalTitle">
+      <div class="exercise-modal__icon exercise-modal__icon--warning">
+        <i class="fa-light fa-clock"></i>
+      </div>
+
+      <h3 id="timeoutModalTitle">
+        Hết thời gian
+      </h3>
+
+      <p>
+        Thời gian làm bài đã kết thúc.
+        Hệ thống đang tự động lưu và nộp bài của bạn.
+      </p>
+
+      <div class="exercise-modal__actions">
+        <button type="button" class="exercise-submit-button" disabled>
+          <i class="fa-light fa-spinner fa-spin"></i>
+          Đang nộp bài...
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

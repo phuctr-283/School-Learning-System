@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from apps.class_sections.infrastructure.dependencies.get_teacher_class_sections_dependency import (
-    get_teacher_class_sections_dependency,
+    get_teacher_class_sections_use_case,
 )
 
 from apps.class_sections.presentation.serializers.teacher_class_section_serializer import (
@@ -25,15 +25,9 @@ class GetTeacherClassSectionsView(APIView):
             None,
         )
 
-        department_id = getattr(
+        username = getattr(
             request.user,
-            "department_id",
-            None,
-        )
-
-        teacher_id = getattr(
-            request.user,
-            "teacher_id",
+            "username",
             None,
         )
 
@@ -41,31 +35,16 @@ class GetTeacherClassSectionsView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": (
-                        "Không xác định được trường đại học."
-                    ),
+                    "message": "Không xác định được trường đại học.",
                 },
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-        if not department_id:
+        if not username:
             return Response(
                 {
                     "success": False,
-                    "message": (
-                        "Không xác định được khoa."
-                    ),
-                },
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
-
-        if not teacher_id:
-            return Response(
-                {
-                    "success": False,
-                    "message": (
-                        "Không xác định được giảng viên."
-                    ),
+                    "message": "Không xác định được tài khoản giảng viên.",
                 },
                 status=status.HTTP_401_UNAUTHORIZED,
             )
@@ -74,30 +53,24 @@ class GetTeacherClassSectionsView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": (
-                        "Thiếu mã môn học."
-                    ),
+                    "message": "Thiếu mã môn học.",
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         try:
-
+            
             class_sections = (
-                get_teacher_class_sections_dependency
-                .execute(
+                get_teacher_class_sections_use_case.execute(
                     university_id=university_id,
-                    department_id=department_id,
-                    teacher_id=teacher_id,
+                    username=username,
                     subject_id=subject_id,
                 )
             )
 
-            serializer = (
-                TeacherClassSectionSerializer(
-                    class_sections,
-                    many=True,
-                )
+            serializer = TeacherClassSectionSerializer(
+                class_sections,
+                many=True,
             )
 
             return Response(
@@ -109,7 +82,6 @@ class GetTeacherClassSectionsView(APIView):
             )
 
         except ValueError as error:
-
             return Response(
                 {
                     "success": False,

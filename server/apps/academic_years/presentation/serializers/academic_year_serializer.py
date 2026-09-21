@@ -11,8 +11,12 @@ class AcademicYearSerializer(serializers.Serializer):
 
     name = serializers.CharField()
 
-    start_date = serializers.DateField()
+    start_date = serializers.DateField(
+        format="%Y-%m-%d",
+    )
 
-    end_date = serializers.DateField()
+    end_date = serializers.DateField(
+        format="%Y-%m-%d",
+    )
 
     status = serializers.CharField()

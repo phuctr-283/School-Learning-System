@@ -10,39 +10,49 @@ from apps.assignments.application.use_cases.get_assignments_use_case import (
     GetAssignmentsUseCase,
 )
 
-from apps.universities.infrastructure.persistence.repositories.mongo_university_repository import (
-    MongoUniversityRepository,
+from apps.assignments.application.use_cases.get_assignments_by_subject_use_case import (
+    GetAssignmentsBySubjectUseCase,
 )
 
-from apps.departments.infrastructure.persistence.repositories.mongo_department_repository import (
-    MongoDepartmentRepository,
+from apps.assignments.application.use_cases.get_assignment_content_use_case import (
+    GetAssignmentContentUseCase,
 )
 
 from apps.subjects.infrastructure.persistence.repositories.mongo_subject_repository import (
     MongoSubjectRepository,
 )
 
-from apps.teachers.infrastructure.persistence.repositories.mongo_teacher_repository import (
-    MongoTeacherRepository,
+from apps.assignments.infrastructure.services.assignment_id_generator import (
+    AssignmentIdGenerator,
 )
 
-
 assignment_repository = MongoAssignmentRepository()
-university_repository = MongoUniversityRepository()
-department_repository = MongoDepartmentRepository()
+
 subject_repository = MongoSubjectRepository()
-teacher_repository = MongoTeacherRepository()
+
+assignment_id_generator = AssignmentIdGenerator()
 
 
 create_assignment_use_case = CreateAssignmentUseCase(
     assignment_repository=assignment_repository,
-    university_repository=university_repository,
-    department_repository=department_repository,
+    assignment_id_generator=assignment_id_generator,
     subject_repository=subject_repository,
-    teacher_repository=teacher_repository,
 )
 
 
 get_assignments_use_case = GetAssignmentsUseCase(
     assignment_repository=assignment_repository,
 )
+
+
+get_assignments_by_subject_use_case = GetAssignmentsBySubjectUseCase(
+    assignment_repository=assignment_repository,
+)
+
+
+get_assignment_content_use_case = GetAssignmentContentUseCase(
+    assignment_repository=assignment_repository,
+)
+
+
+

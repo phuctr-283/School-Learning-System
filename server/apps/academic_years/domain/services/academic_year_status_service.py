@@ -1,5 +1,7 @@
 from datetime import date
 
+from django.utils import timezone
+
 
 class AcademicYearStatusService:
 
@@ -9,14 +11,12 @@ class AcademicYearStatusService:
         end_date: date,
     ) -> str:
 
-        today = date.today()
+        today = timezone.localdate()
 
         if today < start_date:
-
             return "planned"
 
-        if start_date <= today <= end_date:
+        if today > end_date:
+            return "inactive"
 
-            return "active"
-
-        return "inactive"
+        return "active"

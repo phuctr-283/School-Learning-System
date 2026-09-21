@@ -6,6 +6,8 @@ const TeacherSubjectDTO = require("../../../application/class_sections/dto/teach
 
 const TeacherClassSectionDTO = require("../../../application/class_sections/dto/teacher_class_section.dto");
 
+const StudentClassSectionDTO = require("../../../application/class_sections/dto/student_class_section.dto");
+
 const classSectionApi = require("../../api/class_section/class_section_api");
 
 class ClassSectionRepositoryImpl extends ClassSectionRepository {
@@ -66,17 +68,59 @@ class ClassSectionRepositoryImpl extends ClassSectionRepository {
     }
   }
   async getTeacherSubjects(req) {
-    const response = await classSectionApi.getTeacherSubjects(req);
+    try {
+      const response = await classSectionApi.getTeacherSubjects(req);
 
-    if (!response || response.success !== true) {
-      throw new Error(response?.message || "Không thể tải danh sách môn học.");
+      if (!response || response.success !== true) {
+        throw new Error(
+          response?.message || "Không thể tải danh sách môn học.",
+        );
+      }
+
+      const subjects = Array.isArray(response.data) ? response.data : [];
+
+      return subjects.map((item) => TeacherSubjectDTO.fromResponse(item));
+    } catch (error) {
+      console.error(
+        "GET TEACHER SUBJECTS ERROR:",
+        error.response?.data || error.message,
+      );
+
+      throw new Error(
+        error.response?.data?.message ||
+          error.message ||
+          "Không thể tải danh sách môn học.",
+      );
     }
-
-    return (response.data || []).map((item) =>
-      TeacherSubjectDTO.fromResponse(item),
-    );
   }
 
+  async getTeacherActiveSubjects(req) {
+    try {
+      const response = await classSectionApi.getTeacherActiveSubjects(req);
+
+      if (!response || response.success !== true) {
+        throw new Error(
+          response?.message ||
+            "Không thể tải danh sách môn học đang hoạt động.",
+        );
+      }
+
+      const subjects = Array.isArray(response.data) ? response.data : [];
+
+      return subjects.map((item) => TeacherSubjectDTO.fromResponse(item));
+    } catch (error) {
+      console.error(
+        "GET TEACHER ACTIVE SUBJECTS ERROR:",
+        error.response?.data || error.message,
+      );
+
+      throw new Error(
+        error.response?.data?.message ||
+          error.message ||
+          "Không thể tải danh sách môn học đang hoạt động.",
+      );
+    }
+  }
   async getTeacherClassSections(req, subjectId) {
     const response = await classSectionApi.getTeacherClassSections(
       req,
@@ -92,6 +136,89 @@ class ClassSectionRepositoryImpl extends ClassSectionRepository {
     return (response.data || []).map((item) =>
       TeacherClassSectionDTO.fromResponse(item),
     );
+  }
+  async getStudentClassSections(req) {
+  try {
+    const response =
+      await classSectionApi.getStudentClassSections(req);
+
+    console.log(
+      "STUDENT CLASS SECTIONS RESPONSE:",
+      JSON.stringify(response, null, 2),
+    );
+
+    if (
+      !response ||
+      response.success !== true
+    ) {
+      throw new Error(
+        response?.message ||
+          "Không thể tải danh sách lớp học phần.",
+      );
+    }
+
+    const classSections =
+      Array.isArray(response.data)
+        ? response.data
+        : [];
+
+    console.log(
+      "STUDENT CLASS SECTIONS DATA:",
+      classSections,
+    );
+
+    return classSections.map(
+      (item) =>
+        StudentClassSectionDTO.fromResponse(item),
+    );
+  } catch (error) {
+    console.error(
+      "GET STUDENT CLASS SECTIONS ERROR:",
+      error.response?.data ||
+        error.message,
+    );
+
+    throw new Error(
+      error.response?.data?.message ||
+        error.message ||
+        "Không thể tải danh sách lớp học phần.",
+    );
+  }
+}
+  async getTeacherActivePlannedSubjects(req, academicYearId, semesterId) {
+    const response = await classSectionApi.getTeacherActivePlannedSubjects(
+      req,
+      academicYearId,
+      semesterId,
+    );
+
+    if (!response || response.success !== true) {
+      throw new Error(response?.message || "Không thể tải danh sách môn học.");
+    }
+
+    return Array.isArray(response.data) ? response.data : [];
+  }
+
+  async getTeacherActivePlannedClassSections(
+    req,
+    subjectId,
+    academicYearId,
+    semesterId,
+  ) {
+    const response = await classSectionApi.getTeacherActivePlannedClassSections(
+      req,
+      subjectId,
+      academicYearId,
+      semesterId,
+    );
+
+    if (!response || response.success !== true) {
+      throw new Error(
+        response?.message || "Không thể tải danh sách lớp học phần.",
+      );
+    }
+
+    return Array.isArray(response.data) ? response.data : [];
   }
 }
 

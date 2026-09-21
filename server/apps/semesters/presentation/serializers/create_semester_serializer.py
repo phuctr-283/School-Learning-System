@@ -19,9 +19,15 @@ class CreateSemesterSerializer(
     )
 
     start_date = serializers.DateField(
-        required=True
+        required=True,
+        input_formats=[
+            "%Y-%m-%d",
+        ],
     )
 
     end_date = serializers.DateField(
-        required=True
+        required=True,
+        input_formats=[
+            "%Y-%m-%d",
+        ],
     )

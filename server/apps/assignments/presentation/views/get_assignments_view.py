@@ -31,35 +31,26 @@ class GetAssignmentsView(APIView):
             None,
         )
 
-        teacher_id = getattr(
+        teacher_email = getattr(
             request.user,
-            "teacher_id",
+            "username",
             None,
         )
 
-        department_id = getattr(
-            request.user,
-            "department_id",
-            None,
-        )
-
-        if not university_id or not teacher_id:
+        if not university_id or not teacher_email:
             return Response(
                 {
                     "success": False,
                     "message": (
-                        "Tài khoản chưa được gán giảng viên."
+                        "Tài khoản chưa có trường đại học " "hoặc email đăng nhập."
                     ),
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        assignments = (
-            get_assignments_use_case.execute(
-                university_id=university_id,
-                teacher_id=teacher_id,
-                department_id=department_id,
-            )
+        assignments = get_assignments_use_case.execute(
+            university_id=university_id,
+            teacher_email=teacher_email,
         )
 
         serializer = AssignmentListSerializer(

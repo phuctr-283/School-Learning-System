@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     
     "rest_framework",
     "corsheaders",
+
+    "apps.database",
     
     "apps.users",
     "apps.teachers",
@@ -120,6 +122,16 @@ MONGO_HOST = os.getenv(
     "MONGODB_URI",
 )
 
+if not MONGO_DB_NAME:
+    raise RuntimeError(
+        "MONGO_DB_NAME chưa được cấu hình trong .env."
+    )
+
+
+if not MONGO_HOST:
+    raise RuntimeError(
+        "MONGODB_URI chưa được cấu hình trong .env."
+    )
 
 # =========================================================
 # LANGUAGE / TIME
@@ -130,6 +142,7 @@ LANGUAGE_CODE = "vi"
 TIME_ZONE = "Asia/Ho_Chi_Minh"
 
 USE_I18N = True
+
 USE_TZ = True
 
 

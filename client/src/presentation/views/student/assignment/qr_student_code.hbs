@@ -1,0 +1,82 @@
+<div class="qr-student-page">
+
+    <div class="qr-student-card">
+
+        <div class="qr-student-card__icon">
+            <i class="fa-light fa-qrcode"></i>
+        </div>
+
+        <div class="qr-student-card__content">
+
+            <span class="qr-student-card__eyebrow">
+                TRUY CẬP BÀI TẬP
+            </span>
+
+            <h1>
+                Nhập mã sinh viên
+            </h1>
+
+            <p class="qr-student-card__description">
+                Vui lòng nhập mã sinh viên của bạn để
+                xác nhận quyền truy cập bài tập.
+            </p>
+
+            {{#if error}}
+            <div class="qr-student-alert qr-student-alert--error" role="alert">
+                <i class="fa-light fa-circle-exclamation"></i>
+                <span>{{error}}</span>
+            </div>
+            {{/if}}
+
+            <form class="qr-student-form" method="POST" action="/student/assignment/qr/verify">
+
+                <input type="hidden" name="assignment_application_id" value="{{assignmentApplicationId}}" />
+
+                <input type="hidden" name="class_section_id" value="{{classSectionId}}" />
+
+                <input type="hidden" name="lesson_id" value="{{lessonId}}" />
+
+                <div class="qr-student-field">
+
+                    <label for="student-id">
+                        Mã sinh viên
+                    </label>
+
+                    <div class="qr-student-input">
+
+                        <i class="fa-light fa-id-card"></i>
+
+                        <input id="student-id" type="text" name="student_id" placeholder="Ví dụ: SV00123"
+                            autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="50" required
+                            autofocus />
+
+                    </div>
+
+                </div>
+
+                <button type="submit" class="qr-student-submit">
+                    <span>
+                        Tiếp tục
+                    </span>
+
+                    <i class="fa-light fa-arrow-right"></i>
+                </button>
+
+            </form>
+
+            <div class="qr-student-note">
+
+                <i class="fa-light fa-shield-check"></i>
+
+                <span>
+                    Mã sinh viên được sử dụng để xác nhận
+                    bạn thuộc lớp học phần này.
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

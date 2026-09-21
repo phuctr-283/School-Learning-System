@@ -1,15 +1,13 @@
 from mongoengine import (
     Document,
     ReferenceField,
+    EmbeddedDocumentListField,
     StringField,
     DateTimeField,
     IntField,
 )
-
-
-class AssignmentApplicationModel(
-    Document
-):
+from apps.assignments.infrastructure.persistence.models.assignment_application_class_section_model import AssignmentApplicationClassSectionModel
+class AssignmentApplicationModel(Document):
 
     meta = {
         "collection": "assignment_applications",
@@ -18,25 +16,21 @@ class AssignmentApplicationModel(
             {
                 "fields": [
                     "assignment",
-                    "class_section",
-                    "lesson_opening",
+                    "lesson_id",
                 ],
                 "unique": True,
             },
 
             "university",
             "assignment",
-            "class_section",
-            "lesson_opening",
+            "class_sections.class_section",
+            "class_sections.status",
+            "lesson_id",
             "status",
             "open_at",
             "due_at",
         ],
     }
-
-    # =========================================
-    # IDENTIFICATION
-    # =========================================
 
     assignment_application_id = StringField(
         required=True,
@@ -44,46 +38,25 @@ class AssignmentApplicationModel(
         max_length=30,
     )
 
-    # =========================================
-    # UNIVERSITY
-    # =========================================
-
     university = ReferenceField(
         "UniversityModel",
         required=True,
     )
-
-    # =========================================
-    # ASSIGNMENT
-    # =========================================
 
     assignment = ReferenceField(
         "AssignmentModel",
         required=True,
     )
 
-    # =========================================
-    # CLASS SECTION
-    # =========================================
+    class_sections = EmbeddedDocumentListField(
+        AssignmentApplicationClassSectionModel,
+        default=list,
+    )
 
-    class_section = ReferenceField(
-        "ClassSectionModel",
+    lesson_id = StringField(
         required=True,
+        max_length=100,
     )
-
-    # =========================================
-    # LESSON OPENING
-    # =========================================
-
-    lesson_opening = ReferenceField(
-        "LessonOpeningModel",
-        required=False,
-        null=True,
-    )
-
-    # =========================================
-    # STATUS
-    # =========================================
 
     status = StringField(
         required=True,
@@ -95,10 +68,6 @@ class AssignmentApplicationModel(
         default="draft",
     )
 
-    # =========================================
-    # TIME
-    # =========================================
-
     open_at = DateTimeField(
         required=False,
         null=True,
@@ -109,19 +78,11 @@ class AssignmentApplicationModel(
         null=True,
     )
 
-    # =========================================
-    # ATTEMPTS
-    # =========================================
-
     max_attempts = IntField(
         required=True,
         min_value=1,
         default=1,
     )
-
-    # =========================================
-    # TIMESTAMP
-    # =========================================
 
     created_at = DateTimeField(
         required=True,

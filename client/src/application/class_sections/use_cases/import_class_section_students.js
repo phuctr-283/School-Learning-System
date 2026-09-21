@@ -1,38 +1,15 @@
 class ImportClassSectionStudentsUseCase {
-
-  constructor(
-    classSectionStudentRepository
-  ) {
-
-    this.classSectionStudentRepository =
-      classSectionStudentRepository;
+  constructor(classSectionStudentRepository) {
+    this.classSectionStudentRepository = classSectionStudentRepository;
   }
 
-
-  async execute(
-    req,
-    file
-  ) {
-
+  async execute(req, file) {
     if (!file) {
-
-      throw new Error(
-        "Vui lòng chọn file Excel"
-      );
+      throw new Error("Vui lòng chọn file Excel");
     }
 
-    return (
-      await this
-        .classSectionStudentRepository
-        .importStudents(
-          req,
-          file
-        )
-    );
+    return await this.classSectionStudentRepository.importStudents(req, file);
   }
-
 }
 
-
-module.exports =
-  ImportClassSectionStudentsUseCase;
+module.exports = ImportClassSectionStudentsUseCase;

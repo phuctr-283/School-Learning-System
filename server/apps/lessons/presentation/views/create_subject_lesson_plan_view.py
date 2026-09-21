@@ -23,9 +23,7 @@ from apps.lessons.presentation.serializers.subject_lesson_plan_serializer import
 
 class CreateSubjectLessonPlanView(APIView):
 
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    permission_classes = [IsAuthenticated,]
 
     def post(
         self,
@@ -47,40 +45,26 @@ class CreateSubjectLessonPlanView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": (
-                        "Tài khoản chưa được gán "
-                        "trường đại học."
-                    ),
+                    "message": ("Tài khoản chưa được gán " "trường đại học."),
                 },
-                status=(
-                    status.HTTP_400_BAD_REQUEST
-                ),
+                status=(status.HTTP_400_BAD_REQUEST),
             )
 
         # =========================================
         # VALIDATE REQUEST
         # =========================================
 
-        serializer = (
-            CreateSubjectLessonPlanSerializer(
-                data=request.data,
-            )
+        serializer = CreateSubjectLessonPlanSerializer(
+            data=request.data,
         )
 
-        serializer.is_valid(
-            raise_exception=True
-        )
+        serializer.is_valid(raise_exception=True)
 
         # =========================================
         # CREATE DTO
         # =========================================
 
-        dto = (
-            CreateSubjectLessonPlanDTO
-            .from_dict(
-                serializer.validated_data
-            )
-        )
+        dto = CreateSubjectLessonPlanDTO.from_dict(serializer.validated_data)
 
         # =========================================
         # USE CASE
@@ -88,39 +72,27 @@ class CreateSubjectLessonPlanView(APIView):
 
         try:
 
-            plans = (
-                create_subject_lesson_plan_use_case
-                .execute(
-                    dto=dto,
-                    university_id=university_id,
-                )
+            plans = create_subject_lesson_plan_use_case.execute(
+                dto=dto,
+                university_id=university_id,
             )
 
             # =====================================
             # RESPONSE
             # =====================================
 
-            response_serializer = (
-                SubjectLessonPlanSerializer(
-                    plans,
-                    many=True,
-                )
+            response_serializer = SubjectLessonPlanSerializer(
+                plans,
+                many=True,
             )
 
             return Response(
                 {
                     "success": True,
-                    "message": (
-                        "Tạo quy tắc kế hoạch "
-                        "môn học thành công."
-                    ),
-                    "data": (
-                        response_serializer.data
-                    ),
+                    "message": ("Tạo quy tắc kế hoạch " "môn học thành công."),
+                    "data": (response_serializer.data),
                 },
-                status=(
-                    status.HTTP_201_CREATED
-                ),
+                status=(status.HTTP_201_CREATED),
             )
 
         except ValueError as error:
@@ -130,9 +102,7 @@ class CreateSubjectLessonPlanView(APIView):
                     "success": False,
                     "message": str(error),
                 },
-                status=(
-                    status.HTTP_400_BAD_REQUEST
-                ),
+                status=(status.HTTP_400_BAD_REQUEST),
             )
 
         except Exception as error:
@@ -145,12 +115,7 @@ class CreateSubjectLessonPlanView(APIView):
             return Response(
                 {
                     "success": False,
-                    "message": (
-                        "Không thể tạo quy tắc "
-                        "kế hoạch môn học."
-                    ),
+                    "message": ("Không thể tạo quy tắc " "kế hoạch môn học."),
                 },
-                status=(
-                    status.HTTP_500_INTERNAL_SERVER_ERROR
-                ),
+                status=(status.HTTP_500_INTERNAL_SERVER_ERROR),
             )

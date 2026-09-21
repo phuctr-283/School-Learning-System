@@ -1,0 +1,200 @@
+<div class="assignment-form-page">
+    <div class="assignment-form-hero">
+        <div>
+            <span class="assignment-form-eyebrow">
+                <i class="fa-light fa-file-pen"></i>
+                Nội dung học phần
+            </span>
+
+            <h2>Tạo bài tập</h2>
+
+            <p>
+                Tạo nội dung học tập và thiết kế các câu hỏi cho sinh viên.
+            </p>
+        </div>
+
+        <a class="assignment-form-back" href="/teacher/assignment/list">
+            <i class="fa-light fa-arrow-left"></i>
+            Quay lại
+        </a>
+    </div>
+
+
+    {{#if error}}
+    <div class="assignment-error" role="alert">
+        <i class="fa-light fa-circle-exclamation"></i>
+
+        <span>{{error}}</span>
+    </div>
+    {{/if}}
+
+
+    <form class="assignment-form-card" method="post" action="/teacher/assignment/create" id="assignment-form"
+        novalidate>
+        <section class="assignment-section">
+            <div class="assignment-section__heading">
+                <div class="assignment-section__icon">
+                    <i class="fa-light fa-file-lines"></i>
+                </div>
+
+                <div>
+                    <h3>Thông tin nội dung</h3>
+
+                    <p>
+                        Nhập tên, mô tả, môn học và loại bài tập.
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="assignment-form-grid">
+
+                <div class="assignment-field assignment-field--full">
+                    <label for="assignment-title">
+                        Tên nội dung
+                    </label>
+
+                    <input id="assignment-title" type="text" name="title" maxlength="255" value="{{formData.title}}"
+                        required placeholder="Ví dụ: Bài tập vòng lặp trong Python" />
+                </div>
+
+
+                <div class="assignment-field assignment-field--full">
+                    <label for="assignment-description">
+                        Mô tả
+                    </label>
+
+                    <textarea id="assignment-description" name="description" rows="2"
+                        placeholder="Mô tả yêu cầu hoặc nội dung cần sinh viên thực hiện...">{{formData.description}}</textarea>
+                </div>
+
+
+                {{#if hasSelectedSubject}}
+
+                <input type="hidden" name="subject_id" value="{{formData.subject_id}}" />
+
+                {{else}}
+
+                <div class="assignment-field">
+                    <label for="assignment-subject-code">
+                        Môn học
+                    </label>
+
+                    <div class="assignment-input-with-icon">
+                        <i class="fa-light fa-book"></i>
+
+                        <select id="assignment-subject-code" name="subject_id" required>
+                            <option value="" disabled {{#unless formData.subject_id}} selected {{/unless}}>
+                                Chọn môn học
+                            </option>
+
+                            {{#each subjects}}
+                            <option value="{{subject_id}}" {{#if (eq ../formData.subject_id subject_id)}} selected
+                                {{/if}}>
+                                {{subject_id}} - {{subject_name}}
+                            </option>
+                            {{else}}
+                            <option value="" disabled>
+                                Chưa có môn học
+                            </option>
+                            {{/each}}
+                        </select>
+                    </div>
+                </div>
+
+                {{/if}}
+
+
+                <div class="assignment-field">
+                    <label for="assignment-type">
+                        Loại bài tập
+                    </label>
+
+                    <div class="assignment-input-with-icon">
+                        <i class="fa-light fa-layer-group"></i>
+
+                        <select id="assignment-type" name="assignment_type" required>
+                            <option value="practice" {{#if (eq formData.assignment_type "practice" )}} selected {{/if}}>
+                                Bài luyện tập
+                            </option>
+
+                            <option value="homework" {{#if (eq formData.assignment_type "homework" )}} selected {{/if}}>
+                                Bài tập về nhà
+                            </option>
+
+                            <option value="quiz" {{#if (eq formData.assignment_type "quiz" )}} selected {{/if}}>
+                                Bài kiểm tra
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="assignment-field {{#unless hasSelectedSubject}}assignment-field--full{{/unless}}">
+                    <label for="assignment-duration">
+                        Thời gian làm bài (phút)
+                    </label>
+
+                    <div class="assignment-input-with-icon">
+                        <i class="fa-light fa-clock"></i>
+
+                        <input id="assignment-duration" type="number" name="duration_minutes" min="1" max="600"
+                            value="{{#if formData.duration_minutes}}{{formData.duration_minutes}}{{else}}30{{/if}}"
+                            required />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="assignment-section assignment-builder">
+            <div class="assignment-builder__header">
+                <div class="assignment-section__heading">
+                    <div class="assignment-section__icon">
+                        <i class="fa-light fa-list-check"></i>
+                    </div>
+
+                    <div>
+                        <h3>Cấu trúc câu hỏi</h3>
+
+                        <p>
+                            Mỗi câu hỏi có thể sử dụng một dạng khác nhau.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="questions"></div>
+
+
+            <div class="assignment-empty-question" id="question-empty" hidden>
+                <i class="fa-light fa-circle-plus"></i>
+                <span>Chưa có câu hỏi nào.</span>
+            </div>
+
+
+            <div class="assignment-builder__footer">
+                <button type="button" class="assignment-add-question" id="add-question">
+                    <i class="fa-light fa-plus"></i>
+                    Thêm câu hỏi
+                </button>
+            </div>
+        </section>
+
+
+        <input type="hidden" name="questions" id="questions-json" />
+
+
+        <div class="assignment-form-actions">
+            <a class="assignment-form-back" href="/teacher/assignment/list">
+                Hủy
+            </a>
+
+            <button class="assignment-form-submit" type="submit">
+                <i class="fa-light fa-file-circle-plus"></i>
+                Tạo bài tập
+            </button>
+        </div>
+    </form>
+</div>

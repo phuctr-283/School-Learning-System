@@ -10,6 +10,7 @@ const {
   "../../../../infrastructure/dependencies/university/university_dependency",
 );
 
+const {getActiveDepartmentsUseCase} = require("../../../../infrastructure/dependencies/department/department_dependency")
 const TokenManager = require(
   "../../../../infrastructure/security/token_manager",
 );

@@ -4,22 +4,15 @@ class ClassSectionLessonPlanIdGenerator:
 
     def generate(
         self,
-        subject_id: str,
-        group_number: int,
+        class_section_id: str,
     ) -> str:
 
-        if not subject_id:
+        if not class_section_id:
             raise ValueError(
-                "Subject ID không được để trống."
-            )
-
-        if group_number < 1:
-            raise ValueError(
-                "Group number phải lớn hơn hoặc bằng 1."
+                "Class section ID không được để trống."
             )
 
         return (
             f"{self.PREFIX}-"
-            f"{subject_id}-"
-            f"{group_number}"
+            f"{class_section_id}"
         )

@@ -15,15 +15,6 @@ class ClassSectionStudentRepositoryImpl extends ClassSectionStudentRepository {
     return StudentImportResultDTO.fromResponse(response.data);
   }
 
-  async getStudents(req, params) {
-    const response = await classSectionStudentApi.getStudents(req, params);
-
-    if (!response || response.success !== true) {
-      throw new Error(response?.message || "Không thể tải danh sách sinh viên");
-    }
-
-    return response.data;
-  }
 }
 
 module.exports = ClassSectionStudentRepositoryImpl;

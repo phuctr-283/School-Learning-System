@@ -7,6 +7,7 @@ from mongoengine import (
     DecimalField,
     BooleanField,
     DateTimeField,
+    IntField,
 )
 
 from .assessment_question_model import (
@@ -14,17 +15,11 @@ from .assessment_question_model import (
 )
 
 
-class AssessmentModel(
-    Document
-):
+class AssessmentModel(Document):
 
     meta = {
         "abstract": True,
     }
-
-    # =========================================
-    # BASIC INFORMATION
-    # =========================================
 
     title = StringField(
         required=True,
@@ -35,10 +30,6 @@ class AssessmentModel(
         required=False,
         null=True,
     )
-
-    # =========================================
-    # OWNER
-    # =========================================
 
     university = ReferenceField(
         "UniversityModel",
@@ -55,28 +46,21 @@ class AssessmentModel(
         required=True,
     )
 
-    # =========================================
-    # QUESTIONS
-    # =========================================
-
     questions = EmbeddedDocumentListField(
         AssessmentQuestionModel,
         required=True,
     )
 
-    # =========================================
-    # SCORE
-    # =========================================
-
     total_score = DecimalField(
-    required=True,
-    precision=2,
-    default=Decimal("10.00"),
-)
-
-    # =========================================
-    # STATUS
-    # =========================================
+        required=True,
+        precision=2,
+        default=Decimal("10.00"),
+    )
+    duration_minutes = IntField(
+        required=True,
+        min_value=1,
+        default=30,
+    )
 
     status = StringField(
         required=True,
@@ -85,16 +69,12 @@ class AssessmentModel(
             "published",
             "closed",
         ],
-        default="draft",
+        default="published",
     )
 
     is_active = BooleanField(
         default=True,
     )
-
-    # =========================================
-    # TIMESTAMP
-    # =========================================
 
     created_at = DateTimeField(
         required=True,

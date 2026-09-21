@@ -9,7 +9,7 @@ const CourseLessonPlanRepositoryImpl = require("../../../infrastructure/reposito
 const ClassSectionLessonPlanRepositoryImpl = require("../../../infrastructure/repositories/lesson/class_section_lesson_plan_repository_impl");
 
 const LessonPlanRepositoryImpl = require("../../../infrastructure/repositories/lesson/lesson_plan_repository_impl");
-const lessonOpeningRepository = require("../../../infrastructure/repositories/lesson/lesson_opening_repository_impl");
+const LessonOpeningRepositoryImpl = require("../../../infrastructure/repositories/lesson/lesson_opening_repository_impl");
 const GetLessonsUseCase = require("../../../application/lessons/use_cases/get_lessons");
 const CreateLessonUseCase = require("../../../application/lessons/use_cases/create_lesson");
 
@@ -25,9 +25,9 @@ const GetClassSectionLessonPlansUseCase = require("../../../application/lessons/
 
 const EnsureLessonPlansUseCase = require("../../../application/lessons/use_cases/ensure_lesson_plans");
 
-const EnsureLessonOpeningsUseCase = require("../../../application/lessons/use_cases/ensure_lesson_openings");
-
 const GetLessonOpeningsUseCase = require("../../../application/lessons/use_cases/get_lesson_openings");
+
+const UpdateLessonOpeningStatusUseCase = require("../../../application/lessons/use_cases/update_lesson_opening_status");
 
 // =========================================
 // REPOSITORIES
@@ -45,6 +45,7 @@ const classSectionLessonPlanRepository =
   new ClassSectionLessonPlanRepositoryImpl();
 const lessonPlanRepository = new LessonPlanRepositoryImpl();
 
+const lessonOpeningRepository = new LessonOpeningRepositoryImpl();
 // =========================================
 // USE CASES
 // =========================================
@@ -80,13 +81,14 @@ const getClassSectionLessonPlansUseCase = new GetClassSectionLessonPlansUseCase(
 const ensureLessonPlansUseCase = new EnsureLessonPlansUseCase(
   lessonPlanRepository,
 );
-const ensureLessonOpeningsUseCase = new EnsureLessonOpeningsUseCase(
-  lessonOpeningRepository,
-);
 
 const getLessonOpeningsUseCase = new GetLessonOpeningsUseCase(
   lessonOpeningRepository,
 );
+const updateLessonOpeningStatusUseCase = new UpdateLessonOpeningStatusUseCase(
+  lessonOpeningRepository,
+);
+
 module.exports = {
   lessonRepository,
   getLessonsUseCase,
@@ -109,6 +111,6 @@ module.exports = {
   lessonPlanRepository,
   ensureLessonPlansUseCase,
 
-  ensureLessonOpeningsUseCase,
   getLessonOpeningsUseCase,
+  updateLessonOpeningStatusUseCase,
 };

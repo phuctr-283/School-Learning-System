@@ -18,7 +18,6 @@ from apps.lessons.infrastructure.dependencies.course_lesson_plan_dependency impo
 from apps.lessons.infrastructure.dependencies.class_section_lesson_plan_dependency import (
     ensure_class_section_lesson_plans_use_case
 )
-from apps.lessons.infrastructure.dependencies.lesson_opening_dependency import ensure_lesson_openings_use_case
 lesson_repository = MongoLessonRepository()
 
 get_lessons_use_case = GetLessonsUseCase(
@@ -35,6 +34,5 @@ ensure_lesson_plans_dependency = (
         ensure_class_section_lesson_plans_use_case=(
             ensure_class_section_lesson_plans_use_case
         ),
-        ensure_lesson_openings_use_case= ensure_lesson_openings_use_case,
     )
 )

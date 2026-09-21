@@ -1,0 +1,405 @@
+<div class="section-title">
+    <i class="fa-light fa-clipboard-list"></i>
+    <h2>Bài tập</h2>
+</div>
+
+<div class="assignment-list-card">
+
+    <div class="assignment-list-layout">
+
+        <!-- =====================================================
+             LEFT: ASSIGNMENT CONTENT
+        ====================================================== -->
+
+        <main class="assignment-list-content">
+
+            <div class="assignment-list-header">
+
+                <div class="page-list-title">
+
+                    <div class="page-list-title__icon">
+                        <i class="fa-light fa-clipboard-list"></i>
+                    </div>
+
+                    <div>
+                        <h5 id="assignment-list-title">
+                            Tất cả bài tập
+                        </h5>
+
+                        <span id="assignment-list-description">
+                            Danh sách bài tập của tất cả môn học
+                        </span>
+                    </div>
+
+                </div>
+
+                <a href="{{#if selectedSubjectId}}/teacher/assignment/create?subject_id={{selectedSubjectId}}{{else}}/teacher/assignment/create{{/if}}"
+                    class="data-btn data-btn--primary">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <span>
+                        Thêm bài tập
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 SEARCH
+            ================================================== -->
+
+            <div class="data-toolbar assignment-toolbar">
+
+                <div class="data-search">
+
+                    <i class="fa-light fa-magnifying-glass"></i>
+
+                    <input type="text" id="searchAssignment" placeholder="Tìm theo tên bài tập hoặc môn học..."
+                        autocomplete="off">
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ASSIGNMENT TABLE
+            ================================================== -->
+
+            <div class="data-table-wrap">
+
+                <table class="data-table data-table--assignment">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                TÊN BÀI TẬP
+                            </th>
+
+                            <th>
+                                LOẠI BÀI TẬP
+                            </th>
+
+                            <th class="text-center">
+                                Môn học
+                            </th>
+
+                            <th class="text-center">
+                                TRẠNG THÁI
+                            </th>
+
+                            <th class="text-center">
+                                NGÀY TẠO
+                            </th>
+
+                            <th class="text-center">
+                                HOẠT ĐỘNG
+                            </th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody id="assignment-table-body">
+
+                        {{#each assignments}}
+
+                        <tr class="assignment-row" data-subject-id="{{subjectId}}" data-subject-name="{{subjectName}}">
+
+                            <!-- TÊN BÀI TẬP -->
+
+                            <td>
+
+                                <div class="assignment-name">
+
+                                    <strong>
+                                        {{#if title}}
+                                        {{title}}
+                                        {{else}}
+                                        Chưa có tiêu đề
+                                        {{/if}}
+                                    </strong>
+
+                                    {{#if description}}
+
+                                    <small>
+                                        {{description}}
+                                    </small>
+
+                                    {{/if}}
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- LOẠI BÀI TẬP -->
+
+                            <td>
+
+                                <span class="assignment-type">
+
+                                    {{#if (eq assignmentType "assignment")}}
+                                    Bài tập
+                                    {{else if (eq assignmentType "exam")}}
+                                    Bài kiểm tra
+                                    {{else}}
+                                    {{assignmentType}}
+                                    {{/if}}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- TỔNG ĐIỂM -->
+
+                            <td class="text-center">
+
+                                <span class="assignment-score">
+                                    {{subjectName}}
+                                </span>
+
+                            </td>
+
+
+                            <!-- TRẠNG THÁI -->
+
+                            <td class="text-center">
+
+                                {{#if (eq status "open")}}
+
+                                <span class="data-status data-status--active">
+                                    <span class="data-status__dot"></span>
+                                    Đang mở
+                                </span>
+
+                                {{else if (eq status "closed")}}
+
+                                <span class="data-status data-status--inactive">
+                                    <span class="data-status__dot"></span>
+                                    Đã đóng
+                                </span>
+
+                                {{else}}
+
+                                <span class="data-status data-status--planned">
+                                    <span class="data-status__dot"></span>
+                                    {{status}}
+                                </span>
+
+                                {{/if}}
+
+                            </td>
+
+
+                            <!-- NGÀY TẠO -->
+
+                            <td class="text-center">
+
+                                <div class="assignment-created-date">
+
+                                    <i class="fa-light fa-calendar-plus"></i>
+
+                                    <span>
+                                        {{createdAt}}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- HOẠT ĐỘNG -->
+
+                            <td class="text-center">
+
+                                <div class="assignment-actions">
+                                    <a href="/teacher/assignment/lesson-opening/{{assignmentId}}" class="data-action data-action--lesson-opening"
+                                        title="Mở buổi học">
+                                        <i class="fa-light fa-check"></i>
+                                    </a>
+                                    <a href="/teacher/assignment/edit/{{id}}" class="data-action data-action--edit"
+                                        title="Chỉnh sửa bài tập">
+                                        <i class="fa-light fa-pen-to-square"></i>
+                                    </a>
+
+
+                                    <form method="post" action="/teacher/assignment/toggle/{{id}}">
+
+                                        <input type="hidden" name="is_active"
+                                            value="{{#if isActive}}false{{else}}true{{/if}}">
+
+                                        <button type="submit" class="assignment-toggle-button
+                                                {{#if isActive}}is-active{{/if}}"
+                                            title="{{#if isActive}}Tắt bài tập{{else}}Bật bài tập{{/if}}">
+                                            <i class="fa-light fa-power-off"></i>
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {{else}}
+
+                        <tr id="assignment-empty-row">
+
+                            <td colspan="6" class="text-center">
+
+                                <div class="data-empty">
+
+                                    <div class="data-empty__icon">
+                                        <i class="fa-light fa-clipboard-list"></i>
+                                    </div>
+
+                                    <div class="data-empty__content">
+
+                                        <strong>
+                                            Chưa có bài tập
+                                        </strong>
+
+                                        <span>
+                                            Chưa có dữ liệu bài tập trong hệ thống.
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+
+                        <!-- FILTER EMPTY STATE -->
+
+                        <tr id="assignment-filter-empty" hidden>
+
+                            <td colspan="6" class="text-center">
+
+                                <div class="data-empty">
+
+                                    <div class="data-empty__icon">
+                                        <i class="fa-light fa-filter"></i>
+                                    </div>
+
+                                    <div class="data-empty__content">
+
+                                        <strong>
+                                            Không tìm thấy bài tập
+                                        </strong>
+
+                                        <span>
+                                            Không có bài tập phù hợp với bộ lọc hiện tại.
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+
+        <!-- =====================================================
+             RIGHT: SUBJECT SIDEBAR
+        ====================================================== -->
+
+        <aside class="assignment-list-sidebar">
+
+            <div class="assignment-sidebar__header">
+
+                <div class="assignment-sidebar__header-icon">
+                    <i class="fa-light fa-book-open"></i>
+                </div>
+
+                <div>
+                    <strong>
+                        Môn học
+                    </strong>
+
+                    <span>
+                        Chọn môn để xem bài tập
+                    </span>
+                </div>
+
+            </div>
+
+
+            <nav class="assignment-sidebar__nav" id="assignment-subject-sidebar" aria-label="Danh sách môn học">
+                <!-- Assignment chung -->
+
+                <a href="/teacher/assignment/list" class="assignment-sidebar-item
+            {{#unless selectedSubjectId}}is-active{{/unless}}">
+                    <span class="assignment-sidebar-item__icon">
+                        <i class="fa-light fa-clipboard-list"></i>
+                    </span>
+
+                    <span class="assignment-sidebar-item__content">
+                        <strong>Bài tập chung</strong>
+                        <small>Tất cả bài tập chung</small>
+                    </span>
+
+                    <span class="assignment-sidebar-item__count">
+                        {{assignments.length}}
+                    </span>
+
+                    <i class="fa-light fa-chevron-right assignment-sidebar-item__arrow"></i>
+                </a>
+
+
+                <!-- Các môn học -->
+
+                {{#each subjects}}
+                <a href="/teacher/assignment/list/{{subject_id}}" class="assignment-sidebar-item
+                {{#if (eq ../selectedSubjectId subject_id)}}is-active{{/if}}">
+                    <span class="assignment-sidebar-item__icon">
+                        <i class="fa-light fa-book-open"></i>
+                    </span>
+
+                    <span class="assignment-sidebar-item__content">
+                        <strong>{{subject_name}}</strong>
+                        <small>Bài tập của môn học</small>
+                    </span>
+
+                    <i class="fa-light fa-chevron-right assignment-sidebar-item__arrow"></i>
+                </a>
+                {{else}}
+                <div class="data-empty">
+                    <span>Chưa có môn học</span>
+                </div>
+                {{/each}}
+            </nav>
+
+
+            <div class="assignment-sidebar__footer">
+
+                <i class="fa-light fa-circle-info"></i>
+
+                <span>
+                    Chọn “Bài tập chung” để xem toàn bộ bài tập hoặc chọn một môn học cụ thể.
+                </span>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>

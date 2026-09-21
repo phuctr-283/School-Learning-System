@@ -178,9 +178,9 @@ class ImportClassSectionsUseCase:
 
         return {
             "created_count": created_count,
-        "skipped_count": skipped_count,
-        "created_items": created_items,
-        "skipped_items": skipped_items,
+            "skipped_count": skipped_count,
+            "created_items": created_items,
+            "skipped_items": skipped_items,
         }
 
     # =========================================================
@@ -292,23 +292,43 @@ class ImportClassSectionsUseCase:
             raise ValueError(f"Không tìm thấy môn học " f"'{subject_name}'.")
 
         # =====================================================
+        # DEPARTMENT
+        # =====================================================
+
+        department = subject.department
+
+        if department is None:
+            raise ValueError(
+                f"Môn học '{subject_name}' chưa được liên kết với khoa."
+            )
+
+        department_id = department.department_id
+
+        # =====================================================
         # TEACHER
         # =====================================================
 
         teacher = self.teacher_repository.get_by_name(
             name=teacher_name,
+            department_id=department_id,
             university_id=university_id,
         )
 
         if not teacher:
 
-            raise ValueError(f"Không tìm thấy giảng viên " f"'{teacher_name}'.")
+            raise ValueError(
+                f"Không tìm thấy giảng viên "
+                f"'{teacher_name}' "
+                f"thuộc khoa của môn học "
+                f"'{subject_name}'."
+            )
 
         # =====================================================
         # SUBJECT + TEACHER SAME DEPARTMENT
         # =====================================================
-
-        if subject.department.id != teacher.department.id:
+        department_subject = subject.department
+        department_id_subject = department_subject.department_id
+        if department_id_subject != teacher.department_id:
 
             raise ValueError(
                 f"Giảng viên '{teacher_name}' "

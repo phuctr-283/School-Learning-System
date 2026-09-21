@@ -101,6 +101,7 @@ class CreateSemesterUseCase:
                 semester_number=(
                     data.semester_number
                 ),
+                university_id = university_id,
             )
         )
 

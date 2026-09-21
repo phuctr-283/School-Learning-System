@@ -36,10 +36,8 @@ class AssessmentQuestionMapper:
         answer_model = None
 
         if entity.answer is not None:
-            answer_model = (
-                AssessmentQuestionAnswerMapper.to_model(
-                    entity.answer,
-                )
+            answer_model = AssessmentQuestionAnswerMapper.to_model(
+                entity.answer,
             )
 
         test_case_models = [
@@ -51,6 +49,7 @@ class AssessmentQuestionMapper:
 
         return AssessmentQuestionModel(
             question_id=entity.question_id,
+            question=entity.question,
             content=entity.content,
             question_type=entity.question_type,
             score=entity.score,
@@ -71,31 +70,26 @@ class AssessmentQuestionMapper:
             AssessmentQuestionOptionMapper.to_entity(
                 option_model,
             )
-            for option_model in (
-                model.options or []
-            )
+            for option_model in (model.options or [])
         ]
 
         answer = None
 
         if model.answer is not None:
-            answer = (
-                AssessmentQuestionAnswerMapper.to_entity(
-                    model.answer,
-                )
+            answer = AssessmentQuestionAnswerMapper.to_entity(
+                model.answer,
             )
 
         test_cases = [
             AssessmentQuestionTestCaseMapper.to_entity(
                 test_case_model,
             )
-            for test_case_model in (
-                model.test_cases or []
-            )
+            for test_case_model in (model.test_cases or [])
         ]
 
         return AssessmentQuestion(
             question_id=model.question_id,
+            question=model.question,
             content=model.content,
             question_type=model.question_type,
             score=model.score,

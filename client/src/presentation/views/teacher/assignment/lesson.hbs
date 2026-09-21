@@ -1,209 +1,197 @@
-<div class="title mx-3">
-    <h2 class="subject-name">
-        Nhập môn lập trình
-    </h2>
+<div class="title mx-3 class-section-page-title">
+    <div>
+        <h2 class="class-section-page-title__heading">
+            Nội dung học tập
+        </h2>
 
-    <h4 class="group-name">
-        Nhóm 1
-    </h4>
-</div>
-
-<div class="data-card mx-2">
-    <div class="data-card-body">
-
-        <div class="data-table-wrap">
-
-            <table class="data-table">
-
-                <thead>
-                    <tr>
-                        <th>Tên buổi</th>
-
-                        <th class="text-center">
-                            Trạng thái
-                        </th>
-
-                        <th class="text-center">
-                            Hoạt động
-                        </th>
-
-                        <th class="text-center">
-                            Bài tập
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td class="lesson-name">
-                            Buổi 1
-                        </td>
-
-                        <td class="text-center">
-                            <span class="data-status active">
-                                Active
-                            </span>
-                        </td>
-
-                        <td class="text-center">
-                            <button type="button" class="data-btn" data-bs-toggle="modal"
-                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-1"
-                                data-lesson-name="Buổi 1" data-current-status="active">
-                                Thay đổi
-                            </button>
-                        </td>
-
-                        <td class="text-center">
-                            <a href="" class="data-link">
-                                Chi tiết
-                            </a>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="lesson-name">
-                            Buổi 2
-                        </td>
-
-                        <td class="text-center">
-                            <span class="data-status active">
-                                Active
-                            </span>
-                        </td>
-
-                        <td class="text-center">
-                            <button type="button" class="data-btn" data-bs-toggle="modal"
-                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-2"
-                                data-lesson-name="Buổi 2" data-current-status="active">
-                                Thay đổi
-                            </button>
-                        </td>
-
-                        <td class="text-center">
-                            <a href="" class="data-link">
-                                Chi tiết
-                            </a>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="lesson-name">
-                            Buổi 3
-                        </td>
-
-                        <td class="text-center">
-                            <span class="data-status active">
-                                Active
-                            </span>
-                        </td>
-
-                        <td class="text-center">
-                            <button type="button" class="data-btn" data-bs-toggle="modal"
-                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-3"
-                                data-lesson-name="Buổi 3" data-current-status="active">
-                                Thay đổi
-                            </button>
-                        </td>
-
-                        <td class="text-center">
-                            <a href="" class="data-link">
-                                Chi tiết
-                            </a>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td class="lesson-name">
-                            Buổi 4
-                        </td>
-
-                        <td class="text-center">
-                            <span class="data-status active">
-                                Active
-                            </span>
-                        </td>
-
-                        <td class="text-center">
-                            <button type="button" class="data-btn" data-bs-toggle="modal"
-                                data-bs-target="#changeLessonStatusModal" data-lesson-id="lesson-4"
-                                data-lesson-name="Buổi 4" data-current-status="active">
-                                Thay đổi
-                            </button>
-                        </td>
-
-                        <td class="text-center">
-                            <a href="" class="data-link">
-                                Chi tiết
-                            </a>
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
+        <h4 class="class-section-page-title__subheading">
+            Danh sách buổi học
+        </h4>
     </div>
 </div>
 
-<!-- MODAL XÁC NHẬN -->
 
-<div class="modal fade" id="changeLessonStatusModal" tabindex="-1" aria-hidden="true">
+<div class="data-card mx-2 class-section-table-card">
 
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="data-card-body">
+        <div class="lesson-opening-list" data-class-section-id="{{classSectionId}}"
+            data-class-section-lesson-plan-id="{{classSectionLessonPlanId}}">
+            <div class="data-table-wrap">
 
-        <div class="modal-content">
+                <table class="data-table class-section-table">
 
-            <form id="changeLessonStatusForm">
+                    <thead>
+                        <tr>
+                            <th>Buổi học</th>
+                            <th>Trạng thái</th>
+                            <th>Hoạt động</th>
+                            <th>Nội dung</th>
+                        </tr>
+                    </thead>
 
-                <div class="modal-header">
+                    <tbody>
 
-                    <h5 class="modal-title">
-                        Xác nhận thay đổi
-                    </h5>
+                        {{#each lessonOpenings}}
 
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <tr class="lesson-opening-row">
 
-                </div>
+                            <td>
+                                <div class="lesson-opening-name">
 
-                <div class="modal-body">
+                                    <span class="lesson-opening-number">
+                                        {{lessonNumber}}
+                                    </span>
 
-                    <p id="changeLessonStatusMessage">
-                        Bạn có chắc chắn muốn thay đổi trạng thái buổi học?
-                    </p>
+                                    <div class="lesson-opening-info">
 
-                    <input type="hidden" id="lessonId" />
+                                        <span class="lesson-opening-title">
+                                            {{#if lessonName}}
+                                            {{lessonName}}
+                                            {{else}}
+                                            Buổi {{lessonNumber}}
+                                            {{/if}}
+                                        </span>
 
-                    <input type="hidden" id="newLessonStatus" />
+                                        {{#if lessonId}}
+                                        <span class="lesson-opening-id">
+                                            Mã buổi: {{lessonId}}
+                                        </span>
+                                        {{/if}}
 
-                </div>
+                                    </div>
 
-                <div class="modal-footer">
+                                </div>
+                            </td>
 
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Hủy
-                    </button>
 
-                    <button type="submit" class="btn btn-primary">
-                        Submit
-                    </button>
+                            <td>
 
-                </div>
+                                <span class="lesson-opening-status
+                                    {{#if (eq status "open")}} lesson-opening-status--open {{else if (eq
+                                    status "closed" )}} lesson-opening-status--closed {{else}}
+                                    lesson-opening-status--locked {{/if}}">
 
-            </form>
+                                    {{#if (eq status "open")}}
+                                    Đang mở
+                                    {{else if (eq status "closed")}}
+                                    Đã đóng
+                                    {{else}}
+                                    Đang khóa
+                                    {{/if}}
 
+                                </span>
+
+                            </td>
+
+                            <td>
+                                <button type="button" class="lesson-opening-status-button
+                                    {{#if (eq status "open")}}is-active{{/if}}" data-lesson-id="{{lessonId}}"
+                                    data-status="{{status}}" title="{{#if (eq status "open")}} Đóng buổi học {{else if
+                                    (eq status "closed" )}} Mở buổi học {{else}} Buổi học đang khóa {{/if}}">
+                                    <span class="lesson-opening-status-icon">
+                                        <i class="fa-light fa-power-off"></i>
+                                    </span>
+
+                                    <span class="lesson-opening-status-text">
+                                        {{#if (eq status "open")}}
+                                        Đang bật
+                                        {{else}}
+                                        Đang tắt
+                                        {{/if}}
+                                    </span>
+                                </button>
+
+                            </td>
+
+                            <td>
+
+                                {{#if (eq status "open")}}
+
+                                <button type="button" class="lesson-opening-content-toggle" aria-expanded="false"
+                                    aria-controls="lesson-content-{{lessonId}}" data-lesson-id="{{lessonId}}">
+
+                                    <span class="lesson-opening-content-icon">
+                                        <i class="fa-light fa-chevron-down"></i>
+                                    </span>
+
+                                    <span>
+                                        Xem bài tập
+                                    </span>
+
+                                </button>
+
+                                {{else}}
+
+                                <span class="lesson-opening-content-disabled">
+                                    Chưa mở nội dung
+                                </span>
+
+                                {{/if}}
+
+                            </td>
+
+                        </tr>
+
+
+                        {{#if (eq status "open")}}
+
+                        <tr id="lesson-content-{{lessonId}}" class="lesson-content-panel" hidden>
+                            <td colspan="4">
+
+                                <div class="lesson-content-panel__inner">
+
+                                    <div class="lesson-assignments" data-class-section-id="{{../classSectionId}}"
+                                        data-lesson-id="{{lessonId}}">
+
+                                        <div class="assignment-loading" hidden>
+                                            <i class="fa-light fa-spinner fa-spin"></i>
+                                            Đang tải bài tập...
+                                        </div>
+
+                                        <div class="assignment-list"></div>
+
+                                        <div class="assignment-empty" hidden>
+                                            <i class="fa-light fa-inbox"></i>
+
+                                            <span>
+                                                Buổi học này chưa có bài tập.
+                                            </span>
+                                        </div>
+
+                                        <div class="assignment-error" hidden></div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        {{/if}}
+
+                        {{else}}
+
+                        <tr>
+
+                            <td colspan="4">
+
+                                <div class="lesson-opening-empty">
+                                    <i class="fa-light fa-calendar-xmark"></i>
+                                    Chưa có buổi học.
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
         </div>
-
     </div>
 
 </div>

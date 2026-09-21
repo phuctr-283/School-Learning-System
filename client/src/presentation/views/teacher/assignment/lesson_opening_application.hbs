@@ -1,0 +1,200 @@
+<div class="section-title">
+    <i class="fa-light fa-list-check"></i>
+    <h2>Áp dụng bài tập</h2>
+</div>
+
+<div class="lesson-opening-page" data-assignment-id="{{assignmentId}}" data-subject-id="{{subjectId}}">
+
+    <div class="lesson-opening-header">
+
+        <div class="lesson-opening-header-content">
+
+            <div class="lesson-opening-header-icon">
+                <i class="fa-light fa-file-check"></i>
+            </div>
+
+            <div>
+
+                <h1 class="lesson-opening-title">
+                    Áp dụng bài tập
+                </h1>
+
+                <p class="lesson-opening-description">
+                    Chọn năm học, học kỳ, nhóm lớp và buổi học để áp dụng bài tập.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="lesson-opening-assignment-info">
+
+        <div class="lesson-opening-assignment-info-item">
+
+            <span class="lesson-opening-assignment-info-label">
+                Bài tập
+            </span>
+
+            <strong>
+                {{assignmentTitle}}
+            </strong>
+
+        </div>
+
+
+        <div class="lesson-opening-assignment-info-item">
+
+            <span class="lesson-opening-assignment-info-label">
+                Môn học
+            </span>
+
+            <strong>
+                {{subjectId}} - {{subjectName}}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="lesson-opening-filter">
+
+        <div class="lesson-opening-filter-group">
+
+            <label for="academicYearSelect" class="lesson-opening-filter-label">
+                Năm học
+            </label>
+
+            <select id="academicYearSelect" class="form-select lesson-opening-select">
+
+                <option value="">
+                    Chọn năm học
+                </option>
+
+                {{#each academicYears}}
+
+                <option value="{{academicYearId}}">
+                    {{academicYearName}}
+                </option>
+
+                {{/each}}
+
+            </select>
+
+        </div>
+
+
+        <div class="lesson-opening-filter-group">
+
+            <label class="lesson-opening-filter-label">
+                Học kỳ
+            </label>
+
+            <div id="semesterList" class="lesson-opening-semester-list" hidden>
+
+                {{#each semesters}}
+
+                <label class="lesson-opening-semester-item" data-academic-year-id="{{academicYearId}}" hidden>
+
+                    <input type="radio" name="semesterId" value="{{semesterId}}" class="lesson-opening-semester-radio">
+
+                    <span class="lesson-opening-semester-content">
+
+                        <span class="lesson-opening-semester-name">
+                            {{name}}
+                        </span>
+
+                        <span class="lesson-opening-semester-number">
+                            Học kỳ {{semesterNumber}}
+                        </span>
+
+                    </span>
+
+                </label>
+
+                {{/each}}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="classSectionGroup" class="lesson-opening-section" hidden>
+
+        <div class="lesson-opening-section-header">
+
+            <div>
+
+                <h2 class="lesson-opening-section-title">
+                    Nhóm lớp học phần
+                </h2>
+
+                <p class="lesson-opening-section-description">
+                    Chọn các nhóm lớp học phần muốn áp dụng bài tập.
+                </p>
+
+            </div>
+
+
+            <label class="lesson-opening-select-all">
+
+                <input type="checkbox" id="selectAllGroups">
+
+                <span>
+                    Chọn tất cả
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <div id="groupList" class="lesson-opening-group-list"></div>
+
+    </div>
+
+
+    <div id="lessonSection" class="lesson-opening-section" hidden>
+
+        <div class="lesson-opening-section-header">
+
+            <div>
+
+                <h2 class="lesson-opening-section-title">
+                    Buổi học
+                </h2>
+
+                <p class="lesson-opening-section-description">
+                    Chọn một buổi học để áp dụng bài tập.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div id="lessonList" class="lesson-opening-lesson-list"></div>
+
+    </div>
+
+
+    <div id="lessonOpeningAction" class="lesson-opening-action" hidden>
+
+        <button type="button" id="applyAssignmentButton" class="btn lesson-opening-action-button" disabled>
+
+            <i class="fa-light fa-file-import"></i>
+
+            <span>
+                Áp dụng bài tập
+            </span>
+
+        </button>
+
+    </div>
+
+</div>

@@ -1,9 +1,14 @@
 from dataclasses import dataclass
 from typing import Optional
 
+from apps.lessons.application.dto.lesson_opening_dto import (
+    LessonOpeningDTO,
+)
+
 
 @dataclass
 class ClassSectionLessonPlanDTO:
+
     class_section_lesson_plan_id: str
 
     university_id: str
@@ -30,3 +35,5 @@ class ClassSectionLessonPlanDTO:
     custom_total_lessons: Optional[int]
 
     effective_total_lessons: int
+
+    lesson_openings: list[LessonOpeningDTO]

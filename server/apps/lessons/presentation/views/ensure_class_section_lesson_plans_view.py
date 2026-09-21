@@ -17,7 +17,10 @@ class EnsureClassSectionLessonPlansView(APIView):
         IsAuthenticated,
     ]
 
-    def post(self, request):
+    def post(
+        self,
+        request,
+    ):
 
         university_id = getattr(
             request.user,
@@ -26,29 +29,34 @@ class EnsureClassSectionLessonPlansView(APIView):
         )
 
         if not university_id:
+
             return Response(
                 {
                     "success": False,
-                    "message": (
-                        "Tài khoản không thuộc "
-                        "trường đại học."
-                    ),
+                    "message": ("Tài khoản không thuộc " "trường đại học."),
                 },
                 status=400,
             )
 
-        plans = (
-            ensure_class_section_lesson_plans_use_case
-            .execute(
+        try:
+
+            plans = ensure_class_section_lesson_plans_use_case.execute(
                 university_id=university_id,
             )
-        )
 
-        serializer = (
-            ClassSectionLessonPlanResponseSerializer(
-                plans,
-                many=True,
+        except ValueError as error:
+
+            return Response(
+                {
+                    "success": False,
+                    "message": str(error),
+                },
+                status=400,
             )
+
+        serializer = ClassSectionLessonPlanResponseSerializer(
+            plans,
+            many=True,
         )
 
         return Response(

@@ -3,8 +3,10 @@ class GetAssignmentsUseCase {
     this.assignmentRepository = assignmentRepository;
   }
 
-  async execute() {
-    return this.assignmentRepository.getAssignments();
+  async execute(req) {
+    return await this.assignmentRepository.getAssignments(
+      req,
+    );
   }
 }
 

@@ -43,9 +43,17 @@ class ClassSectionRepository(ABC):
 
     @abstractmethod
     def get_teacher_subjects(
-        university_id,
-        department_id,
-        teacher_id,
+        self,
+        university_id: str,
+        username: str,
+    ):
+        pass
+
+    @abstractmethod
+    def get_teacher_active_subjects(
+        self,
+        university_id: str,
+        username: str,
     ):
         pass
 
@@ -59,12 +67,33 @@ class ClassSectionRepository(ABC):
     ):
         pass
 
+    
     def find_by_import_info_and_teacher(
-    self,
-    university_id: str,
-    subject_name: str,
-    group_number: int,
-    semester_number: int,
-    academic_year_name: str,
-    teacher_id: str,
-): pass
+        self,
+        university_id,
+        subject_name,
+        group_number,
+        semester_number,
+        academic_year_name,
+        teacher_id,
+    ):
+        pass
+    @abstractmethod
+    def get_teacher_active_planned_subjects(
+        self,
+        university_id: str,
+        username: str,
+        academic_year_id: str,
+        semester_id: str,
+    ):
+        raise NotImplementedError
+    @abstractmethod
+    def get_teacher_active_planned_class_sections(
+        self,
+        university_id: str,
+        username: str,
+        subject_id: str,
+        academic_year_id: str,
+        semester_id: str,
+    ):
+        raise NotImplementedError

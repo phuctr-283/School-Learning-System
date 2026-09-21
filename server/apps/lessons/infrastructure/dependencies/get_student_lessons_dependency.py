@@ -1,0 +1,8 @@
+from apps.lessons.application.use_cases.get_student_class_section_lessons_use_case import GetStudentClassSectionLessonsUseCase
+from apps.lessons.infrastructure.persistence.repositories.mongo_class_section_lesson_plan_repository import MongoClassSectionLessonPlanRepository
+
+class_section_lesson_plan_repository =  MongoClassSectionLessonPlanRepository()
+
+get_student_class_section_lesson_use_case = GetStudentClassSectionLessonsUseCase(
+    class_section_lesson_plan_repository=class_section_lesson_plan_repository
+)

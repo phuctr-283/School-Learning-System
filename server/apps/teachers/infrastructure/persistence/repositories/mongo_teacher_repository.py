@@ -242,14 +242,13 @@ class MongoTeacherRepository(
         if department is None:
             return None
 
-        teacher_model = (
-            TeacherModel.objects(
-                full_name=name.strip(),
-                department=department,
-            )
-            .select_related()
-            .first()
+        teacher_query = TeacherModel.objects(
+            full_name=name.strip(),
+            department=department,
+            status="active",
         )
+
+        teacher_model = teacher_query.first()
 
         if teacher_model is None:
             return None

@@ -1,15 +1,25 @@
-from decimal import Decimal
+from datetime import datetime, timezone
+
 from mongoengine import (
     Document,
-    ReferenceField,
     StringField,
-    EmbeddedDocumentListField,
-    DecimalField,
+    ReferenceField,
     DateTimeField,
+    DictField,
+    DecimalField,
+    IntField,
 )
 
-from .assignment_attempt_answer_model import (
-    AssignmentAttemptAnswerModel,
+from apps.students.infrastructure.persistence.models.student_model import (
+    StudentModel,
+)
+
+from apps.assignments.infrastructure.persistence.models.assignment_application_model import (
+    AssignmentApplicationModel,
+)
+
+from apps.class_sections.infrastructure.persistence.models.class_section_model import (
+    ClassSectionModel,
 )
 
 
@@ -18,93 +28,38 @@ class AssignmentAttemptModel(Document):
     meta = {
         "collection": "assignment_attempts",
         "indexes": [
-            {
-                "fields": [
-                    "assignment_application",
-                    "student",
-                    "status",
-                ],
-            },
-            "university",
-            "assignment",
+            "attempt_id",
             "assignment_application",
             "student",
+            "class_section",
             "status",
+            "-started_at",
             "-submitted_at",
         ],
     }
 
-    # =========================================
-    # IDENTIFICATION
-    # =========================================
-
-    assignment_attempt_id = StringField(
+    attempt_id = StringField(
         required=True,
         unique=True,
-        max_length=30,
+        max_length=50,
     )
-
-    # =========================================
-    # UNIVERSITY
-    # =========================================
-
-    university = ReferenceField(
-        "UniversityModel",
-        required=True,
-    )
-
-    # =========================================
-    # ASSIGNMENT
-    # =========================================
-
-    assignment = ReferenceField(
-        "AssignmentModel",
-        required=True,
-    )
-
-    # =========================================
-    # APPLICATION
-    # =========================================
 
     assignment_application = ReferenceField(
-        "AssignmentApplicationModel",
+        AssignmentApplicationModel,
         required=True,
     )
-
-    # =========================================
-    # STUDENT
-    # =========================================
 
     student = ReferenceField(
-        "StudentModel",
+        StudentModel,
         required=True,
     )
 
-    # =========================================
-    # ANSWERS
-    # =========================================
-
-    answers = EmbeddedDocumentListField(
-        AssignmentAttemptAnswerModel,
-        default=list,
-    )
-
-    # =========================================
-    # SCORE
-    # =========================================
-
-    total_score = DecimalField(
+    class_section = ReferenceField(
+        ClassSectionModel,
         required=True,
-        precision=2,
-        default=Decimal("0.00"),
     )
-
-    # =========================================
-    # STATUS
-    # =========================================
 
     status = StringField(
-        required=True,
         choices=[
             "in_progress",
             "submitted",
@@ -113,20 +68,38 @@ class AssignmentAttemptModel(Document):
         default="in_progress",
     )
 
-    # =========================================
-    # TIME
-    # =========================================
-
     started_at = DateTimeField(
         required=True,
     )
 
     submitted_at = DateTimeField(
-        required=False,
         null=True,
     )
 
-    graded_at = DateTimeField(
-        required=False,
+    answers = DictField(
+        default=dict,
+    )
+
+    score = DecimalField(
+        precision=2,
+        force_string=False,
         null=True,
+    )
+
+    total_score = DecimalField(
+        precision=2,
+        force_string=False,
+        null=True,
+    )
+
+    answered_count = IntField(
+        default=0,
+    )
+
+    created_at = DateTimeField(
+        default=lambda: datetime.now(timezone.utc),
+    )
+
+    updated_at = DateTimeField(
+        default=lambda: datetime.now(timezone.utc),
     )

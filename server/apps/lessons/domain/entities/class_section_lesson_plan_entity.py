@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 from typing import Optional
-
+from apps.lessons.domain.entities.lesson_opening_entity import LessonOpening
 
 @dataclass
 class ClassSectionLessonPlan:
+
     class_section_lesson_plan_id: str
 
     university_id: str
@@ -30,3 +31,5 @@ class ClassSectionLessonPlan:
     custom_total_lessons: Optional[int]
 
     effective_total_lessons: int
+
+    lesson_openings: list[LessonOpening]

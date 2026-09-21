@@ -2,10 +2,10 @@ const ClassSectionStudentRepositoryImpl = require("../../../infrastructure/repos
 
 const ImportClassSectionStudentsUseCase = require("../../../application/class_sections/use_cases/import_class_section_students");
 
-const repository = new ClassSectionStudentRepositoryImpl();
+const classSectionStudentRepository = new ClassSectionStudentRepositoryImpl();
 
 const importClassSectionStudentsUseCase = new ImportClassSectionStudentsUseCase(
-  repository,
+  classSectionStudentRepository,
 );
 
 module.exports = {

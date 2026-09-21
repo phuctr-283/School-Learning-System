@@ -10,6 +10,8 @@ const AdministratorController = require("../controllers/super_admin/administrato
 
 const RefreshTokenController = require("../controllers/authentication/refresh_token.controller");
 
+const verifyAssignmentRouter= require("./student/assignment/verify_assignment.route")
+
 const guestMiddleware = require("../middlewares/guest.middleware");
 
 router.get(
@@ -40,5 +42,5 @@ router.post(
   guestMiddleware,
   RegisterController.register.bind(RegisterController),
 );
-
+router.use("/student", verifyAssignmentRouter);
 module.exports = router;

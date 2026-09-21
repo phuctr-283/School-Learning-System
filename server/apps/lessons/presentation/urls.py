@@ -35,10 +35,12 @@ from apps.lessons.presentation.views.ensure_class_section_lesson_plans_view impo
 from apps.lessons.presentation.views.ensure_lesson_plans_view import (
     EnsureLessonPlansView,
 )
-from apps.lessons.presentation.views.lesson_opening_views import (
-    EnsureLessonOpeningsView,
+from apps.lessons.presentation.views.get_lesson_openings_view import (
     GetLessonOpeningsView,
 )
+from apps.lessons.presentation.views.update_lesson_opening_status_view import UpdateLessonOpeningStatusView
+from apps.lessons.presentation.views.get_student_lessons_view import GetStudentLessonsView
+
 urlpatterns = [
     path(
         "list/",
@@ -96,14 +98,18 @@ urlpatterns = [
         name="ensure-lesson-plans",
     ),
     path(
-        "lesson-openings/ensure/",
-        EnsureLessonOpeningsView.as_view(),
-        name="ensure-lesson-openings",
-    ),
-
-    path(
         "lesson-openings/class-sections/<str:class_section_lesson_plan_id>/",
         GetLessonOpeningsView.as_view(),
         name="get-lesson-openings",
     ),
+    path(
+        "class-sections/<str:class_section_lesson_plan_id>/lesson-openings/<str:lesson_id>/status/",
+        UpdateLessonOpeningStatusView.as_view(),
+        name="update-lesson-opening-status"
+    ),
+    path(
+    "student/class-sections/<str:class_section_id>/lessons/",
+    GetStudentLessonsView.as_view(),
+    name="student-class-section-lessons",
+),
 ]

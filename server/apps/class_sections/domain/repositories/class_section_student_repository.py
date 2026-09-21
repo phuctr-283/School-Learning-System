@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class ClassSectionStudentRepository(
-    ABC
-):
+class ClassSectionStudentRepository(ABC):
 
     @abstractmethod
     def exists(
@@ -25,5 +23,13 @@ class ClassSectionStudentRepository(
     def get_students_by_class_section(
         self,
         class_section,
+    ):
+        raise NotImplementedError
+
+    @abstractmethod
+    def get_student_class_sections(
+        self,
+        student_id: str,
+        university_id: str,
     ):
         raise NotImplementedError

@@ -87,11 +87,12 @@ const authenticationRouter = require("./src/presentation/http/routes/auth.route"
 const superAdminRouter = require("./src/presentation/http/routes/super_admin.route")
 const schoolAdminRouter = require("./src/presentation/http/routes/school_admin.route")
 const teacherRouter = require("./src/presentation/http/routes/teacher.route")
-
+const studentRouter = require("./src/presentation/http/routes/student.route");
 app.use("/", authenticationRouter);
 app.use("/super-admin", superAdminRouter);
 app.use("/school-admin", schoolAdminRouter);
 app.use("/teacher", teacherRouter);
+app.use("/student", studentRouter);
 
 // =========================================================
 // 404

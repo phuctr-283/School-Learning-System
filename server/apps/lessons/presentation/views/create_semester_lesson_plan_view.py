@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.permissions import IsAuthenticated
 
 from apps.lessons.presentation.serializers.semester_lesson_plan_serializer import (
     SemesterLessonPlanSerializer,
@@ -20,7 +20,9 @@ from apps.lessons.infrastructure.dependencies.semester_lesson_plan_dependency im
 
 
 class CreateSemesterLessonPlanView(APIView):
-
+    permission_classes = [
+            IsAuthenticated,
+        ]
     def post(self, request):
 
         serializer = CreateSemesterLessonPlanSerializer(data=request.data)

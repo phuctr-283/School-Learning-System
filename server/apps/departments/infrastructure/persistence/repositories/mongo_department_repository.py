@@ -216,6 +216,14 @@ class MongoDepartmentRepository(
             )
             for department in departments
         ]
+    @staticmethod
+    def _normalize_department_number(value: str) -> str:
+        value = str(value).strip()
+
+        if not value:
+            return ""
+
+        return value.lstrip("0") or "0"
 
     def find_by_number(
         self,
@@ -230,7 +238,25 @@ class MongoDepartmentRepository(
         if university is None:
             return None
 
-        return DepartmentModel.objects(
+        normalized_number = (
+            self._normalize_department_number(
+                department_number
+            )
+        )
+
+        departments = DepartmentModel.objects(
             university=university,
-            department_number=department_number,
-        ).first()
+        )
+
+        for department in departments:
+
+            db_number = (
+                self._normalize_department_number(
+                    department.department_number
+                )
+            )
+
+            if db_number == normalized_number:
+                return department
+
+        return None

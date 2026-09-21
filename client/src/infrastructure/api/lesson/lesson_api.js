@@ -1,19 +1,11 @@
 const authenticatedApi = require("../authenticated_api");
 
 const lessonApi = {
-  // =========================================
-  // GET LESSONS
-  // =========================================
-
   async getLessons(req, config = {}) {
     const response = await authenticatedApi.get(req, "/lessons/list/", config);
 
     return response.data;
   },
-
-  // =========================================
-  // CREATE LESSON
-  // =========================================
 
   async createLesson(req, data, config = {}) {
     const response = await authenticatedApi.post(
@@ -25,10 +17,6 @@ const lessonApi = {
 
     return response.data;
   },
-
-  // =========================================
-  // GET SEMESTER LESSON PLANS
-  // =========================================
 
   async getSemesterLessonPlans(req, config = {}) {
     const response = await authenticatedApi.get(
@@ -49,9 +37,6 @@ const lessonApi = {
 
     return response.data;
   },
-  // =========================================
-  // GET SUBJECT LESSON PLANS
-  // =========================================
 
   async getSubjectLessonPlans(req, config = {}) {
     const response = await authenticatedApi.get(
@@ -100,21 +85,37 @@ const lessonApi = {
 
     return response.data;
   },
-  async ensureLessonOpenings(req, config = {}) {
-    const response = await authenticatedApi.post(
+
+  async getLessonOpenings(req, classSectionId, config = {}) {
+    if (!classSectionId) {
+      throw new Error("Thiếu mã lớp học phần.");
+    }
+
+    const classSectionLessonPlanId = `CSLP-${classSectionId}`;
+
+    const response = await authenticatedApi.get(
       req,
-      "/lesson-openings/ensure/",
-      {},
+      `/lessons/lesson-openings/class-sections/${classSectionLessonPlanId}/`,
       config,
     );
 
     return response.data;
   },
-
-  async getLessonOpenings(req, classSectionLessonPlanId, config = {}) {
-    const response = await authenticatedApi.get(
+  async updateStatus(
+    req,
+    classSectionLessonPlanId,
+    lessonId,
+    status,
+    config = {},
+  ) {
+    const response = await authenticatedApi.patch(
       req,
-      `/lesson-openings/class-sections/${classSectionLessonPlanId}/`,
+      `/lessons/class-sections/${encodeURIComponent(
+        classSectionLessonPlanId,
+      )}/lesson-openings/${encodeURIComponent(lessonId)}/status/`,
+      {
+        status,
+      },
       config,
     );
 

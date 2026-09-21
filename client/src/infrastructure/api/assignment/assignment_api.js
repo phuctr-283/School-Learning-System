@@ -1,37 +1,126 @@
 const authenticatedApi = require("../authenticated_api");
-
+const publicApi = require("../public_api");
 const assignmentApi = {
-  async create(req, data) {
+  async createAssignment(req, payload, config = {}) {
     const response = await authenticatedApi.post(
       req,
-      "/api/assignments/create/",
-      data,
+      "/assignments/create/",
+      payload,
+      config,
     );
 
     return response.data;
   },
 
-  async getList(req, params = {}) {
+  async getAssignments(req, params = {}, config = {}) {
+    const response = await authenticatedApi.get(req, "/assignments/list/", {
+      ...config,
+      params,
+    });
+
+    return response.data;
+  },
+
+  async getAssignmentsBySubject(req, subjectId, config = {}) {
+    if (!subjectId) {
+      throw new Error("Thiếu mã môn học.");
+    }
+
     const response = await authenticatedApi.get(
       req,
-      "/api/assignments/",
+      `/assignments/list/${encodeURIComponent(subjectId)}/`,
+      config,
+    );
+
+    return response.data;
+  },
+
+  async getAssignmentById(req, assignmentId, config = {}) {
+    if (!assignmentId) {
+      throw new Error("Thiếu mã bài tập.");
+    }
+
+    const response = await authenticatedApi.get(
+      req,
+      `/assignments/${encodeURIComponent(assignmentId)}/`,
+      config,
+    );
+
+    return response.data;
+  },
+  async applyAssignment(req, payload, config = {}) {
+    const response = await authenticatedApi.post(
+      req,
+      "/assignments/apply/",
+      payload,
+      config,
+    );
+    return response.data;
+  },
+  async getByClassSectionAndLesson(req, classSectionId, lessonId, config = {}) {
+    if (!classSectionId) {
+      throw new Error("Thiếu mã lớp học phần.");
+    }
+
+    if (!lessonId) {
+      throw new Error("Thiếu mã lesson.");
+    }
+
+    const response = await authenticatedApi.get(
+      req,
+      "/assignments/applications/",
       {
-        params,
+        ...config,
+        params: {
+          class_section_id: classSectionId,
+          lesson_id: lessonId,
+        },
       },
     );
 
     return response.data;
   },
+  async updateClassSectionStatus(
+    req,
+    assignmentApplicationId,
+    classSectionId,
+    status,
+    config = {},
+  ) {
+    if (!assignmentApplicationId) {
+      throw new Error("Thiếu mã application.");
+    }
 
-  async getById(req, assignmentId) {
-    const response = await authenticatedApi.get(
+    if (!classSectionId) {
+      throw new Error("Thiếu mã lớp học phần.");
+    }
+
+    if (!["active", "closed"].includes(status)) {
+      throw new Error("Trạng thái phải là active hoặc closed.");
+    }
+
+    const response = await authenticatedApi.patch(
       req,
-      `/api/assignments/${assignmentId}/`,
+      `/assignments/applications/${encodeURIComponent(
+        assignmentApplicationId,
+      )}/class-sections/${encodeURIComponent(classSectionId)}/status/`,
+      {
+        status,
+      },
+      config,
     );
 
     return response.data;
   },
+  async verifyStudentAssignmentQr(req, payload, config = {}) {
+  const response = await publicApi.post(
+    "/assignments/student/qr/verify/",
+    payload,
+    config,
+  );
 
+  return response.data;
+},
 };
 
 module.exports = assignmentApi;

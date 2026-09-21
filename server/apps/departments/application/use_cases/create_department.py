@@ -46,7 +46,7 @@ class CreateDepartmentUseCase:
         if not university:
             raise ValueError("Không tìm thấy trường đại học")
 
-        existing_department = self.department_repository.find_by_id(department_id)
+        existing_department = self.department_repository.find_by_id(department_id, university_id)
 
         if existing_department:
             raise ValueError("Mã khoa đã tồn tại")

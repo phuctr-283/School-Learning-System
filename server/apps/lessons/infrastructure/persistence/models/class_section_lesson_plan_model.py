@@ -4,6 +4,7 @@ from mongoengine import (
     IntField,
     BooleanField,
     ReferenceField,
+    EmbeddedDocumentListField,
 )
 
 from apps.class_sections.infrastructure.persistence.models.class_section_model import (
@@ -18,14 +19,16 @@ from apps.lessons.infrastructure.persistence.models.course_lesson_plan_model imp
     CourseLessonPlanModel,
 )
 
+from apps.lessons.infrastructure.persistence.models.class_section_lesson_opening_embedded import (
+    ClassSectionLessonOpeningEmbedded,
+)
+
 
 class ClassSectionLessonPlanModel(Document):
 
     meta = {
         "collection": "class_section_lesson_plans",
-
         "indexes": [
-
             {
                 "fields": [
                     "university",
@@ -33,7 +36,6 @@ class ClassSectionLessonPlanModel(Document):
                 ],
                 "unique": True,
             },
-
             {
                 "fields": [
                     "university",
@@ -41,7 +43,6 @@ class ClassSectionLessonPlanModel(Document):
                 ],
                 "unique": True,
             },
-
             "university",
             "class_section",
             "course_lesson_plan",
@@ -77,4 +78,9 @@ class ClassSectionLessonPlanModel(Document):
         null=True,
         min_value=1,
         max_value=100,
+    )
+
+    lesson_openings = EmbeddedDocumentListField(
+        ClassSectionLessonOpeningEmbedded,
+        default=list,
     )

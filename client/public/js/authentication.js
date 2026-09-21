@@ -150,8 +150,7 @@ function initRegisterValidation() {
         isValid || value.length === 0
           ? ""
           : isAdminRegister
-            ? "Username phải có dạng example@admin.vn hoặc example@admin.stu.edu.vn"
-            : "Username phải có dạng example@stu.edu.vn";
+            ? "Username phải có dạng example@stu.edu.vn" : " " ;
     }
 
     return isValid;

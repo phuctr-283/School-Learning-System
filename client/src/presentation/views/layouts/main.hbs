@@ -9,6 +9,20 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
+    <script>
+        (function () {
+            const STORAGE_KEY = "school-learning-sidebar-state";
+            if (window.innerWidth < 992) {
+                return;
+            }
+            try {
+                const state = localStorage.getItem(STORAGE_KEY);
+                if (state === "collapsed") {
+                    document.documentElement.classList.add("sidebar-precollapsed");
+                }
+            } catch (error) { }
+        })();
+    </script>
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/font.awesome.css">
     <link rel="stylesheet" href="/css/light.css">
@@ -30,15 +44,21 @@
     <link rel="stylesheet" href="/css/style_student.css">
     {{/if}}
     {{/if}}
+    {{#if blank}}
+    <link rel="stylesheet" href="/css/student/take_assignment.css">
+    <link rel="stylesheet" href="/css/student/qr_student_code.css">
+    {{/if}}
     <title>{{title}}</title>
 </head>
 
 <body>
     {{#if authentication}}
     {{{body}}}
+    {{else if  blank}}
+    {{{body}}}
     {{else}}
     {{>sidebar}}
-    <div class="overplay" id="overplay"></div>
+    <div class="overlay" id="overlay"></div>
     <div class="layout">
         {{>header}}
         <main class="content-wrapper">
@@ -57,6 +77,17 @@
     <script src="/js/school_admin/create_lesson.js"></script>
     <script src="/js/school_admin/create_semester_lesson_plan.js"></script>
     <script src="/js/school_admin/create_subject_lesson_plan.js"></script>
+    <script src="/js/teacher/list_lesson_openings.js"></script>
+    <script src="/js/teacher/create_assignment.js"></script>
+    <script src="/js/teacher/list_assignment.js"></script>
+    <script src="/js/teacher/lesson_opening_application.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        window.APP_PUBLIC_URL = "{{appPublicUrl}}";
+    </script>
+    {{#if blank}}
+    <script src="/js/student/assignment.js"></script>
+    {{/if}}
     {{/if}}
 
 </body>

@@ -84,7 +84,14 @@ const authenticatedApi = {
       ...config,
     });
   },
-
+  async patch(req, url, data = {}, config = {}) {
+    return requestWithAuth(req, {
+      method: "PATCH",
+      url,
+      data,
+      ...config,
+    });
+  },
   async delete(req, url, config = {}) {
     return requestWithAuth(req, {
       method: "DELETE",

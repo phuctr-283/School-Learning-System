@@ -30,6 +30,9 @@ from apps.class_sections.application.dto.teacher_class_section_dto import (
 from apps.departments.infrastructure.persistence.models.department_model import (
     DepartmentModel,
 )
+from apps.class_sections.infrastructure.persistence.models.class_section_student_model import (
+    ClassSectionStudentModel,
+)
 
 
 class MongoClassSectionRepository(ClassSectionRepository):
@@ -314,37 +317,48 @@ class MongoClassSectionRepository(ClassSectionRepository):
             status=class_section.status,
         )
 
-    def get_teacher_subjects(
+    def _get_teacher_subjects_by_status(
         self,
         university_id: str,
-        department_id: str,
-        teacher_id: str,
+        username: str,
+        status: str | None = None,
     ):
-        university = UniversityModel.objects(university_id=university_id).first()
+
+        university = UniversityModel.objects(
+            university_id=university_id,
+        ).first()
 
         if not university:
             raise ValueError("Không tìm thấy trường đại học.")
 
-        department = DepartmentModel.objects(
-            department_id=department_id,
-            university=university,
-        ).first()
-
-        if not department:
-            raise ValueError("Không tìm thấy khoa.")
+        normalized_username = username.strip().lower()
 
         teacher = TeacherModel.objects(
-            teacher_id=teacher_id,
-            department=department,
+            email=normalized_username,
         ).first()
 
         if not teacher:
-            raise ValueError("Không tìm thấy giảng viên.")
+            raise ValueError("Không tìm thấy giảng viên " "tương ứng với tài khoản.")
 
-        class_sections = ClassSectionModel.objects(
-            teacher=teacher,
-            status="active",
-        ).select_related()
+        department = teacher.department
+
+        if not department:
+            raise ValueError("Giảng viên chưa được gán khoa.")
+
+        if not department.university:
+            raise ValueError("Khoa của giảng viên chưa được " "gán trường đại học.")
+
+        if department.university.university_id != university.university_id:
+            raise ValueError("Giảng viên không thuộc " "trường đại học này.")
+
+        filters = {
+            "teacher": teacher,
+        }
+
+        if status is not None:
+            filters["status"] = status
+
+        class_sections = ClassSectionModel.objects(**filters).select_related()
 
         subjects = {}
 
@@ -355,48 +369,99 @@ class MongoClassSectionRepository(ClassSectionRepository):
             if not subject:
                 continue
 
-            if (
-                not subject.university
-                or subject.university.university_id != university.university_id
-            ):
+            if not subject.university:
                 continue
 
-            subjects[subject.subject_id] = TeacherSubjectDTO(
+            if subject.university.university_id != university.university_id:
+                continue
+
+            if not subject.department:
+                continue
+
+            subject_id = subject.subject_id
+
+            if subject_id in subjects:
+                continue
+
+            subjects[subject_id] = TeacherSubjectDTO(
                 university_id=(university.university_id),
-                department_id=(department.department_id),
-                subject_id=(subject.subject_id),
+                department_id=(subject.department.department_id),
+                subject_id=subject.subject_id,
                 subject_name=subject.name,
             )
 
-        return list(subjects.values())
+        return sorted(
+            subjects.values(),
+            key=lambda item: (item.subject_name.lower()),
+        )
+
+    def get_teacher_subjects(
+        self,
+        university_id: str,
+        username: str,
+    ):
+        return self._get_teacher_subjects_by_status(
+            university_id=university_id,
+            username=username,
+            status=None,
+        )
+
+    def get_teacher_active_subjects(
+        self,
+        university_id: str,
+        username: str,
+    ):
+        return self._get_teacher_subjects_by_status(
+            university_id=university_id,
+            username=username,
+            status="active",
+        )
 
     def get_teacher_class_sections(
         self,
         university_id: str,
-        department_id: str,
-        teacher_id: str,
+        username: str,
         subject_id: str,
     ):
-        university = UniversityModel.objects(university_id=university_id).first()
+        # =========================================
+        # UNIVERSITY
+        # =========================================
+
+        university = UniversityModel.objects(
+            university_id=university_id,
+        ).first()
 
         if not university:
             raise ValueError("Không tìm thấy trường đại học.")
 
-        department = DepartmentModel.objects(
-            department_id=department_id,
-            university=university,
-        ).first()
-
-        if not department:
-            raise ValueError("Không tìm thấy khoa.")
+        # =========================================
+        # TEACHER
+        # username của UserModel = email giảng viên
+        # =========================================
 
         teacher = TeacherModel.objects(
-            teacher_id=teacher_id,
-            department=department,
+            email=username.strip().lower(),
         ).first()
 
         if not teacher:
-            raise ValueError("Không tìm thấy giảng viên.")
+            raise ValueError("Không tìm thấy giảng viên tương ứng với tài khoản.")
+
+        # =========================================
+        # KIỂM TRA GIẢNG VIÊN THUỘC ĐÚNG TRƯỜNG
+        # =========================================
+
+        if not teacher.department:
+            raise ValueError("Giảng viên chưa được gán khoa.")
+
+        if not teacher.department.university:
+            raise ValueError("Khoa của giảng viên chưa được gán trường.")
+
+        if teacher.department.university.university_id != university.university_id:
+            raise ValueError("Giảng viên không thuộc trường đại học này.")
+
+        # =========================================
+        # LẤY SUBJECT
+        # =========================================
 
         subject = SubjectModel.objects(
             subject_id=subject_id,
@@ -406,6 +471,20 @@ class MongoClassSectionRepository(ClassSectionRepository):
         if not subject:
             raise ValueError("Không tìm thấy môn học.")
 
+        # =========================================
+        # KIỂM TRA MÔN HỌC THUỘC CÙNG KHOA
+        # =========================================
+
+        if not subject.department:
+            raise ValueError("Môn học chưa được gán khoa.")
+
+        if subject.department.department_id != teacher.department.department_id:
+            raise ValueError("Giảng viên không thuộc khoa của môn học.")
+
+        # =========================================
+        # LẤY LỚP HỌC PHẦN
+        # =========================================
+
         class_sections = ClassSectionModel.objects(
             teacher=teacher,
             subject=subject,
@@ -414,6 +493,8 @@ class MongoClassSectionRepository(ClassSectionRepository):
 
         return [
             TeacherClassSectionDTO(
+                university_id=university.university_id,
+                department_id=teacher.department.department_id,
                 class_section_id=class_section.class_section_id,
                 academic_year_id=(class_section.academic_year.academic_year_id),
                 academic_year_name=(class_section.academic_year.name),
@@ -437,24 +518,14 @@ class MongoClassSectionRepository(ClassSectionRepository):
         academic_year_name: str,
         teacher_id: str,
     ):
-
         university = UniversityModel.objects(
             university_id=university_id,
         ).first()
-
         if not university:
             return None
-
-        teacher = TeacherModel.objects(
-            teacher_id=teacher_id,
-        ).first()
-
-        if not teacher:
-            return None
-
-        if not teacher.department or teacher.department.university != university:
-            return None
-
+        # ------------------------------------------
+        # Tìm năm học theo trường
+        # ------------------------------------------
         academic_year = AcademicYearModel.objects(
             university=university,
             name=academic_year_name,
@@ -463,6 +534,9 @@ class MongoClassSectionRepository(ClassSectionRepository):
         if not academic_year:
             return None
 
+        # ------------------------------------------
+        # Tìm học kỳ thuộc năm học
+        # ------------------------------------------
         semester = SemesterModel.objects(
             academic_year=academic_year,
             semester_number=str(semester_number),
@@ -471,20 +545,237 @@ class MongoClassSectionRepository(ClassSectionRepository):
         if not semester:
             return None
 
+        # ------------------------------------------
+        # Tìm môn học thuộc trường
+        # ------------------------------------------
         subject = SubjectModel.objects(
-            university=university,
             name=subject_name,
         ).first()
 
         if not subject:
             return None
 
+        # ------------------------------------------
+        # Tìm giảng viên
+        # ------------------------------------------
+        teacher = TeacherModel.objects(
+            teacher_id=teacher_id,
+        ).first()
+
+        if not teacher:
+            return None
+
+        # ------------------------------------------
+        # ClassSectionModel không có university
+        # ------------------------------------------
         return ClassSectionModel.objects(
+            subject=subject,
+            group_number=group_number,
+            semester=semester,
+            academic_year=academic_year,
+            teacher=teacher,
+        ).first()
+
+    
+    def get_teacher_active_planned_subjects(
+        self,
+        university_id: str,
+        username: str,
+        academic_year_id: str,
+        semester_id: str,
+    ):
+
+        university = UniversityModel.objects(
+            university_id=university_id,
+        ).first()
+
+        if not university:
+            raise ValueError("Không tìm thấy trường đại học.")
+
+        academic_year = AcademicYearModel.objects(
+            academic_year_id=academic_year_id,
             university=university,
+        ).first()
+
+        if not academic_year:
+            raise ValueError("Không tìm thấy năm học.")
+
+        semester = SemesterModel.objects(
+            semester_id=semester_id,
+            academic_year=academic_year,
+        ).first()
+
+        if not semester:
+            raise ValueError("Không tìm thấy học kỳ.")
+
+        normalized_username = username.strip().lower()
+
+        teacher = TeacherModel.objects(
+            email=normalized_username,
+        ).first()
+
+        if not teacher:
+            raise ValueError("Không tìm thấy giảng viên tương ứng với tài khoản.")
+
+        if not teacher.department:
+            raise ValueError("Giảng viên chưa được gán khoa.")
+
+        if not teacher.department.university:
+            raise ValueError("Khoa của giảng viên chưa được gán trường.")
+
+        if teacher.department.university.university_id != university.university_id:
+            raise ValueError("Giảng viên không thuộc trường đại học này.")
+
+        class_sections = ClassSectionModel.objects(
             teacher=teacher,
             academic_year=academic_year,
             semester=semester,
-            subject=subject,
-            group_number=group_number,
-            status="active",
+            status__in=[
+                "active",
+                "planned",
+            ],
+        ).select_related()
+
+        subjects = {}
+
+        for class_section in class_sections:
+
+            subject = class_section.subject
+
+            if not subject:
+                continue
+
+            if not subject.university:
+                continue
+
+            if subject.university.university_id != university.university_id:
+                continue
+
+            if subject.status != "active":
+                continue
+
+            if not subject.department:
+                continue
+
+            if subject.department.department_id != teacher.department.department_id:
+                continue
+
+            subject_id = subject.subject_id
+
+            if subject_id in subjects:
+                continue
+
+            subjects[subject_id] = TeacherSubjectDTO(
+                university_id=university.university_id,
+                department_id=subject.department.department_id,
+                subject_id=subject.subject_id,
+                subject_name=subject.name,
+            )
+
+        return sorted(
+            subjects.values(),
+            key=lambda item: (item.subject_name.lower()),
+        )
+
+    def get_teacher_active_planned_class_sections(
+        self,
+        university_id: str,
+        username: str,
+        subject_id: str,
+        academic_year_id: str,
+        semester_id: str,
+    ):
+
+        university = UniversityModel.objects(
+            university_id=university_id,
         ).first()
+
+        if not university:
+            raise ValueError("Không tìm thấy trường đại học.")
+
+        academic_year = AcademicYearModel.objects(
+            academic_year_id=academic_year_id,
+            university=university,
+        ).first()
+
+        if not academic_year:
+            raise ValueError("Không tìm thấy năm học.")
+
+        semester = SemesterModel.objects(
+            semester_id=semester_id,
+            academic_year=academic_year,
+        ).first()
+
+        if not semester:
+            raise ValueError("Không tìm thấy học kỳ.")
+
+        normalized_username = username.strip().lower()
+
+        teacher = TeacherModel.objects(
+            email=normalized_username,
+        ).first()
+
+        if not teacher:
+            raise ValueError("Không tìm thấy giảng viên tương ứng với tài khoản.")
+
+        if not teacher.department:
+            raise ValueError("Giảng viên chưa được gán khoa.")
+
+        if not teacher.department.university:
+            raise ValueError("Khoa của giảng viên chưa được gán trường.")
+
+        if teacher.department.university.university_id != university.university_id:
+            raise ValueError("Giảng viên không thuộc trường đại học này.")
+
+        subject = SubjectModel.objects(
+            subject_id=subject_id,
+            university=university,
+        ).first()
+
+        if not subject:
+            raise ValueError("Không tìm thấy môn học.")
+
+        if subject.status != "active":
+            raise ValueError("Môn học hiện không hoạt động.")
+
+        if not subject.department:
+            raise ValueError("Môn học chưa được gán khoa.")
+
+        if subject.department.department_id != teacher.department.department_id:
+            raise ValueError("Giảng viên không thuộc khoa của môn học.")
+
+        class_sections = ClassSectionModel.objects(
+            teacher=teacher,
+            subject=subject,
+            academic_year=academic_year,
+            semester=semester,
+            status__in=[
+                "active",
+                "planned",
+            ],
+        ).select_related()
+
+        result = []
+
+        for class_section in class_sections:
+
+            result.append(
+                TeacherClassSectionDTO(
+                    university_id=university.university_id,
+                    department_id=teacher.department.department_id,
+                    class_section_id=(class_section.class_section_id),
+                    academic_year_id=(academic_year.academic_year_id),
+                    academic_year_name=(academic_year.name),
+                    semester_id=(semester.semester_id),
+                    semester_name=(semester.name),
+                    semester_number=(str(semester.semester_number)),
+                    subject_id=(subject.subject_id),
+                    subject_name=(subject.name),
+                    group_number=(class_section.group_number),
+                    status=(class_section.status),
+                )
+            )
+
+        result.sort(key=lambda item: item.group_number)
+
+        return result

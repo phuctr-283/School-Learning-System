@@ -1,0 +1,572 @@
+/* ================================
+   Class section page
+================================ */
+
+.class-section-page-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.class-section-page-title__heading {
+  margin: 0;
+  color: #303841;
+  font-size: 24px;
+  font-weight: 650;
+}
+
+.class-section-page-title__subheading {
+  margin: 5px 0 0;
+  color: #929aa3;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.class-section-table-card {
+  margin-top: 4px;
+}
+
+/* ================================
+   Class section table
+================================ */
+
+.class-section-table .lesson-opening-row td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+/* ================================
+   Lesson opening
+================================ */
+
+.lesson-opening-name {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 190px;
+}
+
+.lesson-opening-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #edf7fb;
+  color: #4187b6;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lesson-opening-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.lesson-opening-info .lesson-opening-title {
+  overflow: hidden;
+  color: #303841;
+  font-size: 13px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lesson-opening-id {
+  color: #929aa3;
+  font-size: 11px;
+}
+
+/* ================================
+   Lesson opening status
+================================ */
+
+.lesson-opening-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 90px;
+  padding: 6px 9px;
+  border: 1px solid #dfe7eb;
+  border-radius: 999px;
+  background: #f7f9fa;
+  color: #929aa3;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.lesson-opening-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c9d1d7;
+}
+
+.lesson-opening-status--open {
+  border-color: #b8dec6;
+  background: #edf9f1;
+  color: #23835a;
+}
+
+.lesson-opening-status--open::before {
+  background: #22a06b;
+}
+
+.lesson-opening-status--closed {
+  border-color: #efc7a7;
+  background: #fff5ec;
+  color: #b56b2d;
+}
+
+.lesson-opening-status--closed::before {
+  background: #d88b4c;
+}
+
+.lesson-opening-status--locked {
+  border-color: #dfe7eb;
+  background: #f7f9fa;
+  color: #929aa3;
+}
+
+/* ================================
+   Lesson opening activity button
+================================ */
+
+.lesson-opening-status-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 88px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #dce5ea;
+  border-radius: 8px;
+  background: #fff;
+  color: #8b989f;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.lesson-opening-status-button:hover {
+  border-color: #b8cbd5;
+  background: #f6fafc;
+  color: #65747d;
+  transform: translateY(-1px);
+}
+
+.lesson-opening-status-button.is-active {
+  border-color: #9ed2b5;
+  background: #edf9f1;
+  color: #23835a;
+}
+
+.lesson-opening-status-button.is-active:hover {
+  border-color: #60b584;
+  background: #dff3e7;
+  color: #176c49;
+}
+
+.lesson-opening-status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.lesson-opening-status-text {
+  white-space: nowrap;
+}
+
+/* ================================
+   Lesson content toggle
+================================ */
+
+.lesson-opening-content-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #4187b6;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.lesson-opening-content-toggle:hover {
+  color: #2f6fa8;
+}
+
+.lesson-opening-content-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid #cfe0e9;
+  border-radius: 8px;
+  background: #f5fafc;
+  color: #4187b6;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.lesson-opening-content-toggle[aria-expanded="true"]
+  .lesson-opening-content-icon {
+  background: #4187b6;
+  border-color: #4187b6;
+  color: #fff;
+}
+
+.lesson-opening-content-disabled {
+  color: #a4adb4;
+  font-size: 12px;
+}
+
+/* ================================
+   Lesson content panel
+================================ */
+
+.lesson-content-panel td {
+  padding: 0 14px 14px !important;
+  background: #f8fbfc;
+  border-radius: 0 0 11px 11px !important;
+}
+
+.lesson-content-panel__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 14px 5px 58px;
+  animation: lesson-content-panel-in 0.25s ease both;
+}
+
+/* ================================
+   Assignment list
+================================ */
+
+.lesson-assignments {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assignment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ================================
+   Assignment item
+================================ */
+
+.lesson-assignment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  min-height: 46px;
+  padding: 7px 9px 7px 11px;
+  border: 1px solid #e1e9ee;
+  border-radius: 9px;
+  background: #fff;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.lesson-assignment-item:hover {
+  border-color: #cbdde7;
+  background: #fbfdfe;
+}
+
+/* ================================
+   Assignment main
+================================ */
+
+.lesson-assignment-main {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.lesson-assignment-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: #3d4750;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.lesson-assignment-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #d8e8f0;
+  border-radius: 7px;
+  background: #f1f8fb;
+  color: #4187b6;
+  font-size: 12px;
+}
+
+.lesson-assignment-title-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ================================
+   Assignment actions
+================================ */
+
+.lesson-assignment-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* ================================
+   Assignment status button
+================================ */
+
+.lesson-assignment-status-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 88px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #dce5ea;
+  border-radius: 8px;
+  background: #fff;
+  color: #8b989f;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.lesson-assignment-status-button:hover {
+  border-color: #b8cbd5;
+  background: #f6fafc;
+  color: #65747d;
+  transform: translateY(-1px);
+}
+
+.lesson-assignment-status-button.is-active {
+  border-color: #9ed2b5;
+  background: #edf9f1;
+  color: #23835a;
+}
+
+.lesson-assignment-status-button.is-active:hover {
+  border-color: #60b584;
+  background: #dff3e7;
+  color: #176c49;
+}
+
+.lesson-assignment-status-button.is-closed {
+  border-color: #dce5ea;
+  background: #fff;
+  color: #8b989f;
+}
+
+.lesson-assignment-status-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+}
+
+.lesson-assignment-status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 12px;
+}
+
+.lesson-assignment-status-text {
+  white-space: nowrap;
+}
+
+/* ================================
+   Assignment states
+================================ */
+
+.assignment-loading,
+.assignment-empty,
+.assignment-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 10px;
+  color: #929aa3;
+  font-size: 12px;
+}
+
+.assignment-empty {
+  color: #929aa3;
+}
+
+.assignment-error {
+  color: #c33f3f;
+}
+
+.assignment-status-error {
+  margin-top: 4px;
+  padding: 0 4px;
+  color: #c33f3f;
+  font-size: 11px;
+}
+
+/* ================================
+   Empty lesson
+================================ */
+
+.lesson-opening-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  color: #929aa3;
+  font-size: 12px;
+}
+
+/* ================================
+   Animation
+================================ */
+
+@keyframes lesson-content-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+   Responsive
+================================ */
+
+@media (max-width: 760px) {
+  .class-section-page-title {
+    flex-direction: column;
+  }
+
+  .lesson-content-panel__inner {
+    padding-left: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .class-section-page-title__heading {
+    font-size: 21px;
+  }
+
+  .class-section-table-card {
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+  }
+
+  .class-section-table .lesson-opening-row td {
+    padding: 12px 9px;
+  }
+
+  .lesson-opening-name {
+    gap: 8px;
+  }
+
+  .lesson-opening-number {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .lesson-opening-title {
+    max-width: 130px;
+  }
+
+  .lesson-opening-status-button {
+    min-width: 36px;
+    width: 36px;
+    height: 32px;
+    padding: 0;
+  }
+
+  .lesson-opening-status-text {
+    display: none;
+  }
+
+  .lesson-content-panel__inner {
+    padding: 10px 5px 4px;
+  }
+
+  .lesson-assignment-item {
+    min-height: 42px;
+    padding: 6px 7px 6px 9px;
+  }
+
+  .lesson-assignment-title {
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  .lesson-assignment-icon {
+    width: 26px;
+    height: 26px;
+    flex-basis: 26px;
+    font-size: 11px;
+  }
+
+  .lesson-assignment-status-button {
+    min-width: 36px;
+    width: 36px;
+    height: 30px;
+    padding: 0;
+  }
+
+  .lesson-assignment-status-text {
+    display: none;
+  }
+}

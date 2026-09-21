@@ -1,91 +1,83 @@
 const {
   importClassSectionStudentsUseCase,
-
-  getClassSectionStudentsUseCase,
-
-} = require(
-  "../../../application/class_sections/dependencies/class_section_student_dependency"
-);
-
+} = require("../../../../infrastructure/dependencies/class_section/class_section_student_dependency");
 
 const classSectionStudentController = {
-
-  async importStudents(
-    req,
-    res,
-    next
-  ) {
-
+  async renderImportStudent(req, res, next) {
     try {
+      return res.render("teacher/import/student", {
+        title: "Import sinh viên",
 
-      const file =
-        req.file;
+        importSuccess: false,
 
-      const result =
-        await importClassSectionStudentsUseCase
-          .execute(
-            req,
-            file
-          );
-
-      return res.status(
-        200
-      ).json({
-        success: true,
-
-        data: result,
+        error: null,
       });
-
     } catch (error) {
-
       next(error);
     }
   },
-
-
-  async getStudents(
-    req,
-    res,
-    next
-  ) {
-
+  async importStudents(req, res, next) {
     try {
+      const file = req.file;
 
-      const result =
-        await getClassSectionStudentsUseCase
-          .execute(
-            req,
-            {
-              academicYearId:
-                req.query.academic_year_id,
+      if (!file) {
+        return res.status(400).render("teacher/import/student", {
+          title: "Import sinh viên",
 
-              semesterId:
-                req.query.semester_id,
+          importSuccess: false,
 
-              subjectId:
-                req.query.subject_id,
+          error: "Vui lòng chọn file Excel",
+        });
+      }
 
-              groupNumber:
-                req.query.group_number,
-            }
-          );
+      const result = await importClassSectionStudentsUseCase.execute(req, file);
 
-      return res.status(
-        200
-      ).json({
-        success: true,
+      return res.status(200).render("teacher/import/student", {
+        title: "Import sinh viên",
 
-        data: result,
+        importSuccess: true,
+
+        importMessage: result.message,
+
+        subjectName: result.subject_name,
+
+        groupNumber: result.group_number,
+
+        semesterNumber: result.semester_number,
+
+        academicYearName: result.academic_year_name,
+
+        importCount: result.imported_count,
+
+        skippedCount: result.skipped_count,
+
+        notFoundCount: result.not_found_count,
+
+        importedStudents: result.imported,
+
+        skippedStudents: result.skipped,
+
+        notFoundStudents: result.not_found,
+
+        error: null,
       });
-
     } catch (error) {
+      console.error("IMPORT CLASS SECTION STUDENTS ERROR:", error);
 
-      next(error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Import sinh viên thất bại";
+
+      return res.status(400).render("teacher/import/student", {
+        title: "Import sinh viên",
+
+        importSuccess: false,
+
+        error: errorMessage,
+      });
     }
   },
-
 };
 
-
-module.exports =
-  classSectionStudentController;
+module.exports = classSectionStudentController;

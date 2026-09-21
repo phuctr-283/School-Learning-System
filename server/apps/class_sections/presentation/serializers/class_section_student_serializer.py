@@ -28,7 +28,7 @@ class ImportClassSectionStudentsSerializer(
 
     group_number = serializers.IntegerField()
 
-    semester_number = serializers.IntegerField()
+    semester_number = serializers.CharField()
 
     academic_year_name = serializers.CharField()
 

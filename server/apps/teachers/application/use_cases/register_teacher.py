@@ -117,6 +117,7 @@ class RegisterTeacherUseCase:
         department = (
             self.department_repository.find_by_id(
                 department_id,
+                university_id,
             )
         )
 

@@ -1,14 +1,12 @@
+from datetime import datetime, timezone
 from decimal import Decimal
-from django.utils import timezone
-import secrets
-import string
-
-from apps.assignments.application.dto.create_assignment_dto import (
-    CreateAssignmentDTO,
-)
 
 from apps.assignments.domain.entities.assignment_entity import (
     Assignment,
+)
+
+from apps.assignments.application.dto.create_assignment_dto import (
+    CreateAssignmentDTO,
 )
 
 from apps.assessment.application.services.question_parser_service import (
@@ -21,64 +19,41 @@ class CreateAssignmentUseCase:
     def __init__(
         self,
         assignment_repository,
-        university_repository,
-        department_repository,
+        assignment_id_generator,
         subject_repository,
-        teacher_repository,
     ):
-
         self.assignment_repository = assignment_repository
-        self.university_repository = university_repository
-        self.department_repository = department_repository
+
+        self.assignment_id_generator = assignment_id_generator
+
         self.subject_repository = subject_repository
-        self.teacher_repository = teacher_repository
 
     def execute(
         self,
         dto: CreateAssignmentDTO,
-    ) -> Assignment:
+        university_id: str,
+        teacher_email: str,
+    ):
 
-        university_id = dto.university_id.strip().upper()
-        department_id = dto.department_id.strip().upper()
-        subject_id = dto.subject_id.strip().upper()
-        teacher_id = dto.teacher_id.strip().upper()
         title = (dto.title or "").strip()
 
         if not title:
-            raise ValueError(
-                "Tiêu đề bài tập không được để trống."
-            )
+            raise ValueError("Tên bài tập không được để trống.")
 
-        # =================================================
-        # UNIVERSITY
-        # =================================================
+        subject_id = (dto.subject_id or "").strip()
 
-        university = self.university_repository.get_by_id(
-            university_id,
-        )
+        if not subject_id:
+            raise ValueError("Chưa chọn môn học.")
 
-        if university is None:
-            raise ValueError(
-                "Không tìm thấy trường đại học."
-            )
+        if dto.assignment_type not in {
+            "practice",
+            "homework",
+            "quiz",
+        }:
+            raise ValueError("Loại bài tập không hợp lệ.")
 
-        # =================================================
-        # DEPARTMENT
-        # =================================================
-
-        department = self.department_repository.get_by_id(
-            department_id=department_id,
-            university_id=university_id,
-        )
-
-        if department is None:
-            raise ValueError(
-                "Không tìm thấy khoa thuộc trường đại học."
-            )
-
-        # =================================================
-        # SUBJECT
-        # =================================================
+        if dto.duration_minutes < 1 or dto.duration_minutes > 600:
+            raise ValueError("Thời gian làm bài " "phải từ 1 đến 600 phút.")
 
         subject = self.subject_repository.get_by_id(
             subject_id=subject_id,
@@ -86,90 +61,39 @@ class CreateAssignmentUseCase:
         )
 
         if subject is None:
-            raise ValueError(
-                "Môn học không tồn tại trong trường."
-            )
+            raise ValueError("Không tìm thấy môn học " "thuộc trường đại học.")
 
-        # =================================================
-        # TEACHER
-        # =================================================
-
-        teacher = self.teacher_repository.get_by_id(
-            teacher_id=teacher_id,
-            university_id=university_id,
-            department_id=department_id,
+        department_id = str(
+            subject.department_id,
         )
 
-        if teacher is None:
-            raise ValueError(
-                "Không tìm thấy giảng viên thuộc khoa."
-            )
-
-        # =================================================
-        # PARSE QUESTIONS
-        # =================================================
-
-        question_entities = (
-            QuestionParserService.parse_questions(
-                raw_questions=dto.questions,
-            )
+        questions = QuestionParserService.parse_questions(
+            dto.questions,
         )
 
-        # =================================================
-        # CREATE ASSIGNMENT
-        # =================================================
-
-        now = timezone.now()
+        now = datetime.now(
+            timezone.utc,
+        )
 
         assignment = Assignment(
-            assignment_id=self.generate_assignment_id(
-                university_id=university_id,
-                department_number=department.department_number,
-            ),
+            assignment_id=(self.assignment_id_generator.generate()),
             university_id=university_id,
             department_id=department_id,
             subject_id=subject_id,
-            teacher_id=teacher_id,
+            teacher_id="",
             title=title,
-            description=(
-                dto.description.strip()
-                if dto.description
-                and dto.description.strip()
-                else None
-            ),
-            questions=question_entities,
-            total_score=Decimal("10.00"),
+            description=(dto.description or None),
             assignment_type=dto.assignment_type,
-            status="draft",
+            questions=questions,
+            total_score=Decimal("10.00"),
+            duration_minutes=dto.duration_minutes,
+            status="published",
             is_active=True,
             created_at=now,
             updated_at=now,
         )
 
-        return self.assignment_repository.create(
-            assignment,
-        )
-
-    @staticmethod
-    def generate_assignment_id(
-        university_id: str,
-        department_number,
-    ) -> str:
-
-        random_part = "".join(
-            secrets.choice(
-                string.ascii_uppercase + string.digits
-            )
-            for _ in range(16)
-        )
-
-        department_code = str(
-            department_number
-        ).strip().zfill(2)
-
-        return (
-            f"ASG-"
-            f"{university_id}-"
-            f"{department_code}-"
-            f"{random_part}"
+        return self.assignment_repository.create_by_teacher_email(
+            assignment=assignment,
+            teacher_email=teacher_email,
         )

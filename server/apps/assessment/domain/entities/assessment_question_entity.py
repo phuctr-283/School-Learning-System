@@ -19,20 +19,18 @@ from apps.assessment.domain.entities.assessment_question_test_case_entity import
 class AssessmentQuestion:
 
     question_id: str
-    content: str
+    question: str
+    content: str | None
     question_type: str
     score: Decimal
     order: int
-
     shuffle_options: bool = False
     blank_count: int = 0
 
     options: list[AssessmentQuestionOption] = field(
         default_factory=list,
     )
-
     answer: Optional[AssessmentQuestionAnswer] = None
-
     test_cases: list[AssessmentQuestionTestCase] = field(
         default_factory=list,
     )

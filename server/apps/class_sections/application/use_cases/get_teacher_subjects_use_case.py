@@ -11,14 +11,22 @@ class GetTeacherSubjectsUseCase:
     def execute(
         self,
         university_id: str,
-        department_id: str,
-        teacher_id: str,
+        username: str,
     ):
+        if not university_id:
+            raise ValueError(
+                "Không xác định được trường đại học."
+            )
+
+        if not username:
+            raise ValueError(
+                "Không xác định được tài khoản giảng viên."
+            )
+
         return (
             self.class_section_repository
             .get_teacher_subjects(
                 university_id=university_id,
-                department_id=department_id,
-                teacher_id=teacher_id,
+                username=username,
             )
         )

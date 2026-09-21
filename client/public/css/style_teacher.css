@@ -1,4 +1,8 @@
-@import url(./variable.css);
+@import url("./variable.css");
+@import url("./teacher/list_lesson_openings.css");
+@import url("./teacher/list_assignment.css");
+@import url("./teacher/create_assignment.css");
+@import url("./teacher//lesson_opening_application.css");
 .section-title {
   display: flex;
   align-items: center;
@@ -2247,7 +2251,476 @@
 
   opacity: 0.8;
 }
+/* =========================================================
+   IMPORT SELECT
+========================================================= */
 
+.import-select {
+  position: relative;
+  width: 100%;
+}
+
+.import-select select {
+  width: 100%;
+  padding-right: 34px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.import-select__arrow {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+
+  transform: translateY(-50%);
+
+  color: #9aa3ab;
+
+  font-size: 11px;
+
+  pointer-events: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.import-select:focus-within .import-select__arrow {
+  color: var(--import-primary);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+
+/* =========================================================
+   EXCEL FORMAT
+========================================================= */
+
+.import-excel-format {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 6px 18px;
+
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  padding: 9px 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 8px;
+}
+
+.import-excel-format__row {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-height: 24px;
+}
+
+.import-excel-format__row span {
+  flex-shrink: 0;
+
+  color: #8f99a1;
+
+  font-size: 10px;
+}
+
+.import-excel-format__row code {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   RESULT CONTEXT
+========================================================= */
+
+.import-result__context {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.import-result__context-item {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns: 26px minmax(0, 1fr);
+
+  grid-template-rows: auto auto;
+
+  column-gap: 8px;
+
+  padding: 11px 12px;
+
+  background: #fafbfc;
+
+  border: 1px solid #edf0f3;
+
+  border-radius: 10px;
+}
+
+.import-result__context-item > i {
+  width: 26px;
+  height: 26px;
+
+  grid-row: 1 / span 2;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: var(--import-primary-light);
+
+  color: var(--import-primary);
+
+  border: 1px solid var(--import-primary-border);
+
+  border-radius: 7px;
+
+  font-size: 12px;
+}
+
+.import-result__context-item span {
+  min-width: 0;
+
+  color: #9aa3ab;
+
+  font-size: 9px;
+
+  line-height: 1.3;
+}
+
+.import-result__context-item strong {
+  min-width: 0;
+
+  margin-top: 2px;
+
+  overflow: hidden;
+
+  color: #48535c;
+
+  font-size: 11px;
+
+  font-weight: 650;
+
+  line-height: 1.4;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   ERROR STAT
+========================================================= */
+
+.import-stat--error {
+  background: #fff8f8;
+
+  border-color: #f3e2e2;
+}
+
+.import-stat--error .import-stat__icon {
+  background: #fdeaea;
+
+  color: #dc3545;
+}
+
+.import-stat--error .import-stat__content strong {
+  color: #dc3545;
+}
+
+
+/* =========================================================
+   HIDDEN STATE
+========================================================= */
+
+.import-file-preview[hidden],
+.import-btn__loading[hidden] {
+  display: none !important;
+}
+
+
+/* =========================================================
+   FILE NAME - SELECTED STATE
+========================================================= */
+
+.import-upload__filename.has-file {
+  color: var(--import-primary);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FILE INPUT ERROR
+========================================================= */
+
+.import-upload.is-error {
+  background: #fff8f8;
+
+  border-color: #dc3545;
+}
+
+.import-upload.is-error .import-upload__icon {
+  background: #fdeaea;
+
+  color: #dc3545;
+
+  border-color: #f3d4d4;
+}
+
+
+/* =========================================================
+   RESULT STATUS - ERROR COLOR
+========================================================= */
+
+.import-result__status.is-error
+  .import-result__status-icon {
+  color: #dc3545;
+}
+
+
+/* =========================================================
+   RESULT STATUS - SUCCESS COLOR
+========================================================= */
+
+.import-result__status.is-success
+  .import-result__status-icon {
+  color: #198754;
+}
+
+
+/* =========================================================
+   RESULT FOOTER TEXT
+========================================================= */
+
+.import-result__footer > span {
+  min-width: 0;
+
+  line-height: 1.5;
+}
+
+.import-result__footer > span i {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   UPLOAD HINT
+========================================================= */
+
+.import-upload {
+  position: relative;
+
+  padding-bottom: 30px;
+}
+
+.import-upload__hint {
+  position: absolute;
+
+  left: 16px;
+  bottom: 8px;
+}
+
+
+/* =========================================================
+   SELECT DISABLED
+========================================================= */
+
+.import-select select:disabled {
+  background: #f5f6f7;
+
+  color: #a1a8ae;
+
+  cursor: not-allowed;
+}
+
+.import-select select:disabled + .import-select__arrow {
+  color: #b8bec3;
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.import-upload__button:focus-visible,
+.import-btn:focus-visible,
+.import-result__close:focus-visible,
+.import-result__reset:focus-visible,
+.import-file-preview__remove:focus-visible {
+  outline: 2px solid var(--import-primary);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .import-card__body {
+    padding: 20px 18px;
+  }
+
+  .import-upload {
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    padding-bottom: 32px;
+  }
+
+  .import-upload__content {
+    flex: 1 1 calc(100% - 60px);
+  }
+
+  .import-upload__input {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+  }
+
+  .import-upload__filename {
+    flex: 1;
+
+    max-width: none;
+
+    margin-top: 0;
+  }
+
+  .import-upload__hint {
+    left: 14px;
+    bottom: 8px;
+  }
+
+  .import-excel-format {
+    grid-template-columns: 1fr;
+  }
+
+  .import-result__context {
+    grid-template-columns: 1fr;
+  }
+
+  .import-result__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .import-result__footer {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .import-result__reset {
+    align-self: flex-start;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .import-card__body {
+    padding: 16px 14px;
+  }
+
+  .import-header {
+    gap: 10px;
+
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .import-header__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .import-header__icon i {
+    font-size: 17px;
+  }
+
+  .import-header__content h5 {
+    font-size: 14px;
+  }
+
+  .import-header__content span {
+    font-size: 10px;
+  }
+
+  .import-upload__input {
+    flex-wrap: wrap;
+  }
+
+  .import-upload__filename {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .import-actions {
+    justify-content: stretch;
+  }
+
+  .import-btn {
+    width: 100%;
+  }
+
+  .import-result__status {
+    align-items: flex-start;
+  }
+
+  .import-result__status-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .import-result__status-content strong {
+    font-size: 12px;
+  }
+
+  .import-result__status-content span {
+    font-size: 10px;
+  }
+
+}
 /* =========================================================
    RESPONSIVE
 ========================================================= */

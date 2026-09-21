@@ -10,7 +10,6 @@ from apps.assessment.domain.entities.assessment_question_entity import (
 
 @dataclass
 class Assignment:
-
     assignment_id: str
 
     university_id: str
@@ -19,21 +18,19 @@ class Assignment:
     teacher_id: str
 
     title: str
+    description: Optional[str] = None
+
+    assignment_type: str = "practice"
 
     questions: list[AssessmentQuestion] = field(
         default_factory=list,
     )
 
     total_score: Decimal = Decimal("10.00")
-
-    assignment_type: str = "practice"
+    duration_minutes: int = 30
 
     status: str = "draft"
-
     is_active: bool = True
 
-    created_at: Optional[datetime] = None
-
-    updated_at: Optional[datetime] = None
-
-    description: Optional[str] = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None

@@ -1,5 +1,6 @@
 const {
   getTeacherClassSectionsUseCase,
+  getTeacherActivePlannedSubjectsUseCase,
 } = require("../../../../infrastructure/dependencies/class_section/class_section_dependency");
 
 class ClassSectionController {
@@ -7,14 +8,14 @@ class ClassSectionController {
     try {
       const { subjectId } = req.params;
 
-      const classSections = await getTeacherClassSectionsUseCase.execute(
+      const groups = await getTeacherClassSectionsUseCase.execute(
         req,
         subjectId,
       );
 
       return res.render("teacher/assignment/group", {
         subjectId,
-        classSections,
+        groups,
       });
     } catch (error) {
       console.error(
@@ -26,6 +27,66 @@ class ClassSectionController {
         message:
           error.response?.data?.detail ||
           "Không thể tải danh sách nhóm học phần",
+      });
+    }
+  }
+  async getTeacherActivePlannedSubjects(req, res) {
+    try {
+      const { academicYearId, semesterId } = req.query;
+
+      const subjects = await getTeacherActivePlannedSubjectsUseCase.execute(
+        req,
+        {
+          academicYearId,
+          semesterId,
+        },
+      );
+
+      return res.status(200).json({
+        success: true,
+
+        data: subjects,
+      });
+    } catch (error) {
+      console.error("[NODE] GET TEACHER SUBJECTS ERROR:", error);
+
+      return res.status(error.response?.status || 400).json({
+        success: false,
+
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Không thể tải danh sách môn học.",
+      });
+    }
+  }
+  async getTeacherActivePlannedClassSections(req, res) {
+    try {
+      const { subjectId } = req.params;
+
+      const { academicYearId, semesterId } = req.query;
+
+      const classSections = await getTeacherClassSectionsUseCase.execute(req, {
+        subjectId,
+        academicYearId,
+        semesterId,
+      });
+
+      return res.status(200).json({
+        success: true,
+
+        data: classSections,
+      });
+    } catch (error) {
+      console.error("[NODE] GET TEACHER CLASS SECTIONS ERROR:", error);
+
+      return res.status(error.response?.status || 400).json({
+        success: false,
+
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          "Không thể tải danh sách lớp học phần.",
       });
     }
   }

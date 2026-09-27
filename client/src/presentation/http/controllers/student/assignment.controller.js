@@ -1,257 +1,245 @@
 const {
-  verifyStudentAssignmentQrUseCase,
-} = require("../../../../infrastructure/dependencies/assignment/assignment_dependency");
-const {
   getStudentAssignmentUseCase,
   saveStudentAssignmentUseCase,
   submitStudentAssignmentUseCase,
 } = require("../../../../infrastructure/dependencies/assignment/student_assignment_dependency");
+const {getStudentAssignmentApplicationUseCase} = require("../../../../infrastructure/dependencies/assignment/assignment_dependency");
 class AssignmentController {
-  async assignmentQrEntry(req, res) {
-    try {
-      const qrCode = String(req.query["QR-CODE"] || "").toUpperCase();
-
-      if (qrCode !== "TRUE") {
-        return res.status(400).render("errors/400", {
-          title: "QR không hợp lệ",
-          message: "Mã QR không hợp lệ.",
-        });
-      }
-
-      const assignmentApplicationId = String(
-        req.query.assignment_application_id || "",
-      ).trim();
-
-      const classSectionId = String(req.query.class_section_id || "").trim();
-
-      const lessonId = String(req.query.lesson_id || "").trim();
-
-      if (!assignmentApplicationId || !classSectionId || !lessonId) {
-        return res.status(400).render("errors/400", {
-          title: "QR không hợp lệ",
-          message: "Mã QR không chứa đủ dữ liệu.",
-        });
-      }
-
-      return res.render("student/assignment/qr_student_code", {
-        title: "Nhập mã sinh viên",
-
-        assignmentApplicationId,
-
-        classSectionId,
-
-        lessonId,
-        blank: true,
-      });
-    } catch (error) {
-      console.error("ASSIGNMENT QR ENTRY ERROR:", error);
-      return res.status(500).render("student/assignment/qr_student_code", {
-        title: "Nhập mã sinh viên",
-
-        assignmentApplicationId,
-
-        classSectionId,
-
-        lessonId,
-        blank: true,
-      });
-    }
-  }
-  async verifyStudentAssignmentQr(req, res) {
-    try {
-      const studentId = String(req.body.student_id || "").trim();
-
-      const assignmentApplicationId = String(
-        req.body.assignment_application_id || "",
-      ).trim();
-
-      const classSectionId = String(req.body.class_section_id || "").trim();
-
-      const lessonId = String(req.body.lesson_id || "").trim();
-
-      const result = await verifyStudentAssignmentQrUseCase.execute(req, {
-        studentId,
-        assignmentApplicationId,
-        classSectionId,
-        lessonId,
-      });
-
-      // -----------------------------------------
-      // Tạo quyền truy cập tạm thời
-      // -----------------------------------------
-
-      req.session.assignmentAccess = {
-        assignmentApplicationId: result.assignment_application_id,
-
-        classSectionId: result.class_section_id,
-
-        lessonId: result.lesson_id,
-
-        studentId: result.student_id,
-
-        expiresAt: Date.now() + 5 * 60 * 1000,
-      };
-
-      return res.redirect(
-        `/student/assignment/take/${encodeURIComponent(
-          result.assignment_application_id,
-        )}` +
-          `?class_section_id=${encodeURIComponent(result.class_section_id)}` +
-          `&lesson_id=${encodeURIComponent(result.lesson_id)}`,
-      );
-    } catch (error) {
-      console.error("VERIFY STUDENT ASSIGNMENT QR ERROR:", error);
-
-      return res.status(400).render("student/assignment/qr_student_code", {
-        title: "Nhập mã sinh viên",
-
-        assignmentApplicationId: req.body.assignment_application_id,
-
-        classSectionId: req.body.class_section_id,
-
-        lessonId: req.body.lesson_id,
-        blank: true,
-        error: error.message || "Không thể xác thực mã sinh viên.",
-      });
-    }
-  }
   async takeAssignment(req, res) {
+    const access = req.session?.assignmentAccess;
+    if (!access) {
+      return res.status(403).render("errors/403", {
+        title: "Không có quyền truy cập",
+        message: "Phiên truy cập bài tập không tồn tại hoặc đã hết hạn.",
+        blank: true,
+      });
+    }
+    const assignmentApplicationId = String(
+      req.params.assignmentApplicationId || "",
+    ).trim();
+    if (
+      !assignmentApplicationId ||
+      assignmentApplicationId !== String(access.assignmentApplicationId)
+    ) {
+      return res.status(403).render("errors/403", {
+        title: "Không được phép truy cập",
+        message: "Bài tập không thuộc phiên truy cập hiện tại.",
+        blank: true,
+      });
+    }
     try {
-      const access = req.session?.assignmentAccess;
-
-      if (!access) {
-        return res.status(403).render("error", {
-          message: "Phiên truy cập bài tập không hợp lệ.",
-        });
-      }
-
-      const assignmentApplicationId = String(
-        req.params.assignmentApplicationId || "",
-      ).trim();
-
-      if (assignmentApplicationId !== String(access.assignmentApplicationId)) {
-        return res.status(403).render("error", {
-          message: "Bài tập không hợp lệ.",
-        });
-      }
-
-      const assignment = await getStudentAssignmentUseCase.execute(req, {
+      const assignment = await getStudentAssignmentUseCase.execute({
         studentId: access.studentId,
-        assignmentApplicationId,
+        assignmentApplicationId: access.assignmentApplicationId,
         classSectionId: access.classSectionId,
         lessonId: access.lessonId,
       });
-
-      console.log("ASSIGNMENT DATA:", JSON.stringify(assignment, null, 2));
-
+      const deadlineAt = Date.parse(assignment.deadline_at);
+      if (!Number.isFinite(deadlineAt)) {
+        throw new Error("Dữ liệu deadline của bài tập không hợp lệ.");
+      }
+      req.session.assignmentAccess = {
+        ...access,
+        mode: "taking",
+        attemptId: assignment.attempt_id,
+        attemptDeadlineAt: deadlineAt,
+        expiresAt: deadlineAt + 10_000,
+      };
+      await new Promise((resolve, reject) => {
+        req.session.save((error) => {
+          if (error) {
+            reject(error);
+            return;
+          }
+          resolve();
+        });
+      });
+      const savedAnswersJson = JSON.stringify(assignment.saved_answers || {});
       return res.render("student/assignment/take-assignment", {
         title: assignment.title,
         assignment,
-        assignmentApplicationId,
+        assignmentApplicationId: assignment.assignment_application_id,
         attemptId: assignment.attempt_id,
         remainingSeconds: assignment.remaining_seconds,
-        savedAnswersJson: JSON.stringify(assignment.saved_answers || {}),
-        classSectionId: access.classSectionId,
-        lessonId: access.lessonId,
+        savedAnswersJson,
         blank: true,
-        backUrl: `/student/class-section/${access.classSectionId}`,
+        backUrl: "/student/assignment/qr",
       });
     } catch (error) {
-      console.error("TAKE ASSIGNMENT ERROR:", error);
-
-      const message = error.message || "Không thể tải bài tập.";
-
-      if (message === "Bài tập này đã được nộp và không thể làm lại.") {
-        return res.status(403).render("student/assignment/assignment-locked", {
-          title: "Không thể làm bài",
-          message,
-        });
-      }
-
-      return res.status(500).render("error", {
-        message,
-      });
+      return this.renderError(res, error, "Không thể tải bài tập.");
     }
   }
 
   async saveAssignment(req, res) {
+    const access = req.session?.assignmentAccess;
+    if (!access || access.mode !== "taking") {
+      return res.status(403).json({
+        success: false,
+        message: "Phiên làm bài không tồn tại hoặc đã hết hạn.",
+      });
+    }
+    const attemptId = String(req.body.attempt_id || "").trim();
+    if (!attemptId || attemptId !== String(access.attemptId)) {
+      return res.status(403).json({
+        success: false,
+        message: "Lượt làm bài không hợp lệ.",
+      });
+    }
     try {
-      const access = req.session?.assignmentAccess;
-
-      if (!access) {
-        return res.status(403).json({
-          success: false,
-          message: "Phiên truy cập không hợp lệ.",
-        });
-      }
-
-      const attemptId = String(req.body.attempt_id || "").trim();
-
-      const result = await saveStudentAssignmentUseCase.execute(req, {
+      const result = await saveStudentAssignmentUseCase.execute({
         studentId: access.studentId,
-
         assignmentApplicationId: access.assignmentApplicationId,
-
         classSectionId: access.classSectionId,
-
         lessonId: access.lessonId,
-
         attemptId,
-
         answers: req.body.answers || {},
       });
+      if (result?.deadline_at) {
+        const deadlineAt = Date.parse(result.deadline_at);
 
+        if (Number.isFinite(deadlineAt)) {
+          req.session.assignmentAccess.attemptDeadlineAt = deadlineAt;
+          req.session.assignmentAccess.expiresAt = deadlineAt + 10_000;
+        }
+      }
       return res.json({
         success: true,
         data: result,
       });
     } catch (error) {
-      console.error("SAVE ASSIGNMENT ERROR:", error);
+      const status = error.status || 500;
 
-      return res.status(400).json({
+      return res.status(status).json({
         success: false,
-        message: error.message || "Không thể lưu bài làm.",
+        message: error.message || "Không thể lưu bài.",
       });
     }
   }
 
   async submitAssignment(req, res) {
+    const access = req.session?.assignmentAccess;
+    if (!access || access.mode !== "taking") {
+      return res.status(403).json({
+        success: false,
+        message: "Phiên làm bài không tồn tại hoặc đã hết hạn.",
+      });
+    }
+    const attemptId = String(req.body.attempt_id || "").trim();
+    if (!attemptId || attemptId !== String(access.attemptId)) {
+      return res.status(403).json({
+        success: false,
+        message: "Lượt làm bài không hợp lệ.",
+      });
+    }
     try {
-      const access = req.session?.assignmentAccess;
-
-      if (!access) {
-        return res.status(403).json({
-          success: false,
-          message: "Phiên truy cập không hợp lệ.",
-        });
-      }
-
-      const attemptId = String(req.body.attempt_id || "").trim();
-
-      const result = await submitStudentAssignmentUseCase.execute(req, {
+      const result = await submitStudentAssignmentUseCase.execute({
         studentId: access.studentId,
-
         assignmentApplicationId: access.assignmentApplicationId,
-
         classSectionId: access.classSectionId,
-
         lessonId: access.lessonId,
-
         attemptId,
-
         answers: req.body.answers || {},
       });
-
+      req.session.assignmentAccess = {
+        ...access,
+        mode: "completed",
+        attemptId,
+        expiresAt: Date.now() + 60_000,
+      };
       return res.json({
         success: true,
         data: result,
       });
     } catch (error) {
-      console.error("SUBMIT ASSIGNMENT ERROR:", error);
+      const status = error.status || 500;
 
-      return res.status(400).json({
+      return res.status(status).json({
         success: false,
         message: error.message || "Không thể nộp bài.",
+      });
+    }
+  }
+  renderError(res, error, fallbackMessage) {
+    const status = error.status || error.response?.status || 500;
+
+    const message = error.message || fallbackMessage;
+
+    if (status === 400) {
+      return res.status(400).render("errors/400", {
+        title: "Yêu cầu không hợp lệ",
+        message,
+        blank: true,
+      });
+    }
+
+    if (status === 403) {
+      return res.status(403).render("errors/403", {
+        title: "Không được phép truy cập",
+        message,
+        blank: true,
+      });
+    }
+
+    if (status === 404) {
+      return res.status(404).render("errors/404", {
+        title: "Không tìm thấy",
+        message,
+        blank: true,
+      });
+    }
+
+    if (status === 409) {
+      return res.status(409).render("student/assignment/locked", {
+        title: "Bài tập đã khóa",
+        message,
+        blank: true,
+      });
+    }
+
+    return res.status(500).render("errors/500", {
+      title: "Lỗi máy chủ",
+      message: fallbackMessage,
+      blank: true,
+    });
+  }
+  async getAssignmentApplications(req, res, next) {
+    try {
+      const classSectionId = String(req.params.classSectionId ?? "").trim();
+
+      const lessonId = String(req.params.lessonId ?? "").trim();
+
+      if (!classSectionId) {
+        throw new Error("Thiếu mã lớp học phần.");
+      }
+
+      if (!lessonId) {
+        throw new Error("Thiếu mã bài học.");
+      }
+
+      const assignments = await getStudentAssignmentApplicationUseCase.execute({
+        req,
+        classSectionId,
+        lessonId,
+      });
+
+      const subjectName = assignments[0]?.subjectName ?? "";
+
+      return res.render("student/assignment/assignment", {
+        assignments,
+        subjectName,
+        classSectionId,
+        lessonId,
+      });
+    } catch (error) {
+      const errorStatus =
+        Number(error.status) || Number(error.response?.status) || 500;
+
+      const message = error.message || "Không thể tải danh sách bài tập.";
+
+      return res.status(errorStatus).render(`errors/${errorStatus}`, {
+        title: "Không thể tải dữ liệu",
+        message,
+        blank: true,
       });
     }
   }

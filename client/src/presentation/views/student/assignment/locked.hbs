@@ -1,0 +1,40 @@
+<div class="assignment-state-page">
+
+    <div class="assignment-state-card">
+
+        <div class="assignment-state-card__icon">
+            <i class="fa-light fa-lock-keyhole"></i>
+        </div>
+
+        <span class="assignment-state-card__eyebrow">
+            ASSIGNMENT LOCKED
+        </span>
+
+        <h1>
+            {{#if title}}
+            {{title}}
+            {{else}}
+            Bài tập đã khóa
+            {{/if}}
+        </h1>
+
+        <p>
+            {{#if message}}
+            {{message}}
+            {{else}}
+            Bài tập hiện không khả dụng.
+            {{/if}}
+        </p>
+
+        <div class="assignment-state-card__actions">
+
+            <a href="/" class="assignment-state-card__button">
+                <i class="fa-light fa-house"></i>
+                Trang chủ
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

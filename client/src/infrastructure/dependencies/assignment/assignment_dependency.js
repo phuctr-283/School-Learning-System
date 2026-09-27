@@ -10,6 +10,8 @@ const GetAssignmentApplicationsUseCase = require("../../../application/assignmen
 const UpdateAssignmentApplicationClassSectionStatusUseCase = require("../../../application/assignments/use_cases/update_assignment_application_class_section_status.use_case");
 const VerifyStudentAssignmentQrUseCase = require("../../../application/assignments/use_cases/verify_student_assignment_qr");
 const GetStudentAssignmentUseCase = require("../../../application/assignments/use_cases/get_student_assignment");
+const GetStudentAssignmentApplication = require("../../../application/assignments/use_cases/get_student_assignment_applications.use_case")
+
 const assignmentRepositoryImpl = new AssignmentRepositoryImpl();
 const assignmentApplicationRepositoryImpl =
   new AssignmentApplicationRepositoryImpl();
@@ -41,6 +43,9 @@ const verifyStudentAssignmentQrUseCase = new VerifyStudentAssignmentQrUseCase(
 const getStudentAssignmentUseCase = new GetStudentAssignmentUseCase(
   assignmentApplicationRepositoryImpl,
 );
+const getStudentAssignmentApplicationUseCase = new GetStudentAssignmentApplication(
+  assignmentApplicationRepositoryImpl
+)
 module.exports = {
   getAssignmentsUseCase,
   createAssignmentUseCase,
@@ -51,4 +56,5 @@ module.exports = {
   updateAssignmentApplicationClassSectionStatusUseCase,
   verifyStudentAssignmentQrUseCase,
   getStudentAssignmentUseCase,
+  getStudentAssignmentApplicationUseCase,
 };

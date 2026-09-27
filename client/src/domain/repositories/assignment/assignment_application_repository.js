@@ -15,16 +15,12 @@ class AssignmentApplicationRepository {
   ) {
     throw new Error("updateClassSectionStatus() chưa được triển khai.");
   }
-  async verifyStudentAssignmentQr(req,payload){
-    throw new Error("verifyStudentAssignmentQr() chưa được triển khai")
+  async verifyStudentAssignmentQr(req, payload) {
+    throw new Error("verifyStudentAssignmentQr() chưa được triển khai");
   }
-  async getStudentAssignment(
-    req,
-    params,
-  ) {
-    throw new Error(
-      "getStudentAssignment() chưa được triển khai.",
-    );
+
+  async getStudentAssignmentApplications(req,classSectionId, lessonId) {
+    throw new Error("getStudentAssignmentApplications() must be implemented");
   }
 }
 

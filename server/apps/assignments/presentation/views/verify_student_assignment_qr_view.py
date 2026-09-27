@@ -9,7 +9,9 @@ from apps.assignments.presentation.serializers.verify_student_assignment_qr_seri
 from apps.assignments.infrastructure.dependencies.verify_student_assignment_qr_dependency import (
     verify_student_assignment_qr_use_case,
 )
-
+from apps.assignments.application.exceptions.assignment_exceptions import (
+    AssignmentApiError,
+)
 
 class VerifyStudentAssignmentQrView(APIView):
 
@@ -44,27 +46,28 @@ class VerifyStudentAssignmentQrView(APIView):
                 status=status.HTTP_200_OK,
             )
 
-        except ValueError as error:
+        except AssignmentApiError as error:
 
             return Response(
                 {
                     "success": False,
                     "message": str(error),
                 },
-                status=status.HTTP_400_BAD_REQUEST,
+                status=error.status_code,
             )
 
-        except Exception as error:
+        except Exception:
 
-            print(
-                "VERIFY STUDENT ASSIGNMENT QR ERROR:",
-                error,
-            )
+            import traceback
+
+            traceback.print_exc()
 
             return Response(
                 {
                     "success": False,
-                    "message": ("Không thể xác thực " "quyền truy cập bài tập."),
+                    "message": (
+                        "Không thể xác thực quyền truy cập bài tập."
+                    ),
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

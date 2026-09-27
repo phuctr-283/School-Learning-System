@@ -1,6 +1,8 @@
-<div class="exercise-page" data-duration="{{assignment.duration_minutes}}" data-remaining-seconds="{{remainingSeconds}}"
-  data-attempt-id="{{attemptId}}" data-submit-url="/student/assignment/take/{{assignmentApplicationId}}/submit"
-  data-save-url="/student/assignment/take/{{assignmentApplicationId}}/save" data-back-url="{{backUrl}}">
+<div class="exercise-page" data-duration="{{assignment.duration_minutes}}"
+  data-remaining-seconds="{{assignment.remaining_seconds}}" data-attempt-id="{{assignment.attempt_id}}"
+  data-attempt-status="{{assignment.attempt_status}}"
+  data-submit-url="/student/assignment/take/{{assignment.assignment_application_id}}/submit"
+  data-save-url="/student/assignment/take/{{assignment.assignment_application_id}}/save" data-back-url="{{backUrl}}">
   <textarea id="saved-answers-data" hidden>{{savedAnswersJson}}</textarea>
 
   <header class="exercise-topbar">
@@ -103,8 +105,7 @@
 
           {{#each assignment.questions}}
 
-          <button type="button" class="question-nav-item" data-index="{{@index}}"
-            aria-label="Câu {{add @index 1}}">
+          <button type="button" class="question-nav-item" data-index="{{@index}}" aria-label="Câu {{add @index 1}}">
 
             <span class="question-nav-item__number">
               {{add @index 1}}
@@ -247,8 +248,8 @@
                   {{score}} điểm
                 </span>
 
-                <button type="button" class="question-mark-button" data-mark-question
-                  title="Đánh dấu câu hỏi" aria-label="Đánh dấu câu hỏi" aria-pressed="false">
+                <button type="button" class="question-mark-button" data-mark-question title="Đánh dấu câu hỏi"
+                  aria-label="Đánh dấu câu hỏi" aria-pressed="false">
                   <i class="fa-light fa-bookmark"></i>
                 </button>
 
@@ -441,45 +442,48 @@
       </form>
 
       <section class="exercise-result" id="exerciseResult" hidden>
+        <div class="exercise-result__container">
+          <div class="exercise-result__icon">
+            <i class="fa-light fa-circle-check"></i>
+          </div>
+          <div class="exercise-result__eyebrow">
+            Nộp bài thành công
+          </div>
+          <h2 class="exercise-result__title">
+            Đã nộp bài
+          </h2>
+          <p class="exercise-result__message">
+            Bài làm của bạn đã được hệ thống ghi nhận.
+          </p>
+          <div class="exercise-result__info">
 
-  <div class="exercise-result__icon">
-    <i class="fa-light fa-circle-check"></i>
-  </div>
+            <div class="exercise-result__info-item">
+              <span>Môn học</span>
+              <strong>
+                {{assignment.subject_name}}
+              </strong>
+            </div>
+            <div class="exercise-result__info-item">
+              <span>Bài tập</span>
+              <strong>
+                {{assignment.title}}
+              </strong>
+            </div>
+          </div>
+          <div class="exercise-result__score-wrap">
+            <span class="exercise-result__score-label">
+              Điểm số
+            </span>
+            <div class="exercise-result__score" id="resultScore"></div>
+          </div>
+          <button type="button" class="exercise-submit-button" id="btnResultBack">
+            <i class="fa-light fa-arrow-left"></i>
+            Quay lại
+          </button>
 
-  <div class="exercise-result__eyebrow">
-    Nộp bài thành công
-  </div>
+        </div>
 
-  <h2 class="exercise-result__title">
-    Đã nộp bài
-  </h2>
-
-  <div class="exercise-result__info">
-
-    <div class="exercise-result__info-item">
-      <span>Môn học</span>
-      <strong>
-        {{assignment.subject_name}}
-      </strong>
-    </div>
-
-    <div class="exercise-result__info-item">
-      <span>Bài tập</span>
-      <strong>
-        {{assignment.title}}
-      </strong>
-    </div>
-
-  </div>
-
-  <div class="exercise-result__score" id="resultScore"></div>
-
-  <button type="button" class="exercise-submit-button" id="btnResultBack">
-    <i class="fa-light fa-arrow-left"></i>
-    Quay lại
-  </button>
-
-</section>
+      </section>
 
     </main>
 

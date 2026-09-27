@@ -1,37 +1,29 @@
-const StudentAssignmentRepositoryImpl = require(
-  "../../repositories/assignment/student_assignment_repository_impl"
+const StudentAssignmentRepositoryImpl = require("../../repositories/assignment/student_assignment_repository_impl");
+
+const GetStudentAssignmentUseCase = require("../../../application/assignments/use_cases/get_student_assignment");
+const SaveStudentAssignmentUseCase = require("../../../application/assignments/use_cases/save_student_assignment");
+const SubmitStudentAssignmentUseCase = require("../../../application/assignments/use_cases/submit_student_assignment");
+const GetAssignmentHistoryUseCase = require("../../../application/assignments/use_cases/get_assignment_history");
+
+const assignmentRepository = new StudentAssignmentRepositoryImpl();
+
+const getStudentAssignmentUseCase = new GetStudentAssignmentUseCase(
+  assignmentRepository,
 );
-const GetStudentAssignmentUseCase = require(
-  "../../../application/assignments/use_cases/get_student_assignment"
+
+const saveStudentAssignmentUseCase = new SaveStudentAssignmentUseCase(
+  assignmentRepository,
 );
 
-const SaveStudentAssignmentUseCase = require(
-  "../../../application/assignments/use_cases/save_student_assignment"
+const submitStudentAssignmentUseCase = new SubmitStudentAssignmentUseCase(
+  assignmentRepository,
 );
-
-const SubmitStudentAssignmentUseCase = require(
-  "../../../application/assignments/use_cases/submit_student_assignment"
-);
-const assignmentRepository =
-  new StudentAssignmentRepositoryImpl();
-
-const getStudentAssignmentUseCase =
-  new GetStudentAssignmentUseCase(
-    assignmentRepository
-  );
-
-const saveStudentAssignmentUseCase =
-  new SaveStudentAssignmentUseCase(
-    assignmentRepository
-  );
-
-const submitStudentAssignmentUseCase =
-  new SubmitStudentAssignmentUseCase(
-    assignmentRepository
-  );
-
+const getAssignmentHistoryUseCase = new GetAssignmentHistoryUseCase(
+  assignmentRepository,
+)
 module.exports = {
   getStudentAssignmentUseCase,
   saveStudentAssignmentUseCase,
   submitStudentAssignmentUseCase,
+  getAssignmentHistoryUseCase,
 };

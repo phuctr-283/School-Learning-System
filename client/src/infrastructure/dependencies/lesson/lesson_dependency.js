@@ -10,6 +10,7 @@ const ClassSectionLessonPlanRepositoryImpl = require("../../../infrastructure/re
 
 const LessonPlanRepositoryImpl = require("../../../infrastructure/repositories/lesson/lesson_plan_repository_impl");
 const LessonOpeningRepositoryImpl = require("../../../infrastructure/repositories/lesson/lesson_opening_repository_impl");
+
 const GetLessonsUseCase = require("../../../application/lessons/use_cases/get_lessons");
 const CreateLessonUseCase = require("../../../application/lessons/use_cases/create_lesson");
 
@@ -27,6 +28,7 @@ const EnsureLessonPlansUseCase = require("../../../application/lessons/use_cases
 
 const GetLessonOpeningsUseCase = require("../../../application/lessons/use_cases/get_lesson_openings");
 
+const GetStudentLessonOpenings = require("../../../application/lessons/use_cases/get_student_lesson_openings")
 const UpdateLessonOpeningStatusUseCase = require("../../../application/lessons/use_cases/update_lesson_opening_status");
 
 // =========================================
@@ -85,6 +87,9 @@ const ensureLessonPlansUseCase = new EnsureLessonPlansUseCase(
 const getLessonOpeningsUseCase = new GetLessonOpeningsUseCase(
   lessonOpeningRepository,
 );
+const getStudentLessonOpeningsUseCase = new GetStudentLessonOpenings(
+  lessonOpeningRepository
+)
 const updateLessonOpeningStatusUseCase = new UpdateLessonOpeningStatusUseCase(
   lessonOpeningRepository,
 );
@@ -112,5 +117,6 @@ module.exports = {
   ensureLessonPlansUseCase,
 
   getLessonOpeningsUseCase,
+  getStudentLessonOpeningsUseCase,
   updateLessonOpeningStatusUseCase,
 };

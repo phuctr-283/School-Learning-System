@@ -36,3 +36,12 @@ class StudentAssignmentRepository(ABC):
         answers: dict,
     ):
         raise NotImplementedError
+
+    @abstractmethod
+    def get_attempt_history(
+        self,
+        assignment_application_id: str,
+        student_id: str,
+        class_section_id: str,
+    ):
+        pass

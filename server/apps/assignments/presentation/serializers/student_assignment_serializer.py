@@ -138,6 +138,12 @@ class StudentAssignmentSerializer(
 
     attempt_status = serializers.CharField()
 
+    started_at = serializers.DateTimeField()
+
+    deadline_at = serializers.DateTimeField(
+        allow_null=True,
+    )
+    
     remaining_seconds = serializers.IntegerField()
 
     saved_answers = serializers.JSONField()
@@ -145,7 +151,6 @@ class StudentAssignmentSerializer(
     questions = StudentAssignmentQuestionSerializer(
         many=True
     )
-
     result = StudentAssignmentResultSerializer(
         allow_null=True
     )

@@ -1,0 +1,447 @@
+<div class="assignment-history-page" data-history-root>
+
+    <div class="history-header">
+
+        <div class="history-header-main">
+
+            <div class="history-back">
+                <a href="javascript:history.back()">
+                    <i class="fa-light fa-arrow-left"></i>
+                    Quay lại
+                </a>
+            </div>
+
+            <div class="history-title">
+                <span class="history-eyebrow">
+                    LỊCH SỬ BÀI LÀM
+                </span>
+
+                <h1>
+                    {{history.title}}
+                </h1>
+
+                <p>
+                    {{history.subjectName}}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="history-result">
+
+            <div class="history-score">
+                <strong>
+                    {{history.score}}
+                </strong>
+
+                <span>
+                    / {{history.totalScore}}
+                </span>
+            </div>
+
+            <div class="history-percentage">
+                {{history.percentage}}%
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="history-statistics">
+
+        <div class="history-stat-card">
+
+            <div class="history-stat-icon">
+                <i class="fa-light fa-list-check"></i>
+            </div>
+
+            <div>
+                <span>Tổng câu</span>
+                <strong>
+                    {{history.questionCount}}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="history-stat-card">
+
+            <div class="history-stat-icon">
+                <i class="fa-light fa-circle-check"></i>
+            </div>
+
+            <div>
+                <span>Đúng</span>
+                <strong>
+                    {{history.correctCount}}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="history-stat-card">
+
+            <div class="history-stat-icon">
+                <i class="fa-light fa-circle-xmark"></i>
+            </div>
+
+            <div>
+                <span>Sai</span>
+                <strong>
+                    {{history.wrongCount}}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="history-stat-card">
+
+            <div class="history-stat-icon">
+                <i class="fa-light fa-circle-question"></i>
+            </div>
+
+            <div>
+                <span>Chưa trả lời</span>
+                <strong>
+                    {{history.unansweredCount}}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FILTER -->
+
+    <div class="history-filter">
+
+        <div class="history-filter-title">
+
+            <i class="fa-light fa-filter"></i>
+
+            <div>
+                <strong>
+                    Hiển thị đáp án
+                </strong>
+
+                <span data-history-filter-label>
+                    Đáp án đúng
+                </span>
+            </div>
+
+        </div>
+
+
+        <button type="button" class="history-filter-toggle" data-history-filter-toggle>
+            <i class="fa-light fa-circle-check" data-history-filter-icon></i>
+
+            <span data-history-filter-button>
+                Đáp án đúng
+            </span>
+        </button>
+
+    </div>
+
+
+    <!-- QUESTIONS -->
+
+    <div class="history-question-list">
+
+        {{#each history.questions}}
+
+        <article class="
+          history-question-card
+          {{#if correct}}
+            is-correct
+          {{else}}
+            is-wrong
+          {{/if}}
+        " data-question-card data-correct="{{correct}}">
+
+            <div class="history-question-header">
+
+                <div class="history-question-number">
+                    Câu {{add @index 1}}
+                </div>
+
+                <div class="
+              history-question-result
+              {{#if correct}}
+                is-correct
+              {{else}}
+                is-wrong
+              {{/if}}
+            ">
+
+                    {{#if correct}}
+
+                    <i class="fa-light fa-circle-check"></i>
+
+                    <span>
+                        Đúng
+                    </span>
+
+                    {{else}}
+
+                    <i class="fa-light fa-circle-xmark"></i>
+
+                    <span>
+                        Sai
+                    </span>
+
+                    {{/if}}
+
+                </div>
+
+            </div>
+
+
+            <div class="history-question-content">
+
+                <h3>
+                    {{question}}
+                </h3>
+
+                {{#if content}}
+                <p>
+                    {{content}}
+                </p>
+                {{/if}}
+
+            </div>
+
+
+            <div class="history-question-score">
+
+                <span>
+                    Điểm câu hỏi
+                </span>
+
+                <strong>
+                    {{earnedScore}}
+                    /
+                    {{score}}
+                </strong>
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div class="history-options">
+
+                {{#if options.length}}
+
+                {{#each options}}
+
+                <div class="
+                  history-option
+
+                  {{#if isCorrect}}
+                    option-correct
+                  {{else}}
+                    option-wrong
+                  {{/if}}
+
+                  {{#if isSelected}}
+                    option-selected
+                  {{/if}}
+
+                  {{#if isSelectedCorrect}}
+                    option-selected-correct
+                  {{/if}}
+
+                  {{#if isSelectedWrong}}
+                    option-selected-wrong
+                  {{/if}}
+                " data-option data-correct="{{isCorrect}}">
+
+                    <div class="history-option-icon">
+
+                        {{#if isCorrect}}
+
+                        <i class="fa-light fa-circle-check"></i>
+
+                        {{else}}
+
+                        <i class="fa-light fa-circle-xmark"></i>
+
+                        {{/if}}
+
+                    </div>
+
+
+                    <div class="history-option-content">
+
+                        <span>
+                            {{content}}
+                        </span>
+
+                        {{#if isSelected}}
+
+                        <small>
+                            {{#if isSelectedCorrect}}
+                            Bạn đã chọn đáp án này
+                            {{else}}
+                            Bạn đã chọn đáp án này
+                            {{/if}}
+                        </small>
+
+                        {{/if}}
+
+                    </div>
+
+
+                    {{#if isSelected}}
+
+                    <div class="history-option-selected">
+                        <i class="fa-light fa-user-check"></i>
+                    </div>
+
+                    {{/if}}
+
+                </div>
+
+                {{/each}}
+
+                {{else}}
+
+                <div class="history-answer-text">
+
+                    <div class="history-answer-block">
+
+                        <span>
+                            Câu trả lời của bạn
+                        </span>
+
+                        <strong>
+                            {{userAnswer}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="history-answer-block is-correct-answer">
+
+                        <span>
+                            Đáp án đúng
+                        </span>
+
+                        <strong>
+                            {{correctAnswer}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                {{/if}}
+
+            </div>
+
+
+            <!-- CORRECT ANSWER -->
+            {{#if correctOptions.length}}
+
+            <div class="history-correct-answer-list">
+
+                <span>
+                    Đáp án đúng
+                </span>
+
+                {{#each correctOptions}}
+
+                <div>
+                    <i class="fa-light fa-circle-check"></i>
+
+                    <span>
+                        {{content}}
+                    </span>
+                </div>
+
+                {{/each}}
+
+            </div>
+
+            {{else}}
+
+            <div class="history-correct-answer">
+
+                <i class="fa-light fa-circle-check"></i>
+
+                <div>
+
+                    <span>
+                        Đáp án đúng
+                    </span>
+
+                    <strong>
+                        {{correctAnswer}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            {{/if}}
+
+
+            <!-- USER ANSWER -->
+
+            {{#if answered}}
+
+            <div class="
+              history-user-answer
+              {{#if correct}}
+                is-correct
+              {{else}}
+                is-wrong
+              {{/if}}
+            ">
+
+                {{#if correct}}
+
+                <i class="fa-light fa-circle-check"></i>
+
+                <span>
+                    Câu trả lời của bạn chính xác
+                </span>
+
+                {{else}}
+
+                <i class="fa-light fa-circle-xmark"></i>
+
+                <span>
+                    Câu trả lời của bạn chưa chính xác
+                </span>
+
+                {{/if}}
+
+            </div>
+
+            {{else}}
+
+            <div class="history-user-answer is-unanswered">
+
+                <i class="fa-light fa-circle-question"></i>
+
+                <span>
+                    Bạn chưa trả lời câu này
+                </span>
+
+            </div>
+
+            {{/if}}
+
+        </article>
+
+        {{/each}}
+
+    </div>
+
+</div>

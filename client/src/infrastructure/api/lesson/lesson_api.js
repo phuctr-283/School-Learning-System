@@ -121,6 +121,14 @@ const lessonApi = {
 
     return response.data;
   },
+  async getStudentLessonOpenings(req, classSectionId, config = {}) {
+    const response = await authenticatedApi.get(
+      req,
+      `/lessons/student/class-sections/${classSectionId}/lesson-openings/`,
+      config,
+    );
+    return response.data;
+  },
 };
 
 module.exports = lessonApi;

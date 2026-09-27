@@ -10,6 +10,9 @@ class StudentAssignmentRepository {
   async submitAssignment(req, data) {
     throw new Error("Not implemented");
   }
+  async getAssignmentHistory(req, assignmentApplicationId,classSectionId,studentId){
+    throw new Error("Not implemented");
+  }
 }
 
 module.exports = StudentAssignmentRepository;

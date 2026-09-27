@@ -3,14 +3,12 @@ from decimal import Decimal
 from datetime import datetime
 from typing import Any
 
-
 @dataclass
 class StudentAssignmentOptionDTO:
 
     option_id: str
     content: str
     order: int
-
 
 @dataclass
 class StudentAssignmentQuestionDTO:
@@ -34,6 +32,7 @@ class StudentAssignmentReviewDTO:
     correct: bool
     score: Decimal
     correct_answer: Any
+
 @dataclass
 class StudentAssignmentResultDTO:
 
@@ -51,29 +50,21 @@ class StudentAssignmentContentDTO:
     assignment_application_id: str
     assignment_id: str
     lesson_id: str
-
     title: str
     description: str | None
-
     subject_id: str
     subject_name: str
-
     assignment_type: str
-
     total_score: Decimal
     duration_minutes: int
     max_attempts: int
-
     open_at: datetime | None
     due_at: datetime | None
-
     attempt_id: str
     attempt_status: str
-
+    started_at: datetime
+    deadline_at: datetime | None
     remaining_seconds: int
-
     saved_answers: dict
-
     questions: list[StudentAssignmentQuestionDTO]
-
     result: StudentAssignmentResultDTO | None = None

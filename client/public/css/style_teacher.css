@@ -3,6 +3,7 @@
 @import url("./teacher/list_assignment.css");
 @import url("./teacher/create_assignment.css");
 @import url("./teacher//lesson_opening_application.css");
+@import url("./teacher/lesson.css");
 .section-title {
   display: flex;
   align-items: center;

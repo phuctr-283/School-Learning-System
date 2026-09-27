@@ -56,6 +56,12 @@ from apps.assignments.infrastructure.persistence.models.assignment_attempt_answe
 from apps.assignments.infrastructure.persistence.models.assignment_attempt_model import (
     AssignmentAttemptModel,
 )
+from apps.assignments.application.exceptions.assignment_exceptions import (
+    AssignmentBadRequestError,
+    AssignmentForbiddenError,
+    AssignmentNotFoundError,
+    AssignmentLockedError,
+)
 
 
 class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
@@ -395,11 +401,7 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             if target is None:
                 continue
 
-            result.append(
-                AssignmentApplicationMapper.to_content_dto(
-                    application
-                )
-            )
+            result.append(AssignmentApplicationMapper.to_content_dto(application))
 
         return result
 
@@ -492,23 +494,22 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
         class_section_id: str,
         lesson_id: str,
     ):
-
         student_id = str(student_id or "").strip()
         assignment_application_id = str(assignment_application_id or "").strip()
         class_section_id = str(class_section_id or "").strip()
         lesson_id = str(lesson_id or "").strip()
 
         if not student_id:
-            raise ValueError("Mã sinh viên không được để trống.")
+            raise AssignmentBadRequestError("Mã sinh viên không được để trống.")
 
         if not assignment_application_id:
-            raise ValueError("Thiếu mã bài tập.")
+            raise AssignmentBadRequestError("Thiếu mã bài tập.")
 
         if not class_section_id:
-            raise ValueError("Thiếu mã lớp học phần.")
+            raise AssignmentBadRequestError("Thiếu mã lớp học phần.")
 
         if not lesson_id:
-            raise ValueError("Thiếu mã bài học.")
+            raise AssignmentBadRequestError("Thiếu mã bài học.")
 
         application = (
             AssignmentApplicationModel.objects(
@@ -518,14 +519,14 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             .select_related()
         )
 
-        if not application:
-            raise ValueError("Không tìm thấy bài tập.")
+        if application is None:
+            raise AssignmentNotFoundError("Không tìm thấy bài tập.")
 
         if application.status != "published":
-            raise ValueError("Bài tập hiện không khả dụng.")
+            raise AssignmentLockedError("Bài tập hiện không khả dụng.")
 
         if str(application.lesson_id) != lesson_id:
-            raise ValueError("Bài tập không thuộc bài học này.")
+            raise AssignmentBadRequestError("Bài tập không thuộc bài học này.")
 
         class_section = (
             ClassSectionModel.objects(
@@ -535,27 +536,33 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             .select_related()
         )
 
-        if not class_section:
-            raise ValueError("Không tìm thấy lớp học phần.")
+        if class_section is None:
+            raise AssignmentNotFoundError("Không tìm thấy lớp học phần.")
 
         if class_section.status != "active":
-            raise ValueError("Lớp học phần hiện không hoạt động.")
+            raise AssignmentLockedError("Lớp học phần hiện không hoạt động.")
 
         class_section_state = next(
             (
                 item
                 for item in (application.class_sections or [])
-                if item.class_section
-                and str(item.class_section.class_section_id) == class_section_id
+                if (
+                    item.class_section
+                    and str(item.class_section.class_section_id) == class_section_id
+                )
             ),
             None,
         )
 
-        if not class_section_state:
-            raise ValueError("Bài tập không được áp dụng cho lớp học phần này.")
+        if class_section_state is None:
+            raise AssignmentLockedError(
+                "Bài tập không được áp dụng cho " "lớp học phần này."
+            )
 
         if class_section_state.status != "active":
-            raise ValueError("Bài tập hiện chưa được mở cho lớp học phần này.")
+            raise AssignmentLockedError(
+                "Bài tập hiện chưa được mở " "cho lớp học phần này."
+            )
 
         student = (
             StudentModel.objects(
@@ -565,20 +572,23 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             .select_related()
         )
 
-        if not student:
-            raise ValueError("Mã sinh viên không tồn tại.")
+        if student is None:
+            raise AssignmentNotFoundError("Mã sinh viên không tồn tại.")
+
+        if not getattr(
+            student,
+            "is_active",
+            True,
+        ):
+            raise AssignmentForbiddenError("Tài khoản sinh viên đã bị khóa.")
 
         enrollment = ClassSectionStudentModel.objects(
             student=student,
             class_section=class_section,
         ).first()
 
-        if not enrollment:
-            raise ValueError("Sinh viên không thuộc lớp học phần này.")
-
-        # --------------------------------------------------
-        # 8. Kiểm tra lesson opening
-        # --------------------------------------------------
+        if enrollment is None:
+            raise AssignmentForbiddenError("Sinh viên không thuộc lớp học phần này.")
 
         lesson_plan = (
             ClassSectionLessonPlanModel.objects(
@@ -588,27 +598,23 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             .select_related()
         )
 
-        if not lesson_plan:
-            raise ValueError("Không tìm thấy kế hoạch bài học của lớp.")
+        if lesson_plan is None:
+            raise AssignmentNotFoundError("Không tìm thấy kế hoạch bài học của lớp.")
 
         lesson_opening = next(
             (
                 opening
                 for opening in (lesson_plan.lesson_openings or [])
-                if opening.lesson and str(opening.lesson.lesson_id) == lesson_id
+                if (opening.lesson and str(opening.lesson.lesson_id) == lesson_id)
             ),
             None,
         )
 
-        if not lesson_opening:
-            raise ValueError("Không tìm thấy bài học.")
+        if lesson_opening is None:
+            raise AssignmentNotFoundError("Không tìm thấy buổi học.")
 
         if lesson_opening.status != "open":
-            raise ValueError("Bài học hiện chưa được mở.")
-
-        # --------------------------------------------------
-        # 9. open_at / due_at
-        # --------------------------------------------------
+            raise AssignmentLockedError("Buổi học hiện chưa được mở.")
 
         now = datetime.now(timezone.utc)
 
@@ -617,14 +623,129 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
         due_at = ensure_aware_datetime(application.due_at)
 
         if open_at and now < open_at:
-            raise ValueError("Bài tập chưa đến thời gian mở.")
+            raise AssignmentLockedError("Bài tập chưa đến thời gian mở.")
 
         if due_at and now > due_at:
-            raise ValueError("Bài tập đã hết hạn.")
+            raise AssignmentLockedError("Bài tập đã hết hạn.")
 
         return {
-            "assignment_application_id": (application.assignment_application_id),
-            "class_section_id": (class_section.class_section_id),
+            "assignment_application_id": application.assignment_application_id,
+            "class_section_id": class_section.class_section_id,
             "lesson_id": application.lesson_id,
             "student_id": student.student_id,
         }
+
+    def get_student_assignment_applications(
+        self,
+        university_id: str,
+        student_id: str,
+        class_section_id: str,
+        lesson_id: str,
+    ):
+        from apps.class_sections.infrastructure.persistence.models.class_section_student_model import (
+            ClassSectionStudentModel,
+        )
+        from apps.class_sections.infrastructure.persistence.models.class_section_model import (
+            ClassSectionModel,
+        )
+        from apps.students.infrastructure.persistence.models.student_model import (
+            StudentModel,
+        )
+        from apps.subjects.infrastructure.persistence.models.subject_model import (
+            SubjectModel,
+        )
+
+        student_id = str(student_id).upper().strip()
+        university_id = str(university_id).strip()
+        class_section_id = str(class_section_id).strip()
+        lesson_id = str(lesson_id).strip()
+
+        parts = class_section_id.split("-")
+
+        if len(parts) != 3:
+            return []
+
+        subject_id = parts[0]
+        group_number = parts[2]
+
+        try:
+            group_number = int(group_number)
+        except ValueError:
+            return []
+        
+        student = StudentModel.objects(
+            student_id=student_id,
+        ).first()
+
+        if not student:
+            return []
+        
+        university = UniversityModel.objects(
+            university_id=university_id,
+        ).first()
+
+        if not university:
+            return []
+        
+        subject = SubjectModel.objects(
+            subject_id=subject_id,
+            university=university,
+        ).first()
+
+        if not subject:
+            return []
+
+        class_section = ClassSectionModel.objects(
+            class_section_id=class_section_id,
+            subject=subject,
+            group_number=group_number,
+        ).first()
+
+        if not class_section:
+            return []
+
+        enrollment = ClassSectionStudentModel.objects(
+            student=student,
+            class_section=class_section,
+        ).first()
+
+        if not enrollment:
+            return []
+
+        applications = AssignmentApplicationModel.objects(
+            university=university,
+            lesson_id=lesson_id,
+            status="published",
+        ).order_by("created_at")
+
+        result = []
+
+        for application in applications:
+            class_section_application = next(
+                (
+                    item
+                    for item in application.class_sections
+                    if (
+                        item.class_section
+                        and item.class_section.class_section_id == class_section_id
+                    )
+                ),
+                None,
+            )
+
+            if not class_section_application:
+                continue
+
+            assignment = application.assignment
+
+            if assignment.subject.subject_id != subject.subject_id:
+                continue
+
+            result.append(
+                (
+                    application,
+                    class_section_application,
+                )
+            )
+
+        return result

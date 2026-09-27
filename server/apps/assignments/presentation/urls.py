@@ -37,6 +37,10 @@ from apps.assignments.infrastructure.dependencies.student_assignment_dependencie
     get_save_student_assignment_use_case,
     get_submit_student_assignment_use_case,
 )
+from apps.assignments.presentation.views.get_student_assignment_application import GetStudentAssignmentApplicationView
+from apps.assignments.presentation.views.get_student_assignment_history_view import (
+    GetStudentAssignmentHistoryView,
+)
 
 urlpatterns = [
     path(
@@ -99,5 +103,15 @@ urlpatterns = [
         "applications/<str:assignment_application_id>/class-sections/<str:class_section_id>/status/",
         UpdateAssignmentApplicationClassSectionStatusView.as_view(),
         name="update-assignment-application-class-section-status",
+    ),
+    path(
+        "student/applications/class-sections/<str:class_section_id>/lessons/<str:lesson_id>/",
+        GetStudentAssignmentApplicationView.as_view(),
+        name="student-assignment-applications",
+    ),
+    path(
+        "student/assignments/<str:assignment_application_id>/history/<str:class_section_id>/student/<str:student_id>/",
+        GetStudentAssignmentHistoryView.as_view(),
+        name="student-assignment-history",
     ),
 ]

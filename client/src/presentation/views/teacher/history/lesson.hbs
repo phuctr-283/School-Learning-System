@@ -1,0 +1,145 @@
+<link rel="stylesheet" href="/css/teacher/history_lesson.css">
+
+<div class="title mx-3 class-section-page-title">
+    <div>
+        <h2 class="class-section-page-title__heading">
+            Nội dung học tập
+        </h2>
+
+        <h4 class="class-section-page-title__subheading">
+            Danh sách buổi học
+        </h4>
+    </div>
+</div>
+
+<div class="data-card mx-2 class-section-table-card">
+    <div class="data-card-body">
+        <div
+            class="lesson-opening-list"
+            data-class-section-id="{{classSectionId}}"
+        >
+            <div class="data-table-wrap">
+                <table class="data-table class-section-table">
+                    <thead>
+                        <tr>
+                            <th>Buổi học</th>
+                            <th>Nội dung</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#if lessonOpenings}}
+
+                            {{#each lessonOpenings}}
+
+                                <tr class="lesson-opening-row">
+                                    <td>
+                                        <div class="lesson-opening-name">
+                                            <span class="lesson-opening-number">
+                                                {{lessonNumber}}
+                                            </span>
+
+                                            <div class="lesson-opening-info">
+                                                <span class="lesson-opening-title">
+                                                    {{#if lessonName}}
+                                                        {{lessonName}}
+                                                    {{else}}
+                                                        Buổi {{lessonNumber}}
+                                                    {{/if}}
+                                                </span>
+
+                                                {{#if lessonId}}
+                                                    <span class="lesson-opening-id">
+                                                        Mã buổi: {{lessonId}}
+                                                    </span>
+                                                {{/if}}
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <button
+                                            type="button"
+                                            class="lesson-opening-content-toggle"
+                                            aria-expanded="false"
+                                            aria-controls="lesson-content-{{lessonId}}"
+                                            data-lesson-id="{{lessonId}}"
+                                        >
+                                            <span>
+                                                Xem bài tập
+                                            </span>
+
+                                            <span class="lesson-opening-content-icon">
+                                                <i class="fa-light fa-chevron-right"></i>
+                                            </span>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr
+                                    id="lesson-content-{{lessonId}}"
+                                    class="lesson-content-panel"
+                                    hidden
+                                >
+                                    <td colspan="2">
+                                        <div class="lesson-content-panel__inner">
+
+                                            <div
+                                                class="lesson-assignments"
+                                                data-class-section-id="{{../classSectionId}}"
+                                                data-lesson-id="{{lessonId}}"
+                                            >
+                                                <div
+                                                    class="assignment-loading"
+                                                    hidden
+                                                >
+                                                    <i class="fa-light fa-spinner fa-spin"></i>
+                                                    Đang tải bài tập...
+                                                </div>
+
+                                                <div class="assignment-list"></div>
+
+                                                <div
+                                                    class="assignment-empty"
+                                                    hidden
+                                                >
+                                                    <i class="fa-light fa-inbox"></i>
+
+                                                    <span>
+                                                        Buổi học này chưa có bài tập.
+                                                    </span>
+                                                </div>
+
+                                                <div
+                                                    class="assignment-error"
+                                                    hidden
+                                                ></div>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            {{/each}}
+
+                        {{else}}
+
+                            <tr>
+                                <td colspan="2">
+                                    <div class="lesson-opening-empty">
+                                        <i class="fa-light fa-calendar-xmark"></i>
+
+                                        Chưa có buổi học.
+                                    </div>
+                                </td>
+                            </tr>
+
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/teacher/history_lesson.js"></script>

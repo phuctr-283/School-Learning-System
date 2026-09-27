@@ -1,39 +1,23 @@
 class SaveStudentAssignmentUseCase {
-
   constructor(repository) {
     this.repository = repository;
   }
 
+  async execute(params) {
+    return this.repository.saveAnswers({
+      student_id: params.studentId,
 
-  async execute(
-    req,
-    params
-  ) {
+      assignment_application_id: params.assignmentApplicationId,
 
-    return this.repository.saveAnswers(
-      req,
-      {
-        student_id: params.studentId,
+      class_section_id: params.classSectionId,
 
-        assignment_application_id:
-          params.assignmentApplicationId,
+      lesson_id: params.lessonId,
 
-        class_section_id:
-          params.classSectionId,
+      attempt_id: params.attemptId,
 
-        lesson_id:
-          params.lessonId,
-
-        attempt_id:
-          params.attemptId,
-
-        answers:
-          params.answers || {},
-      }
-    );
+      answers: params.answers || {},
+    });
   }
-
 }
 
-module.exports =
-  SaveStudentAssignmentUseCase;
+module.exports = SaveStudentAssignmentUseCase;

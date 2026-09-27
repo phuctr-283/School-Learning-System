@@ -1,88 +1,119 @@
-<h2 class="subject-name">Nhập môn lập trình</h2>
+<h2 class="subject-name">
+    {{subjectName}}
+</h2>
+
 <div class="lesson-list">
 
-    <!-- BUỔI ĐÃ MỞ -->
-    <a href="/student/assignment/assignment" class="lesson-card">
+    {{#each lessons}}
+
+    {{#if (eq status "open")}}
+
+    <a href="/student/assignment/class-sections/{{../classSectionId}}/lessons/{{lessonId}}/assignment" class="lesson-card">
 
         <div class="lesson-card-content">
+
             <div class="lesson-card-name">
-                Buổi 1
+                Buổi {{lessonNumber}}
             </div>
 
             <div class="lesson-card-progress">
+
                 <i class="fa-light fa-circle-check"></i>
-                <span>0/3</span>
+
+                <span>
+                    0/3
+                </span>
+
             </div>
+
         </div>
 
         <div class="lesson-card-arrow">
+
             <i class="fa-light fa-chevron-right"></i>
+
         </div>
 
     </a>
 
+    {{else if (eq status "locked")}}
 
-    <!-- BUỔI BỊ KHÓA -->
     <div class="lesson-card is-locked">
 
         <div class="lesson-card-content">
+
             <div class="lesson-card-name">
-                Buổi 2
+                Buổi {{lessonNumber}}
             </div>
 
             <div class="lesson-card-progress">
+
                 <i class="fa-light fa-circle-check"></i>
-                <span>0/3</span>
+
+                <span>
+                    0/3
+                </span>
+
             </div>
+
         </div>
 
-        <!-- LOCK -->
         <div class="lesson-card-lock">
+
             <i class="fa-light fa-lock"></i>
+
         </div>
 
     </div>
 
+    {{else if (eq status "closed")}}
 
-    <!-- BUỔI BỊ KHÓA -->
-    <div class="lesson-card is-locked">
+    <div class="lesson-card is-closed">
 
         <div class="lesson-card-content">
+
             <div class="lesson-card-name">
-                Buổi 3
+                Buổi {{lessonNumber}}
             </div>
 
             <div class="lesson-card-progress">
+
                 <i class="fa-light fa-circle-check"></i>
-                <span>0/3</span>
+
+                <span>
+                    0/3
+                </span>
+
             </div>
+
         </div>
 
-        <div class="lesson-card-lock">
-            <i class="fa-light fa-lock"></i>
+        <div class="lesson-card-closed">
+
+            <i class="fa-light fa-circle-xmark"></i>
+
+            <span>
+                Đã đóng
+            </span>
+
         </div>
 
     </div>
 
+    {{/if}}
 
-    <!-- BUỔI ĐÃ MỞ -->
-    <a href="./lesson.html" class="lesson-card">
+    {{else}}
 
-        <div class="lesson-card-content">
-            <div class="lesson-card-name">
-                Buổi 4
-            </div>
+    <div class="lesson-empty">
 
-            <div class="lesson-card-progress">
-                <i class="fa-light fa-circle-check"></i>
-                <span>0/3</span>
-            </div>
-        </div>
+        <i class="fa-light fa-book-open"></i>
 
-        <div class="lesson-card-arrow">
-            <i class="fa-light fa-chevron-right"></i>
-        </div>
+        <span>
+            Chưa có buổi học nào.
+        </span>
 
-    </a>
+    </div>
+
+    {{/each}}
 
 </div>

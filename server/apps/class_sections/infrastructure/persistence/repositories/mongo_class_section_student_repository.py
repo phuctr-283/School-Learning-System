@@ -112,10 +112,10 @@ class MongoClassSectionStudentRepository(
         return students
 
     def get_student_class_sections(
-    self,
-    student_id: str,
-    university_id: str,
-):
+        self,
+        student_id: str,
+        university_id: str,
+    ):
         print(
             "STUDENT CLASS SECTIONS:",
             student_id,
@@ -134,10 +134,10 @@ class MongoClassSectionStudentRepository(
         if not university:
             print("UNIVERSITY NOT FOUND")
             return []
-
+        student_id = str(student_id).upper()
         student = StudentModel.objects(
-    student_id=student_id,
-).first()
+            student_id=student_id,
+        ).first()
 
         print(
             "STUDENT:",
@@ -234,24 +234,14 @@ class MongoClassSectionStudentRepository(
 
             result.append(
                 {
-                    "class_section_id": str(
-                        class_section.class_section_id
-                    ),
-                    "academic_year_id": str(
-                        academic_year.academic_year_id
-                    ),
-                    "semester_id": str(
-                        semester.semester_id
-                    ),
-                    "subject_id": str(
-                        subject.subject_id
-                    ),
+                    "class_section_id": str(class_section.class_section_id),
+                    "academic_year_id": str(academic_year.academic_year_id),
+                    "semester_id": str(semester.semester_id),
+                    "subject_id": str(subject.subject_id),
                     "group_number": class_section.group_number,
                     "subject_name": subject.name,
                     "teacher_name": (
-                        teacher.full_name
-                        if teacher
-                        else "Chưa phân công"
+                        teacher.full_name if teacher else "Chưa phân công"
                     ),
                 }
             )

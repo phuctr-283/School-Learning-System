@@ -75,10 +75,10 @@ class ClassSectionLessonPlanRepository(ABC):
         pass
 
     @abstractmethod
-    def get_student_lessons(
+    def get_student_lesson_openings(
         self,
-        student_id: str,
         university_id: str,
         class_section_id: str,
+        student_id: str,
     ):
         raise NotImplementedError

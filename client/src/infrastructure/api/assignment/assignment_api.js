@@ -76,11 +76,11 @@ const assignmentApi = {
           lesson_id: lessonId,
         },
       },
-      
     );
-console.log(
-    "[NODE] DJANGO ASSIGNMENT APPLICATIONS RESPONSE:",
-    response.data,);
+    console.log(
+      "[NODE] DJANGO ASSIGNMENT APPLICATIONS RESPONSE:",
+      response.data,
+    );
     return response.data;
   },
   async updateClassSectionStatus(
@@ -115,15 +115,32 @@ console.log(
 
     return response.data;
   },
-  async verifyStudentAssignmentQr(req, payload, config = {}) {
-  const response = await publicApi.post(
-    "/assignments/student/qr/verify/",
-    payload,
-    config,
-  );
+  async verifyStudentAssignmentQr(payload, config = {}) {
+    const response = await publicApi.post(
+      "/assignments/student/qr/verify/",
+      payload,
+      config,
+    );
 
-  return response.data;
-},
+    return response.data;
+  },
+  async getStudentAssignmentApplications(
+    req,
+    classSectionId,
+    lessonId,
+    config = {},
+  ) {
+    const response = await authenticatedApi.get(
+      req,
+      `/assignments/student/applications/class-sections/${encodeURIComponent(
+        classSectionId,
+      )}/lessons/${encodeURIComponent(lessonId)}/`,
+      config,
+    );
+
+    return response.data;
+  },
+  
 };
 
 module.exports = assignmentApi;

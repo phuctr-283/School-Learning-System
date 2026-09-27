@@ -50,3 +50,13 @@ class AssignmentApplicationRepository(ABC):
         lesson_id: str,
     ):
         raise NotImplementedError
+
+    @abstractmethod
+    def get_student_assignment_applications(
+        self,
+        university_id: str,
+        student_id: str,
+        class_section_id: str,
+        lesson_id: str,
+    ):
+        raise NotImplementedError

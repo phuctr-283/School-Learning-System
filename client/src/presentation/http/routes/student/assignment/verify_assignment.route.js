@@ -1,37 +1,34 @@
 const express = require("express");
 const router = express.Router();
 const assignmentController = require("../../../controllers/student/assignment.controller");
-const assignmentAccessMiddleware = require("../../..//middlewares/assignment_qr_access_middleware");
-router.get("/assignment/qr", assignmentController.assignmentQrEntry.bind(assignmentController));
+const assignmentQrController = require("../../../controllers/student/assignment_qr.controller")
+const assignmentAccessMiddleware = require("../../../middlewares/assignment_qr_access_middleware");
+
+router.get(
+  "/student/assignment/qr",
+  assignmentQrController.assignmentQrEntry.bind(assignmentQrController),
+);
 
 router.post(
-  "/assignment/qr/verify",
-  assignmentController.verifyStudentAssignmentQr.bind(assignmentController),
+  "/student/assignment/qr/verify",
+  assignmentQrController.verifyStudentAssignmentQr.bind(assignmentQrController),
 );
 router.get(
-    "/assignment/take/:assignmentApplicationId",
-    assignmentAccessMiddleware,
-    assignmentController.takeAssignment.bind(
-        assignmentController
-    )
+  "/student/assignment/take/:assignmentApplicationId",
+  assignmentAccessMiddleware,
+  assignmentController.takeAssignment.bind(assignmentController),
 );
 
-
 router.post(
-    "/assignment/take/:assignmentApplicationId/save",
-    assignmentAccessMiddleware,
-    assignmentController.saveAssignment.bind(
-        assignmentController
-    )
+  "/student/assignment/take/:assignmentApplicationId/save",
+  assignmentAccessMiddleware,
+  assignmentController.saveAssignment.bind(assignmentController),
 );
 
-
 router.post(
-    "/assignment/take/:assignmentApplicationId/submit",
-    assignmentAccessMiddleware,
-    assignmentController.submitAssignment.bind(
-        assignmentController
-    )
+  "/student/assignment/take/:assignmentApplicationId/submit",
+  assignmentAccessMiddleware,
+  assignmentController.submitAssignment.bind(assignmentController),
 );
 
 module.exports = router;

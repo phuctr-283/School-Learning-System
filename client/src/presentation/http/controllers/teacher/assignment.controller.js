@@ -198,7 +198,9 @@ class AssignmentController {
       });
     }
   }
-  
+  async getAssignmentHistory(){
+    
+  }
 }
 
 module.exports = new AssignmentController();

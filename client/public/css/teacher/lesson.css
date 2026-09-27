@@ -1,0 +1,287 @@
+/* =========================================================
+   LESSON LIST
+========================================================= */
+
+.lesson-list {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(
+    3,
+    minmax(0, 1fr)
+  );
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   LESSON CARD
+========================================================= */
+
+.lesson-card {
+  position: relative;
+
+  min-height: 125px;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e8edf1;
+  border-radius: 17px;
+
+  text-decoration: none;
+  color: inherit;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 2px 7px rgba(35, 55, 70, 0.025),
+    0 8px 22px rgba(35, 55, 70, 0.035);
+
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+
+/* =========================================================
+   LEFT ACCENT
+========================================================= */
+
+.lesson-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+
+  width: 4px;
+
+  background: #4187b6;
+
+  border-radius: 0 6px 6px 0;
+
+  opacity: 0.7;
+
+  transition:
+    top 0.22s ease,
+    bottom 0.22s ease,
+    opacity 0.22s ease;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.lesson-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #d7e7ef;
+
+  box-shadow:
+    0 6px 14px rgba(35, 55, 70, 0.045),
+    0 15px 30px rgba(65, 135, 182, 0.1);
+}
+
+
+.lesson-card:hover::before {
+  top: 0;
+  bottom: 0;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.lesson-card-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   LESSON NAME
+========================================================= */
+
+.lesson-card-name {
+  color: #303841;
+
+  font-size: 17px;
+  font-weight: 650;
+
+  line-height: 1.4;
+
+  transition: color 0.2s ease;
+}
+
+
+.lesson-card:hover .lesson-card-name {
+  color: #4187b6;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.lesson-card-progress {
+  width: fit-content;
+
+  min-height: 30px;
+
+  padding: 5px 10px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  background: #f4f8fa;
+
+  border: 1px solid #e7eef2;
+
+  border-radius: 8px;
+
+  color: #7d8992;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.lesson-card-progress i {
+  color: #8fa0aa;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.lesson-card-arrow {
+  flex: 0 0 35px;
+
+  width: 35px;
+  height: 35px;
+
+  margin-left: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #f7f9fa;
+
+  border: 1px solid #edf0f2;
+
+  border-radius: 10px;
+
+  color: #9aa4ac;
+
+  font-size: 12px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.lesson-card:hover .lesson-card-arrow {
+  background: #eef7fb;
+
+  border-color: #d7e8f0;
+
+  color: #4187b6;
+
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.lesson-empty {
+  width: 100%;
+
+  min-height: 125px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  color: #8b969e;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .lesson-list {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .lesson-list {
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+  }
+
+  .lesson-card {
+    min-height: 105px;
+
+    padding: 17px;
+  }
+
+  .lesson-card-name {
+    font-size: 15px;
+  }
+
+  .lesson-card-arrow {
+    flex-basis: 32px;
+
+    width: 32px;
+    height: 32px;
+  }
+
+}

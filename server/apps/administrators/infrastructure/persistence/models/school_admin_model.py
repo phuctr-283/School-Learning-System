@@ -12,7 +12,7 @@ from apps.universities.infrastructure.persistence.models.university_model import
 class SchoolAdminModel(Document):
 
     meta = {
-        "collection": "school-admins",
+        "collection": "school_admins",
         "indexes": [
             "university",
             "email",

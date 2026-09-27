@@ -42,5 +42,5 @@ router.post(
   guestMiddleware,
   RegisterController.register.bind(RegisterController),
 );
-router.use("/student", verifyAssignmentRouter);
+router.use("/", verifyAssignmentRouter);
 module.exports = router;

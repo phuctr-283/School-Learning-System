@@ -24,6 +24,26 @@ class SubjectController {
       });
     }
   }
+  async getSubjectHistory(req,res){
+    try {
+      const subjects = await getTeacherActiveSubjectsUseCase.execute(req);
+
+      return res.render("teacher/history/subject", {
+        title:"Bài tập",
+        subjects,
+      });
+    } catch (error) {
+      console.error(
+        "GET TEACHER SUBJECTS ERROR:",
+        error.response?.data || error.message,
+      );
+
+      return res.status(error.response?.status || 500).render("error", {
+        message:
+          error.response?.data?.detail || "Không thể tải danh sách môn học",
+      });
+    }
+  }
 }
 
 module.exports = new SubjectController();

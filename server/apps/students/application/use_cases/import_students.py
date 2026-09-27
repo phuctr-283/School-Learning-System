@@ -21,7 +21,10 @@ from apps.students.domain.services.student_class_service import (
 from apps.users.domain.enums.account_level import (
     AccountLevel,
 )
-from apps.users.application.dto.user_dto import CreateUserDTO
+
+from apps.users.application.dto.user_dto import (
+    CreateUserDTO,
+)
 
 
 class ImportStudentsUseCase:
@@ -36,13 +39,9 @@ class ImportStudentsUseCase:
     ):
 
         self.student_repository = student_repository
-
         self.university_repository = university_repository
-
         self.department_repository = department_repository
-
         self.user_repository = user_repository
-
         self.create_user_use_case = create_user_use_case
 
     def execute(
@@ -55,15 +54,20 @@ class ImportStudentsUseCase:
         # University
         # =========================================
 
-        university = self.university_repository.find_by_id(university_id)
+        university = self.university_repository.find_by_id(
+            university_id
+        )
 
         if not university:
-
-            raise ValueError("Không tìm thấy trường.")
+            raise ValueError(
+                "Không tìm thấy trường."
+            )
 
         validated_students = []
 
         errors = []
+
+        skipped = []
 
         file_student_ids = set()
 
@@ -95,12 +99,38 @@ class ImportStudentsUseCase:
                 self._validate_required(dto)
 
                 # =================================
+                # Normalize
+                # =================================
+
+                student_id = (
+                    dto.student_id
+                    .strip()
+                    .upper()
+                )
+
+                email = (
+                    dto.email
+                    .strip()
+                    .lower()
+                )
+
+                student_class = (
+                    dto.student_class
+                    .strip()
+                    .upper()
+                )
+
+                # =================================
                 # MSSV
                 # =================================
 
-                parsed = StudentIdParserService.parse(dto.student_id)
+                parsed = StudentIdParserService.parse(
+                    student_id
+                )
 
-                department_candidates = parsed["department_candidates"]
+                department_candidates = (
+                    parsed["department_candidates"]
+                )
 
                 cohort_id = parsed["cohort_id"]
 
@@ -109,7 +139,7 @@ class ImportStudentsUseCase:
                 # =================================
 
                 StudentClassService.validate_cohort(
-                    student_class=dto.student_class,
+                    student_class=student_class,
                     cohort_id=cohort_id,
                 )
 
@@ -117,27 +147,56 @@ class ImportStudentsUseCase:
                 # Gender
                 # =================================
 
-                gender = self._parse_gender(dto.gender)
+                gender = self._parse_gender(
+                    dto.gender
+                )
 
                 # =================================
-                # Duplicate trong file
+                # Duplicate MSSV trong file
                 # =================================
-
-                student_id = dto.student_id.strip().upper()
-
-                email = dto.email.strip().lower()
 
                 if student_id in file_student_ids:
 
-                    raise ValueError("MSSV bị trùng trong file.")
+                    skipped.append(
+                        {
+                            "row_number": row_number,
+                            "student_id": student_id,
+                            "reason": (
+                                "MSSV bị trùng "
+                                "trong file."
+                            ),
+                        }
+                    )
+
+                    continue
+
+                # =================================
+                # Duplicate Email trong file
+                # =================================
 
                 if email in file_emails:
 
-                    raise ValueError("Email bị trùng trong file.")
+                    skipped.append(
+                        {
+                            "row_number": row_number,
+                            "student_id": student_id,
+                            "reason": (
+                                "Email bị trùng "
+                                "trong file."
+                            ),
+                        }
+                    )
 
-                file_student_ids.add(student_id)
+                    continue
 
-                file_emails.add(email)
+                # Đánh dấu sau khi đã kiểm tra duplicate
+                file_student_ids.add(
+                    student_id
+                )
+
+                file_emails.add(
+                    email
+                )
 
                 # =================================
                 # Department
@@ -148,21 +207,30 @@ class ImportStudentsUseCase:
 
                 for candidate in department_candidates:
 
-                    department = self.department_repository.find_by_number(
-                        university_id=university_id,
-                        department_number=candidate,
+                    department = (
+                        self.department_repository.find_by_number(
+                            university_id=university_id,
+                            department_number=candidate,
+                        )
                     )
 
                     if department:
-                        matched_department_number = department.department_number
+
+                        matched_department_number = (
+                            department.department_number
+                        )
+
                         break
 
                 if department is None:
-                    candidates_text = ", ".join(department_candidates)
+
+                    candidates_text = ", ".join(
+                        department_candidates
+                    )
 
                     raise ValueError(
-                        f"Không tìm thấy khoa tương ứng với "
-                        f"mã khoa {candidates_text}."
+                        "Không tìm thấy khoa tương ứng "
+                        f"với mã khoa {candidates_text}."
                     )
 
                 # =================================
@@ -174,7 +242,18 @@ class ImportStudentsUseCase:
                     student_id=student_id,
                 ):
 
-                    raise ValueError(f"MSSV {student_id} " f"đã tồn tại.")
+                    skipped.append(
+                        {
+                            "row_number": row_number,
+                            "student_id": student_id,
+                            "reason": (
+                                f"MSSV {student_id} "
+                                "đã tồn tại."
+                            ),
+                        }
+                    )
+
+                    continue
 
                 # =================================
                 # Email DB
@@ -185,17 +264,43 @@ class ImportStudentsUseCase:
                     email=email,
                 ):
 
-                    raise ValueError(f"Email {email} " f"đã tồn tại.")
+                    skipped.append(
+                        {
+                            "row_number": row_number,
+                            "student_id": student_id,
+                            "reason": (
+                                f"Email {email} "
+                                "đã tồn tại."
+                            ),
+                        }
+                    )
+
+                    continue
 
                 # =================================
                 # User
                 # =================================
 
-                existing_user = self.user_repository.find_by_username(student_id)
+                existing_user = (
+                    self.user_repository.find_by_username(
+                        student_id
+                    )
+                )
 
                 if existing_user:
 
-                    raise ValueError(f"Tài khoản của MSSV " f"{student_id} đã tồn tại.")
+                    skipped.append(
+                        {
+                            "row_number": row_number,
+                            "student_id": student_id,
+                            "reason": (
+                                f"Tài khoản của MSSV "
+                                f"{student_id} đã tồn tại."
+                            ),
+                        }
+                    )
+
+                    continue
 
                 # =================================
                 # Validated
@@ -205,11 +310,13 @@ class ImportStudentsUseCase:
                     ValidatedStudent(
                         row_number=row_number,
                         student_id=student_id,
-                        full_name=(dto.full_name.strip()),
+                        full_name=dto.full_name.strip(),
                         gender=gender,
                         email=email,
-                        student_class=(dto.student_class.strip().upper()),
-                        department_number=matched_department_number,
+                        student_class=student_class,
+                        department_number=(
+                            matched_department_number
+                        ),
                         cohort_id=cohort_id,
                         department=department,
                     )
@@ -217,15 +324,20 @@ class ImportStudentsUseCase:
 
             except ValueError as error:
 
-                errors.append(f"Dòng {row_number}: " f"{str(error)}")
+                errors.append(
+                    f"Dòng {row_number}: {str(error)}"
+                )
 
         # =========================================
-        # Nếu có lỗi → không tạo gì
+        # Nếu có lỗi validation
+        # → không CREATE gì
         # =========================================
 
         if errors:
 
-            raise ValueError("\n".join(errors))
+            raise ValueError(
+                "\n".join(errors)
+            )
 
         # =========================================
         # PHASE 2
@@ -236,29 +348,29 @@ class ImportStudentsUseCase:
 
         for item in validated_students:
 
-            # -------------------------------
-            # Create Student Entity
-            # -------------------------------
-
             student = Student(
                 student_id=item.student_id,
                 full_name=item.full_name,
                 gender=item.gender,
                 student_class=item.student_class,
-                department_id=(item.department.department_id),
-                department_name=(item.department.name),
+                department_id=(
+                    item.department.department_id
+                ),
+                department_name=(
+                    item.department.name
+                ),
                 cohort_id=item.cohort_id,
                 status="studying",
-                university_id=(university.university_id),
-                university_name=(university.name),
+                university_id=(
+                    university.university_id
+                ),
+                university_name=(
+                    university.name
+                ),
                 date_of_birth=None,
                 email=item.email,
                 phone=None,
             )
-
-            # -------------------------------
-            # Create Student
-            # -------------------------------
 
             self.student_repository.create(
                 student=student,
@@ -266,48 +378,63 @@ class ImportStudentsUseCase:
                 department=item.department,
             )
 
-            # -------------------------------
-            # Create User
-            # -------------------------------
-
             self.create_user_use_case.execute(
                 CreateUserDTO(
                     user_id=None,
                     username=item.student_id,
                     password=item.student_id,
-                    account_level=(AccountLevel.STUDENT),
-                    university_id=(university.university_id),
+                    account_level=(
+                        AccountLevel.STUDENT
+                    ),
+                    university_id=(
+                        university.university_id
+                    ),
                 )
             )
 
             created_count += 1
 
+        # =========================================
+        # RESULT
+        # =========================================
+
         return {
             "created_count": created_count,
-            "skipped_count": 0,
+            "skipped_count": len(skipped),
+            "skipped": skipped,
         }
 
-    # =========================================
-    # Helpers
-    # =========================================
+    # =============================================
+    # VALIDATION
+    # =============================================
 
     @staticmethod
     def _validate_required(dto):
 
         if not dto.student_id:
-            raise ValueError("MSSV không được để trống.")
+            raise ValueError(
+                "MSSV không được để trống."
+            )
 
         if not dto.full_name:
-            raise ValueError("Họ tên không được để trống.")
+            raise ValueError(
+                "Họ tên không được để trống."
+            )
 
         if not dto.gender:
-            raise ValueError("Giới tính không được để trống.")
+            raise ValueError(
+                "Giới tính không được để trống."
+            )
 
         if not dto.email:
-            raise ValueError("Email không được để trống.")
+            raise ValueError(
+                "Email không được để trống."
+            )
 
         if not dto.student_class:
-            raise ValueError("Lớp không được để trống.")
+            raise ValueError(
+                "Lớp không được để trống."
+            )
 
     @staticmethod
     def _parse_gender(value):
@@ -327,4 +454,6 @@ class ImportStudentsUseCase:
         ):
             return "female"
 
-        raise ValueError("Giới tính chỉ được là Nam hoặc Nữ.")
+        raise ValueError(
+            "Giới tính chỉ được là Nam hoặc Nữ."
+        )

@@ -764,13 +764,29 @@ function initializeAssignment() {
     confirmButton?.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      if (submitted) {
+      if (submitted || confirmButton.disabled) {
         return;
       }
+
+      confirmButton.disabled = true;
+
+      confirmButton.innerHTML = `
+    <i class="fa-light fa-spinner fa-spin"></i>
+    Đang nộp...
+  `;
 
       modal.hidden = true;
 
       await submitAssignment(false);
+
+      if (!submitted) {
+        confirmButton.disabled = false;
+
+        confirmButton.innerHTML = `
+      <i class="fa-light fa-paper-plane"></i>
+      Nộp bài
+    `;
+      }
     });
 
     page.querySelector("#btnResultBack")?.addEventListener("click", () => {
@@ -859,7 +875,7 @@ function initializeAssignment() {
 
       page.querySelector("#timeoutModal")?.setAttribute("hidden", "");
 
-      renderResult(data.data);
+      renderResult(data?.data || data);
     } catch (error) {
       console.error("SUBMIT ERROR:", error);
 
@@ -881,26 +897,25 @@ function initializeAssignment() {
   }
 
   function renderResult(result) {
-  const resultBox = page.querySelector("#exerciseResult");
+    const resultBox = page.querySelector("#exerciseResult");
 
-  if (!resultBox) {
-    return;
+    if (!resultBox) {
+      return;
+    }
+
+    resultBox.removeAttribute("hidden");
+    resultBox.classList.add("is-visible");
+
+    const score = page.querySelector("#resultScore");
+
+    if (score) {
+      const current = result?.score ?? 0;
+      const total = result?.total_score ?? 0;
+      const percentage = result?.percentage ?? 0;
+
+      score.textContent = `${current} / ${total} điểm (${percentage}%)`;
+    }
   }
-
-  resultBox.removeAttribute("hidden");
-  resultBox.classList.add("is-visible");
-
-  const score = page.querySelector("#resultScore");
-
-  if (score) {
-    const current = result?.score ?? 0;
-    const total = result?.total_score ?? 0;
-    const percentage = result?.percentage ?? 0;
-
-    score.textContent =
-      `${current} / ${total} điểm (${percentage}%)`;
-  }
-}
   function initializeFullscreen() {
     const button = page.querySelector("#btnFullscreen");
 
@@ -934,8 +949,6 @@ function initializeAssignment() {
       icon.classList.toggle("fa-compress", fullscreen);
     });
   }
-
-  
 
   function readSavedAnswers() {
     const element = page.querySelector("#saved-answers-data");

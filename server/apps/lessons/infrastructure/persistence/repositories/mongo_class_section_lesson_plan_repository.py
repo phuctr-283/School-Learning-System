@@ -32,8 +32,15 @@ from apps.lessons.infrastructure.persistence.models.course_lesson_plan_model imp
 from apps.lessons.application.dto.lesson_opening_dto import (
     LessonOpeningDTO,
 )
-from apps.class_sections.infrastructure.persistence.models.class_section_student_model import ClassSectionStudentModel
-from apps.lessons.application.dto.student_class_section_lesson_dto import StudentClassSectionLessonDTO
+from apps.class_sections.infrastructure.persistence.models.class_section_student_model import (
+    ClassSectionStudentModel,
+)
+from apps.lessons.application.dto.student_class_section_lesson_dto import (
+    StudentClassSectionLessonDTO,
+)
+from apps.students.infrastructure.persistence.models.student_model import StudentModel
+
+
 class MongoClassSectionLessonPlanRepository(ClassSectionLessonPlanRepository):
 
     def _to_lesson_opening_entity(
@@ -423,85 +430,75 @@ class MongoClassSectionLessonPlanRepository(ClassSectionLessonPlanRepository):
 
         return self._to_entity(model)
 
-    def get_student_lessons(
-        self,
-        student_id: str,
-        university_id: str,
-        class_section_id: str,
-    ):
+    def get_student_lesson_openings(
+    self,
+    university_id: str,
+    class_section_id: str,
+    student_id: str,
+):
 
         university = UniversityModel.objects(
             university_id=university_id,
         ).first()
 
         if not university:
-            return None
+            
+            return []
 
         class_section = ClassSectionModel.objects(
             class_section_id=class_section_id,
-            university=university,
-            status="active",
         ).first()
 
         if not class_section:
-            raise ValueError("Không tìm thấy lớp học phần.")
+            return []
+
+        subject = class_section.subject
+
+        if not subject:
+            return []
+
+        if subject.university != university:
+            return []
+
+        student_id = str(student_id).strip().upper()
+
+        student = StudentModel.objects(
+            university=university,
+            student_id=student_id,
+        ).first()
+
+        if not student:
+            return []
 
         enrollment = ClassSectionStudentModel.objects(
-            student__student_id=student_id,
-            student__university=university,
             class_section=class_section,
+            student=student,
         ).first()
 
         if not enrollment:
-            raise ValueError("Sinh viên không thuộc lớp học phần này.")
+            return []
 
-        lesson_plan = (
-            ClassSectionLessonPlanModel.objects(
-                class_section=class_section,
-                university=university,
-            )
-            .select_related()
-            .first()
-        )
+        model = ClassSectionLessonPlanModel.objects(
+            university=university,
+            class_section=class_section,
+        ).first()
 
-        if not lesson_plan:
-            return None
-
-        course_lesson_plan = lesson_plan.course_lesson_plan
-
-        subject = course_lesson_plan.subject
-        semester = course_lesson_plan.semester
-        academic_year = semester.academic_year
+        if not model:
+            return []
 
         lesson_openings = []
 
-        for item in lesson_plan.lesson_openings or []:
+        for embedded in model.lesson_openings or []:
 
-            lesson = item.lesson
-
-            if not lesson:
-                continue
-
-            lesson_openings.append(
-                LessonOpeningDTO(
-                    lesson_id=str(lesson.lesson_id),
-                    lesson_number=lesson.lesson_number,
-                    lesson_name=lesson.title,
-                    status=item.status,
-                    opened_at=item.opened_at,
-                    closed_at=item.closed_at,
-                )
+            entity = self._to_lesson_opening_entity(
+                embedded,
             )
 
-        return StudentClassSectionLessonDTO(
-            class_section_id=str(class_section.class_section_id),
-            academic_year_id=str(academic_year.academic_year_id),
-            academic_year_name=academic_year.name,
-            semester_id=str(semester.semester_id),
-            semester_name=semester.name,
-            semester_number=str(semester.semester_number),
-            subject_id=str(subject.subject_id),
-            subject_name=subject.name,
-            group_number=class_section.group_number,
-            lesson_openings=lesson_openings,
+            if entity:
+                lesson_openings.append(entity)
+
+        lesson_openings.sort(
+            key=lambda item: item.lesson_number,
         )
+
+        return lesson_openings

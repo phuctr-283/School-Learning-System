@@ -85,7 +85,47 @@ class LessonOpeningController {
         });
     }
   }
+  async getLessonHistory(req, res) {
+    const { classSectionId } = req.params;
 
+    const classSectionLessonPlanId =
+      createClassSectionLessonPlanId(classSectionId);
+
+    try {
+      const lessonOpenings = await getLessonOpeningsUseCase.execute(
+        req,
+        classSectionId,
+      );
+
+      return res.render("teacher/history/lesson", {
+        lessonOpenings,
+        classSectionId,
+        classSectionLessonPlanId,
+        success: true,
+      });
+    } catch (error) {
+      console.error("[NODE] GET LESSON OPENINGS ERROR:", error);
+
+      console.error("[NODE] ERROR MESSAGE:", error.message);
+
+      console.error("[NODE] ERROR RESPONSE:", error.response?.data);
+
+      console.error("[NODE] ERROR STATUS:", error.response?.status);
+
+      return res
+        .status(error.response?.status || 400)
+        .render("teacher/history/lesson", {
+          lessonOpenings: [],
+          classSectionId,
+          classSectionLessonPlanId,
+          success: false,
+          error:
+            error.response?.data?.message ||
+            error.message ||
+            "Không thể tải danh sách buổi học.",
+        });
+    }
+  }
   async updateLessonOpeningStatus(req, res) {
     try {
       const { classSectionLessonPlanId, lessonId } = req.params;
@@ -392,39 +432,38 @@ class LessonOpeningController {
     }
   }
   async getAssignmentApplications(req, res) {
-  try {
-    const { class_section_id, lesson_id } = req.query;
+    try {
+      const { class_section_id, lesson_id } = req.query;
 
-    console.log("[NODE] GET ASSIGNMENT APPLICATIONS:", {
-      class_section_id,
-      lesson_id,
-    });
+      console.log("[NODE] GET ASSIGNMENT APPLICATIONS:", {
+        class_section_id,
+        lesson_id,
+      });
 
-    const applications =
-      await getAssignmentApplicationsUseCase.execute(req, {
+      const applications = await getAssignmentApplicationsUseCase.execute(req, {
         classSectionId: class_section_id,
         lessonId: lesson_id,
       });
 
-    console.log("[NODE] ASSIGNMENT APPLICATIONS RESULT:", applications);
-    console.log(
-      "[NODE] ASSIGNMENT APPLICATIONS COUNT:",
-      Array.isArray(applications) ? applications.length : "NOT_ARRAY",
-    );
+      console.log("[NODE] ASSIGNMENT APPLICATIONS RESULT:", applications);
+      console.log(
+        "[NODE] ASSIGNMENT APPLICATIONS COUNT:",
+        Array.isArray(applications) ? applications.length : "NOT_ARRAY",
+      );
 
-    return res.status(200).json({
-      success: true,
-      data: applications,
-    });
-  } catch (error) {
-    console.error("GET ASSIGNMENT APPLICATIONS ERROR:", error);
+      return res.status(200).json({
+        success: true,
+        data: applications,
+      });
+    } catch (error) {
+      console.error("GET ASSIGNMENT APPLICATIONS ERROR:", error);
 
-    return res.status(400).json({
-      success: false,
-      message: error.message || "Không thể tải bài tập của buổi học.",
-    });
+      return res.status(400).json({
+        success: false,
+        message: error.message || "Không thể tải bài tập của buổi học.",
+      });
+    }
   }
-}
   async updateAssignmentApplicationClassSectionStatus(req, res) {
     try {
       const { applicationId, classSectionId } = req.params;

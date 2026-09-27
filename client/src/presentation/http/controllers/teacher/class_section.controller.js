@@ -30,6 +30,32 @@ class ClassSectionController {
       });
     }
   }
+  async getClassSectionHistory(req,res){
+    try {
+      const { subjectId } = req.params;
+
+      const groups = await getTeacherClassSectionsUseCase.execute(
+        req,
+        subjectId,
+      );
+
+      return res.render("teacher/history/group", {
+        subjectId,
+        groups,
+      });
+    } catch (error) {
+      console.error(
+        "GET TEACHER SUBJECT GROUPS ERROR:",
+        error.response?.data || error.message,
+      );
+
+      return res.status(error.response?.status || 500).render("error", {
+        message:
+          error.response?.data?.detail ||
+          "Không thể tải danh sách nhóm học phần",
+      });
+    }
+  }
   async getTeacherActivePlannedSubjects(req, res) {
     try {
       const { academicYearId, semesterId } = req.query;

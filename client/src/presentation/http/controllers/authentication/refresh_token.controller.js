@@ -1,57 +1,36 @@
 const {
   refreshTokenUseCase,
-} = require(
-  "../../../../infrastructure/dependencies/auth/auth_dependency",
-);
+} = require("../../../../infrastructure/dependencies/auth/auth_dependency");
 
-const TokenManager = require(
-  "../../../../infrastructure/security/token_manager",
-);
-
+const TokenManager = require("../../../../infrastructure/security/token_manager");
 
 class RefreshController {
   async refresh(req, res) {
     try {
-      const refreshToken =
-        TokenManager.getRefreshToken(
-          req.session,
-        );
+      const refreshToken = TokenManager.getRefreshToken(req.session);
 
       if (!refreshToken) {
-        TokenManager.clearTokens(
-          req.session,
-        );
+        TokenManager.clearTokens(req.session);
 
         delete req.session.user;
 
         return res.redirect("/");
       }
 
-      const result =
-        await refreshTokenUseCase.execute({
-          refreshToken,
-        });
+      const result = await refreshTokenUseCase.execute({
+        refreshToken,
+      });
 
-      TokenManager.setTokens(
-        req.session,
-        {
-          access_token: result.access_token,
-          refresh_token: result.refresh_token,
-        },
-      );
+      TokenManager.setTokens(req.session, {
+        access_token: result.access_token,
+        refresh_token: result.refresh_token,
+      });
 
-      return res.redirect(
-        req.get("Referrer") || "/",
-      );
+      return res.redirect(req.get("Referrer") || "/");
     } catch (error) {
-      console.error(
-        "REFRESH ERROR:",
-        error.message,
-      );
+      console.error("REFRESH ERROR:", error.message);
 
-      TokenManager.clearTokens(
-        req.session,
-      );
+      TokenManager.clearTokens(req.session);
 
       delete req.session.user;
 

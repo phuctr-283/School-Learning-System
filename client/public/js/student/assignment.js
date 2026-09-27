@@ -790,7 +790,7 @@ function initializeAssignment() {
     });
 
     page.querySelector("#btnResultBack")?.addEventListener("click", () => {
-      window.location.href = "/student/assignment/qr";
+      window.location.href = "/";
     });
   }
 

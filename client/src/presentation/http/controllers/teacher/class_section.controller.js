@@ -14,6 +14,7 @@ class ClassSectionController {
       );
 
       return res.render("teacher/assignment/group", {
+        title:"Bài tập",
         subjectId,
         groups,
       });

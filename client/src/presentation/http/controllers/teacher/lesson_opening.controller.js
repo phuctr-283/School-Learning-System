@@ -57,6 +57,7 @@ class LessonOpeningController {
       );
 
       return res.render("teacher/assignment/lesson", {
+        title:"Bài tập",
         lessonOpenings,
         classSectionId,
         classSectionLessonPlanId,

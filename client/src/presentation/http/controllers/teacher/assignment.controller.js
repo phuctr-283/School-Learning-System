@@ -29,7 +29,7 @@ const normalizeSubjects = (subjects) => {
 
 class AssignmentController {
   async getIndex(req, res) {
-    return res.render("teacher/assignment/index", { title: "Bà tập" });
+    return res.render("teacher/assignment/index", { title: "Bài tập" });
   }
 
   async showAssignmentList(req, res) {

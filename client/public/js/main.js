@@ -102,35 +102,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateMenuIcon() {
-  if (!menuToggle) {
-    return;
-  }
-
-  const isDesktop =
-    window.innerWidth >= DESKTOP_BREAKPOINT;
-
-  const isCollapsed =
-    sidebar.classList.contains("collapsed");
-
-  const icon =
-    menuToggle.querySelector(".sidebar-toggle-icon");
-
-  if (isDesktop) {
-    menuToggle.classList.remove("is-mobile");
-
-    if (icon) {
-      icon.src = isCollapsed
-        ? "/img/right-bar.svg"
-        : "/img/left-bar.svg";
+    if (!menuToggle) {
+      return;
     }
-  } else {
-    menuToggle.classList.add("is-mobile");
 
-    if (icon) {
-      icon.src = "/img/left-bar.svg";
+    const isDesktop = window.innerWidth >= DESKTOP_BREAKPOINT;
+
+    const isCollapsed = sidebar.classList.contains("collapsed");
+
+    const icon = menuToggle.querySelector(".sidebar-toggle-icon");
+
+    if (isDesktop) {
+      menuToggle.classList.remove("is-mobile");
+
+      if (icon) {
+        icon.src = isCollapsed ? "/img/right-bar.svg" : "/img/left-bar.svg";
+      }
+    } else {
+      menuToggle.classList.add("is-mobile");
+
+      if (icon) {
+        icon.src = "/img/left-bar.svg";
+      }
     }
   }
-}
 
   function handleMenuToggle() {
     const isDesktop = window.innerWidth >= DESKTOP_BREAKPOINT;

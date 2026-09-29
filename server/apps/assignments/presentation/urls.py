@@ -42,6 +42,10 @@ from apps.assignments.presentation.views.get_student_assignment_history_view imp
     GetStudentAssignmentHistoryView,
 )
 
+from apps.assignments.presentation.views.get_assignment_by_id_view import (
+    GetAssignmentByIdView,
+)
+from apps.assignments.presentation.views.update_assignment_view import UpdateAssignmentView
 urlpatterns = [
     path(
         "create/",
@@ -94,6 +98,16 @@ urlpatterns = [
         ),
         name="student-assignment-submit",
     ),
+    path(
+        "assignments/<str:assignment_id>/",
+        GetAssignmentByIdView.as_view(),
+        name="get-assignment-by-id",
+    ),
+    path(
+    "assignments/<str:assignment_id>/update/",
+    UpdateAssignmentView.as_view(),
+    name="update-assignment",
+),
     path(
         "<str:assignment_id>/",
         GetAssignmentContentView.as_view(),

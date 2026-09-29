@@ -469,3 +469,251 @@ class MongoAssignmentRepository(
         return AssignmentMapper.to_content_dto(
             assignment,
         )
+    def update_by_teacher_email(
+    self,
+    assignment_id: str,
+    university_id: str,
+    teacher_email: str,
+    subject_id: str,
+    department_id: str,
+    title: str,
+    description: str | None,
+    assignment_type: str,
+    questions,
+    duration_minutes: int,
+    updated_at,
+) -> Assignment:
+
+        # =========================================
+        # UNIVERSITY
+        # =========================================
+
+        university = UniversityModel.objects(
+            university_id=university_id,
+            is_active=True,
+        ).first()
+
+        if university is None:
+            raise ValueError(
+                "Không tìm thấy trường đại học.",
+            )
+
+        # =========================================
+        # ASSIGNMENT
+        # =========================================
+
+        assignment_model = AssignmentModel.objects(
+            assignment_id=assignment_id,
+            university=university,
+        ).first()
+
+        if assignment_model is None:
+            raise ValueError(
+                "Không tìm thấy bài tập.",
+            )
+
+        # =========================================
+        # SUBJECT
+        # =========================================
+
+        subject = SubjectModel.objects(
+            university=university,
+            subject_id=subject_id,
+        ).first()
+
+        if subject is None:
+            raise ValueError(
+                "Không tìm thấy môn học "
+                "thuộc trường đại học.",
+            )
+
+        if subject.department is None:
+            raise ValueError(
+                "Môn học chưa được gán khoa.",
+            )
+
+        subject_department_id = str(
+            subject.department.department_id,
+        )
+
+        if str(department_id) != subject_department_id:
+            raise ValueError(
+                "Khoa của bài tập không khớp "
+                "với khoa của môn học.",
+            )
+
+        department = DepartmentModel.objects(
+            department_id=subject_department_id,
+            university=university,
+            is_active=True,
+        ).first()
+
+        if department is None:
+            raise ValueError(
+                "Không tìm thấy khoa "
+                "thuộc trường đại học.",
+            )
+
+        # =========================================
+        # TEACHER
+        # =========================================
+
+        normalized_email = (
+            teacher_email or ""
+        ).strip().lower()
+
+        if not normalized_email:
+            raise ValueError(
+                "Không xác định được email giảng viên.",
+            )
+
+        teacher = TeacherModel.objects(
+            email=normalized_email,
+            department=department,
+            status="active",
+        ).first()
+
+        if teacher is None:
+            raise ValueError(
+                "Giảng viên không thuộc khoa "
+                "của môn học hoặc không tồn tại.",
+            )
+
+        # =========================================
+        # OWNERSHIP
+        # =========================================
+
+        if assignment_model.teacher != teacher:
+            raise ValueError(
+                "Bạn không có quyền chỉnh sửa bài tập này.",
+            )
+
+        # =========================================
+        # UPDATE
+        # =========================================
+
+        assignment_model.subject = subject
+        assignment_model.department = department
+        assignment_model.title = title
+        assignment_model.description = description
+        assignment_model.assignment_type = assignment_type
+        assignment_model.questions = questions
+        assignment_model.duration_minutes = duration_minutes
+        assignment_model.updated_at = updated_at
+
+        assignment_model.save()
+
+        # =========================================
+        # RETURN DOMAIN
+        # =========================================
+
+        return AssignmentMapper.to_entity(
+            assignment_model,
+        )
+
+    def get_by_id_for_teacher(
+        self,
+        assignment_id: str,
+        university_id: str,
+        teacher_email: str,
+    ):
+        assignment_id = (assignment_id or "").strip()
+        university_id = (university_id or "").strip()
+        teacher_email = (teacher_email or "").strip().lower()
+
+        if not assignment_id:
+            raise ValueError("Thiếu mã bài tập.")
+
+        if not university_id:
+            raise ValueError("Không xác định được trường đại học.")
+
+        if not teacher_email:
+            raise ValueError("Không xác định được email giảng viên.")
+
+        # -------------------------------------------------
+        # 1. Tìm trường đại học
+        # -------------------------------------------------
+
+        university = UniversityModel.objects(
+            university_id=university_id,
+            is_active=True,
+        ).first()
+
+        if university is None:
+            raise ValueError(
+                "Không tìm thấy trường đại học."
+            )
+
+        # -------------------------------------------------
+        # 2. Tìm assignment
+        # -------------------------------------------------
+
+        assignment_model = AssignmentModel.objects(
+            assignment_id=assignment_id,
+            university=university,
+            is_active=True,
+        ).first()
+
+        if assignment_model is None:
+            raise ValueError(
+                "Không tìm thấy bài tập."
+            )
+
+        # -------------------------------------------------
+        # 3. Kiểm tra subject
+        # -------------------------------------------------
+
+        subject = assignment_model.subject
+
+        if subject is None:
+            raise ValueError(
+                "Bài tập chưa được gán môn học."
+            )
+
+        if subject.university != university:
+            raise ValueError(
+                "Môn học không thuộc trường đại học."
+            )
+
+        # -------------------------------------------------
+        # 4. Kiểm tra teacher
+        # -------------------------------------------------
+
+        teacher = assignment_model.teacher
+
+        if teacher is None:
+            raise ValueError(
+                "Bài tập chưa được gán giảng viên."
+            )
+
+        if teacher.email != teacher_email:
+            raise PermissionError(
+                "Bạn không có quyền xem bài tập này."
+            )
+
+        if teacher.status != "active":
+            raise PermissionError(
+                "Tài khoản giảng viên không còn hoạt động."
+            )
+
+        # -------------------------------------------------
+        # 5. Kiểm tra department
+        # -------------------------------------------------
+
+        if subject.department is None:
+            raise ValueError(
+                "Môn học chưa được gán khoa."
+            )
+
+        if teacher.department != subject.department:
+            raise PermissionError(
+                "Giảng viên không thuộc khoa của môn học."
+            )
+
+        # -------------------------------------------------
+        # 6. Mapping Model -> Entity
+        # -------------------------------------------------
+
+        return AssignmentMapper.to_entity(
+            assignment_model
+        )

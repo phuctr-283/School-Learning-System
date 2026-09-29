@@ -9,6 +9,7 @@ from apps.assignments.application.dto.assignment_list_dto import (
 )
 from apps.assignments.application.dto.assignment_content_dto import AssignmentContentDTO
 
+
 class AssignmentRepository(ABC):
 
     @abstractmethod
@@ -60,3 +61,20 @@ class AssignmentRepository(ABC):
         university_id: str,
     ) -> AssignmentContentDTO | None:
         raise NotImplementedError
+
+    @abstractmethod
+    def update_by_teacher_email(
+        self,
+        assignment_id: str,
+        university_id: str,
+        teacher_email: str,
+        subject_id: str,
+        department_id: str,
+        title: str,
+        description: str | None,
+        assignment_type: str,
+        questions,
+        duration_minutes: int,
+        updated_at,
+    ):
+        pass

@@ -509,12 +509,43 @@
 }
 
 .question-card__content-text {
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
   margin-top: 12px;
+  padding: 10px 12px;
+
   color: #334155;
   font-size: 14px;
   line-height: 1.8;
+
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  border: 1px solid var(--exercise-border);
+  border-radius: 10px;
+  background: #f8fafc;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.question-card__content-text::-webkit-scrollbar {
+  width: 6px;
 }
 
+.question-card__content-text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.question-card__content-text::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #cbd5e1;
+}
+
+.question-card__content-text::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
 .question-options {
   margin-top: 20px;
   display: flex;

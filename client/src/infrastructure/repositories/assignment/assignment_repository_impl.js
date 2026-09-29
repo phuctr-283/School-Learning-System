@@ -29,6 +29,41 @@ class AssignmentRepositoryImpl extends AssignmentRepository {
       throw new Error(error.message || "Không thể tạo bài tập.");
     }
   }
+  async updateAssignment(req, assignmentDTO) {
+    try {
+      if (!assignmentDTO || typeof assignmentDTO.toRequest !== "function") {
+        throw new Error("Dữ liệu cập nhật bài tập không hợp lệ.");
+      }
+
+      const payload = assignmentDTO.toRequest();
+
+      const response = await assignmentApi.updateAssignment(
+        req,
+        assignmentDTO.assignmentId,
+        payload,
+      );
+
+      if (!response || response.success !== true) {
+        throw new Error(response?.message || "Không thể cập nhật bài tập.");
+      }
+
+      return response.data;
+    } catch (error) {
+      const backendData = error.response?.data;
+
+      console.error("UPDATE ASSIGNMENT ERROR:", backendData || error.message);
+
+      if (backendData?.message) {
+        throw new Error(backendData.message);
+      }
+
+      if (backendData?.errors) {
+        throw new Error(this.formatValidationErrors(backendData.errors));
+      }
+
+      throw new Error(error.message || "Không thể cập nhật bài tập.");
+    }
+  }
   formatValidationErrors(errors) {
     if (!errors || typeof errors !== "object") {
       return "Dữ liệu không hợp lệ.";
@@ -106,34 +141,37 @@ class AssignmentRepositoryImpl extends AssignmentRepository {
   }
   async getAssignmentById(req, assignmentId) {
     try {
-      if (!assignmentId) {
+      const id = String(assignmentId ?? "").trim();
+
+      if (!id) {
         throw new Error("Thiếu mã bài tập.");
       }
 
-      const response = await assignmentApi.getAssignmentById(req, assignmentId);
+      const response = await assignmentApi.getAssignmentById(req, id);
 
       if (!response || response.success !== true) {
-        throw new Error(
-          response?.message || "Không thể tải thông tin bài tập.",
-        );
+        throw new Error(response?.message || "Không thể tải bài tập.");
       }
 
       if (!response.data) {
-        throw new Error("Không tìm thấy dữ liệu bài tập.");
+        throw new Error("Dữ liệu bài tập không tồn tại.");
       }
 
-      return AssignmentContentDTO.fromResponse(response.data);
+      return response.data;
     } catch (error) {
-      console.error(
-        "GET ASSIGNMENT BY ID ERROR:",
-        error.response?.data || error.message,
-      );
+      const backendData = error.response?.data;
 
-      throw new Error(
-        error.response?.data?.message ||
-          error.message ||
-          "Không thể tải thông tin bài tập.",
-      );
+      console.error("GET ASSIGNMENT ERROR:", backendData || error.message);
+
+      if (backendData?.message) {
+        throw new Error(backendData.message);
+      }
+
+      if (backendData?.errors) {
+        throw new Error(this.formatValidationErrors(backendData.errors));
+      }
+
+      throw new Error(error.message || "Không thể tải bài tập.");
     }
   }
 }

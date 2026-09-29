@@ -23,6 +23,8 @@ router.post(
   "/create",
   assignmentController.createAssignment.bind(assignmentController),
 );
+router.get("/edit/:assignmentId", assignmentController.showUpdatePage);
+router.post("/edit/:assignmentId", assignmentController.updateAssignment);
 router.use("/", subjectRouter);
 router.use("/", classSectionRouter);
 router.use("/", lessonRouter);

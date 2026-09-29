@@ -1,7 +1,7 @@
 const {
   createAssignmentUseCase,
   getAssignmentsUseCase,
-  getAssignmentsBySubjectUseCase,
+  getAssignmentsBySubjectUseCase,getAssignmentByIdUseCase
 } = require("../../../../infrastructure/dependencies/assignment/assignment_dependency");
 
 const {
@@ -198,8 +198,133 @@ class AssignmentController {
       });
     }
   }
-  async getAssignmentHistory(){
-    
+  async showUpdatePage(req, res) {
+    const assignmentId = String(req.params.assignmentId ?? "").trim();
+
+    if (!assignmentId) {
+      return res.redirect("/teacher/assignment/list");
+    }
+
+    try {
+      const assignment = await getAssignmentByIdUseCase.execute(
+        req,
+        assignmentId,
+      );
+
+      const subjects = await getTeacherSubjectsUseCase.execute(req);
+
+      const formData = {
+        assignment_id: assignment.assignment_id,
+        title: assignment.title ?? "",
+        description: assignment.description ?? "",
+        subject_id: assignment.subject_id ?? "",
+        assignment_type: assignment.assignment_type ?? "practice",
+        duration_minutes: assignment.duration_minutes ?? 30,
+        questions: Array.isArray(assignment.questions)
+          ? assignment.questions
+          : [],
+      };
+
+      return res.status(200).render("teacher/assignment/update", {
+        pageTitle: "Chỉnh sửa bài tập",
+        isEdit: true,
+        assignment,
+        formData,
+        subjects,
+        hasSelectedSubject: Boolean(formData.subject_id),
+        error: null,
+      });
+    } catch (error) {
+      console.error("SHOW UPDATE ASSIGNMENT PAGE ERROR:", error);
+
+      return res
+        .status(error.response?.status ?? 400)
+        .render("teacher/assignment/update", {
+          pageTitle: "Chỉnh sửa bài tập",
+          isEdit: true,
+          assignment: null,
+          formData: {
+            assignment_id: assignmentId,
+            title: "",
+            description: "",
+            subject_id: "",
+            assignment_type: "practice",
+            duration_minutes: 30,
+            questions: [],
+          },
+          subjects: [],
+          hasSelectedSubject: false,
+          error: error.message || "Không thể tải bài tập.",
+        });
+    }
+  }
+  async updateAssignment(req, res) {
+    const assignmentId = String(req.params.assignmentId ?? "").trim();
+
+    if (!assignmentId) {
+      return res.redirect("/teacher/assignment/list");
+    }
+
+    const subjectId = getRequestSubjectId(req);
+
+    let questions = [];
+
+    try {
+      const rawQuestions = req.body?.questions;
+
+      if (typeof rawQuestions === "string") {
+        const value = rawQuestions.trim();
+
+        questions = value ? JSON.parse(value) : [];
+      } else if (Array.isArray(rawQuestions)) {
+        questions = rawQuestions;
+      }
+
+      if (!Array.isArray(questions)) {
+        throw new Error("Danh sách câu hỏi không hợp lệ.");
+      }
+    } catch (error) {
+      console.error("PARSE UPDATE ASSIGNMENT QUESTIONS ERROR:", error);
+
+      return this.renderUpdateAssignmentPage(req, res, {
+        statusCode: 400,
+
+        formData: {
+          ...req.body,
+          assignment_id: assignmentId,
+          subject_id: subjectId,
+          questions: [],
+        },
+
+        error: "Dữ liệu câu hỏi không hợp lệ.",
+      });
+    }
+
+    const formData = {
+      ...req.body,
+
+      assignment_id: assignmentId,
+
+      subject_id: subjectId,
+
+      questions,
+    };
+
+    try {
+      await updateAssignmentUseCase.execute(req, formData);
+
+      return res.redirect("/teacher/assignment/list");
+    } catch (error) {
+      console.error("UPDATE ASSIGNMENT ERROR:", error);
+
+      return this.renderUpdateAssignmentPage(req, res, {
+        statusCode: 400,
+
+        formData,
+
+        error: error.message || "Không thể cập nhật bài tập.",
+      });
+    }
   }
 }
 

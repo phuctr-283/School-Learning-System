@@ -36,13 +36,15 @@ const assignmentApi = {
   },
 
   async getAssignmentById(req, assignmentId, config = {}) {
-    if (!assignmentId) {
+    const id = String(assignmentId ?? "").trim();
+
+    if (!id) {
       throw new Error("Thiếu mã bài tập.");
     }
 
     const response = await authenticatedApi.get(
       req,
-      `/assignments/${encodeURIComponent(assignmentId)}/`,
+      `/assignments/${encodeURIComponent(id)}/`,
       config,
     );
 
@@ -140,7 +142,16 @@ const assignmentApi = {
 
     return response.data;
   },
-  
+  async updateAssignment(req, assignmentId, payload, config = {}) {
+    const response = await authenticatedApi.put(
+      req,
+      `/assignments/${encodeURIComponent(assignmentId)}/update/`,
+      payload,
+      config,
+    );
+
+    return response.data;
+  },
 };
 
 module.exports = assignmentApi;

@@ -58,13 +58,9 @@ class UpdateAssignmentUseCase:
                 "Loại bài tập không hợp lệ.",
             )
 
-        if (
-            dto.duration_minutes < 1
-            or dto.duration_minutes > 600
-        ):
+        if dto.duration_minutes < 1 or dto.duration_minutes > 600:
             raise ValueError(
-                "Thời gian làm bài "
-                "phải từ 1 đến 600 phút.",
+                "Thời gian làm bài " "phải từ 1 đến 600 phút.",
             )
 
         # =========================================
@@ -78,8 +74,7 @@ class UpdateAssignmentUseCase:
 
         if subject is None:
             raise ValueError(
-                "Không tìm thấy môn học "
-                "thuộc trường đại học.",
+                "Không tìm thấy môn học " "thuộc trường đại học.",
             )
 
         department_id = str(
@@ -109,11 +104,7 @@ class UpdateAssignmentUseCase:
             subject_id=subject_id,
             department_id=department_id,
             title=title,
-            description=(
-                dto.description.strip()
-                if dto.description
-                else None
-            ),
+            description=(dto.description.strip() if dto.description else None),
             assignment_type=dto.assignment_type,
             questions=questions,
             duration_minutes=dto.duration_minutes,

@@ -1,77 +1,900 @@
-<div class="title mx-3">
-    <h2 class="subject-name">Nhập môn lập trình</h2>
-    <h4 class="group-name">Nhóm 1</h4>
-</div>
-<div class="data-card">
+<style>
+    /* =========================================================
+   STUDENT ATTEMPT PAGE
+   ========================================================= */
 
-    <div class="data-card-body">
+.student-attempt-page {
+    --attempt-primary: #3b82c4;
+    --attempt-primary-dark: #2f6fa8;
+    --attempt-primary-light: #eaf4fb;
 
-        <div class="data-table-wrap">
+    --attempt-text: #172033;
+    --attempt-muted: #64748b;
+    --attempt-border: #e5e7eb;
+    --attempt-bg: #f5f7fa;
 
-            <table class="data-table">
+    min-height: 100vh;
+    padding: 30px;
+    box-sizing: border-box;
+
+    background: var(--attempt-bg);
+    color: var(--attempt-text);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.student-attempt-header {
+    margin-bottom: 26px;
+}
+
+.student-attempt-eyebrow {
+    margin-bottom: 7px;
+
+    color: var(--attempt-primary);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.student-attempt-header h1 {
+    margin: 0;
+
+    color: var(--attempt-text);
+
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.student-attempt-header p {
+    margin: 8px 0 0;
+
+    color: var(--attempt-muted);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.student-attempt-header p span {
+    margin: 0 8px;
+
+    color: #cbd5e1;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.student-attempt-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 28px;
+}
+
+.student-attempt-summary-card {
+    min-height: 92px;
+
+    padding: 18px 20px;
+
+    border: 1px solid var(--attempt-border);
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.025);
+
+    box-sizing: border-box;
+}
+
+.student-attempt-summary-card span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--attempt-muted);
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.student-attempt-summary-card strong {
+    display: block;
+
+    color: var(--attempt-text);
+
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+
+/* Summary colors */
+
+.student-attempt-summary-card--waiting strong {
+    color: #d97706;
+}
+
+.student-attempt-summary-card--doing strong {
+    color: var(--attempt-primary);
+}
+
+.student-attempt-summary-card--done strong {
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   MAIN TABLE CARD
+   ========================================================= */
+
+.student-attempt-card {
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid var(--attempt-border);
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+
+/* =========================================================
+   TABLE CARD HEADER
+   ========================================================= */
+
+.student-attempt-card__header {
+    min-height: 76px;
+
+    padding: 18px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #edf0f3;
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+}
+
+.student-attempt-card__header > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.student-attempt-card__header h2 {
+    margin: 0;
+
+    color: var(--attempt-text);
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.student-attempt-card__header span {
+    color: var(--attempt-muted);
+
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+   ========================================================= */
+
+.student-attempt-table-wrap {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.student-attempt-table {
+    width: 100%;
+    min-width: 760px;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+
+/* Column widths */
+
+.student-attempt-table th:nth-child(1),
+.student-attempt-table td:nth-child(1) {
+    width: 7%;
+}
+
+.student-attempt-table th:nth-child(2),
+.student-attempt-table td:nth-child(2) {
+    width: 31%;
+}
+
+.student-attempt-table th:nth-child(3),
+.student-attempt-table td:nth-child(3) {
+    width: 20%;
+}
+
+.student-attempt-table th:nth-child(4),
+.student-attempt-table td:nth-child(4) {
+    width: 24%;
+}
+
+.student-attempt-table th:nth-child(5),
+.student-attempt-table td:nth-child(5) {
+    width: 18%;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.student-attempt-table thead {
+    background: #f8fafc;
+}
+
+.student-attempt-table th {
+    height: 44px;
+
+    padding: 0 20px;
+
+    color: #64748b;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.05em;
+    text-align: left;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.student-attempt-table td {
+    height: 64px;
+
+    padding: 12px 20px;
+
+    border-top: 1px solid #edf0f3;
+
+    vertical-align: middle;
+
+    box-sizing: border-box;
+}
+
+.student-attempt-row {
+    background: #ffffff;
+
+    transition:
+        background 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.student-attempt-row:hover {
+    background: #fafcff;
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.student-attempt-number {
+    color: #94a3b8;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   STUDENT
+   ========================================================= */
+
+.student-info {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-width: 0;
+}
+
+.student-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    color: var(--attempt-primary-dark);
+    background: var(--attempt-primary-light);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+.student-info__content {
+    min-width: 0;
+}
+
+.student-info__content strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #334155;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.4;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.student-id {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border: 1px solid #e7edf3;
+    border-radius: 7px;
+
+    color: #64748b;
+    background: #f8fafc;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.attempt-status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 10px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.attempt-status i {
+    font-size: 12px;
+}
+
+
+/* Chưa làm */
+
+.attempt-status--not-started {
+    color: #64748b;
+    background: #f8fafc;
+}
+
+.attempt-status--not-started i {
+    color: #94a3b8;
+}
+
+
+/* Đang làm */
+
+.attempt-status--in-progress {
+    color: #2563eb;
+    background: #eff6ff;
+}
+
+.attempt-status--in-progress i {
+    animation: attemptSpin 1.2s linear infinite;
+}
+
+
+/* Đã nộp */
+
+.attempt-status--submitted {
+    color: #b45309;
+    background: #fffbeb;
+}
+
+.attempt-status--submitted i {
+    color: #d97706;
+}
+
+
+/* Đã chấm */
+
+.attempt-status--graded {
+    color: #15803d;
+    background: #f0fdf4;
+}
+
+.attempt-status--graded i {
+    color: #16a34a;
+}
+
+
+/* =========================================================
+   SCORE
+   ========================================================= */
+
+.student-score {
+    display: inline-flex;
+    align-items: baseline;
+
+    gap: 3px;
+}
+
+.student-score strong {
+    color: var(--attempt-primary-dark);
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.student-score span {
+    color: #94a3b8;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.student-score--empty {
+    color: #cbd5e1;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+.student-attempt-empty {
+    height: 190px;
+
+    padding: 30px !important;
+
+    color: #94a3b8;
+
+    font-size: 13px;
+
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.student-attempt-empty i {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #cbd5e1;
+
+    font-size: 28px;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.student-attempt-error {
+    padding: 15px 17px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+
+    color: #b91c1c;
+    background: #fef2f2;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   LOADING / SPINNER
+   ========================================================= */
+
+@keyframes attemptSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .student-attempt-page {
+        padding: 24px;
+    }
+
+    .student-attempt-summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .student-attempt-page {
+        padding: 18px;
+    }
+
+    .student-attempt-header h1 {
+        font-size: 23px;
+    }
+
+    .student-attempt-summary {
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .student-attempt-summary-card {
+        min-height: 84px;
+
+        padding: 15px;
+    }
+
+    .student-attempt-summary-card strong {
+        font-size: 21px;
+    }
+
+    .student-attempt-card {
+        border-radius: 13px;
+    }
+
+    .student-attempt-card__header {
+        padding: 16px 17px;
+    }
+
+    .student-attempt-table th {
+        padding: 0 16px;
+    }
+
+    .student-attempt-table td {
+        padding: 12px 16px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .student-attempt-page {
+        padding: 14px;
+    }
+
+    .student-attempt-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .student-attempt-summary-card {
+        padding: 13px;
+    }
+
+    .student-attempt-summary-card span {
+        font-size: 10px;
+    }
+
+    .student-attempt-summary-card strong {
+        font-size: 20px;
+    }
+
+    .student-attempt-header {
+        margin-bottom: 20px;
+    }
+
+    .student-attempt-header h1 {
+        font-size: 21px;
+    }
+
+    .student-attempt-header p {
+        font-size: 12px;
+    }
+}
+</style>
+<div class="student-attempt-page">
+
+    <div class="student-attempt-header">
+
+        <div>
+            <div class="student-attempt-eyebrow">
+                Theo dõi bài làm
+            </div>
+
+            <h1>
+                Danh sách sinh viên
+            </h1>
+
+            <p>
+                {{classSectionId}}
+                <span>•</span>
+                {{lessonId}}
+            </p>
+        </div>
+
+    </div>
+
+
+    {{#if error}}
+
+    <div class="student-attempt-error">
+        <i class="fa-light fa-circle-exclamation"></i>
+        <span>{{error}}</span>
+    </div>
+
+    {{else}}
+
+    <div class="student-attempt-summary">
+
+        <div class="student-attempt-summary-card">
+            <span>Tổng sinh viên</span>
+            <strong>
+                {{totalStudents}}
+            </strong>
+        </div>
+
+        <div class="student-attempt-summary-card student-attempt-summary-card--waiting">
+            <span>Chưa làm</span>
+            <strong>
+                {{notStartedStudents}}
+            </strong>
+        </div>
+
+        <div class="student-attempt-summary-card student-attempt-summary-card--doing">
+            <span>Đang làm</span>
+            <strong>
+                {{inProgressStudents}}
+            </strong>
+        </div>
+
+        <div class="student-attempt-summary-card student-attempt-summary-card--done">
+            <span>Đã nộp</span>
+            <strong>
+                {{completedStudents}}
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="student-attempt-card">
+
+        <div class="student-attempt-card__header">
+
+            <div>
+                <h2>
+                    Sinh viên
+                </h2>
+
+                <span>
+                    {{totalStudents}} sinh viên
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="student-attempt-table-wrap">
+
+            <table class="student-attempt-table">
 
                 <thead>
+
                     <tr>
-                        <th class="text-center">Mã số sinh viên</th>
-                        <th class="text-center">Họ tên</th>
-                        <th class="text-center">Lớp</th>
-                        <th class="text-center">Chi tiết</th>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Sinh viên
+                        </th>
+
+                        <th>
+                            Mã sinh viên
+                        </th>
+
+                        <th>
+                            Trạng thái
+                        </th>
+
+                        <th>
+                            Điểm
+                        </th>
+
                     </tr>
+
                 </thead>
 
                 <tbody>
 
-                    <tr>
-                        <td class="text-center">
+                    {{#each students}}
+
+                    <tr class="student-attempt-row">
+
+                        <td>
+                            <span class="student-attempt-number">
+                                {{add @index 1}}
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <div class="student-info">
+
+                                <div class="student-avatar">
+                                    {{substring full_name 0 1}}
+                                </div>
+
+                                <div class="student-info__content">
+
+                                    <strong>
+                                        {{full_name}}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+                        <td>
+
                             <span class="student-id">
-                                DH52301555
+                                {{student_id}}
                             </span>
+
                         </td>
 
-                        <td class="text-center">
-                            <span class="student-name">
-                                Nguyễn Trọng Phúc
+                        <td>
+
+                            {{#if (eq status "not_started")}}
+
+                            <span class="attempt-status attempt-status--not-started">
+                                <i class="fa-light fa-clock"></i>
+                                Chưa làm bài
                             </span>
+
+                            {{else if (eq status "in_progress")}}
+
+                            <span class="attempt-status attempt-status--in-progress">
+                                <i class="fa-light fa-spinner"></i>
+                                Đang làm
+                            </span>
+
+                            {{else if (eq status "submitted")}}
+
+                            <span class="attempt-status attempt-status--submitted">
+                                <i class="fa-light fa-paper-plane"></i>
+                                Đã nộp
+                            </span>
+
+                            {{else if (eq status "graded")}}
+
+                            <span class="attempt-status attempt-status--graded">
+                                <i class="fa-light fa-circle-check"></i>
+                                Đã chấm
+                            </span>
+
+                            {{else}}
+
+                            <span class="attempt-status">
+                                {{status_label}}
+                            </span>
+
+                            {{/if}}
+
                         </td>
 
-                        <td class="text-center">
-                            <span class="class-badge">
-                                D23_TH09
+                        <td>
+
+                            {{#if score}}
+
+                            <div class="student-score">
+
+                                <strong>
+                                    {{score}}
+                                </strong>
+
+                                {{#if total_score}}
+                                <span>
+                                    / {{total_score}}
+                                </span>
+                                {{/if}}
+
+                            </div>
+
+                            {{else}}
+
+                            <span class="student-score student-score--empty">
+                                —
                             </span>
+
+                            {{/if}}
+
                         </td>
 
-                        <td class="text-center">
-                            <a href="/teacher/history/list-student/detail" class="data-link">
-                                Chi tiết
-                            </a>
-                        </td>
                     </tr>
 
+                    {{else}}
+
                     <tr>
-                        <td class="text-center">
-                            <span class="student-id">
-                                DH52300999
+
+                        <td colspan="5" class="student-attempt-empty">
+                            <i class="fa-light fa-users"></i>
+
+                            <span>
+                                Chưa có sinh viên trong lớp học phần.
                             </span>
                         </td>
 
-                        <td class="text-center">
-                            <span class="student-name">
-                                Dương Tấn Lộc
-                            </span>
-                        </td>
-
-                        <td class="text-center">
-                            <span class="class-badge">
-                                D23_TH09
-                            </span>
-                        </td>
-
-                        <td class="text-center">
-                            <a href="" class="data-link">
-                                Chi tiết
-                            </a>
-                        </td>
                     </tr>
+
+                    {{/each}}
 
                 </tbody>
 
@@ -80,5 +903,7 @@
         </div>
 
     </div>
+
+    {{/if}}
 
 </div>

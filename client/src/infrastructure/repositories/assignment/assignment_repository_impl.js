@@ -34,24 +34,33 @@ class AssignmentRepositoryImpl extends AssignmentRepository {
       if (!assignmentDTO || typeof assignmentDTO.toRequest !== "function") {
         throw new Error("Dữ liệu cập nhật bài tập không hợp lệ.");
       }
-
       const payload = assignmentDTO.toRequest();
-
+      console.log("========== UPDATE ASSIGNMENT ==========");
+      console.log("ASSIGNMENT ID:", assignmentDTO.assignmentId);
+      console.log("UPDATE PAYLOAD:", JSON.stringify(payload, null, 2));
       const response = await assignmentApi.updateAssignment(
         req,
         assignmentDTO.assignmentId,
         payload,
       );
-
+      console.log("========== NODE UPDATE RESPONSE ==========");
+      console.log(JSON.stringify(response, null, 2));
       if (!response || response.success !== true) {
         throw new Error(response?.message || "Không thể cập nhật bài tập.");
       }
-
       return response.data;
     } catch (error) {
-      const backendData = error.response?.data;
+      console.error("========== NODE UPDATE ERROR ==========");
 
-      console.error("UPDATE ASSIGNMENT ERROR:", backendData || error.message);
+      console.error("STATUS:", error.response?.status);
+
+      console.error("DATA:", JSON.stringify(error.response?.data, null, 2));
+
+      console.error("MESSAGE:", error.message);
+
+      console.error("========================================");
+
+      const backendData = error.response?.data;
 
       if (backendData?.message) {
         throw new Error(backendData.message);

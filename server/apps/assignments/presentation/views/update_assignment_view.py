@@ -24,7 +24,7 @@ class UpdateAssignmentView(APIView):
         IsAuthenticated,
     ]
 
-    def put(
+    def post(
         self,
         request,
         assignment_id,
@@ -49,13 +49,19 @@ class UpdateAssignmentView(APIView):
                 {
                     "success": False,
                     "message": (
-                        "Tài khoản chưa có " "trường đại học hoặc " "email đăng nhập."
+                        "Tài khoản chưa có "
+                        "trường đại học hoặc "
+                        "email đăng nhập."
                     ),
                 },
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         payload = request.data.copy()
+
+        # =========================================
+        # QUESTIONS JSON STRING
+        # =========================================
 
         if isinstance(
             payload.get("questions"),
@@ -69,17 +75,23 @@ class UpdateAssignmentView(APIView):
                 return Response(
                     {
                         "success": False,
-                        "message": ("Dữ liệu câu hỏi " "không hợp lệ."),
+                        "message": (
+                            "Dữ liệu câu hỏi "
+                            "không hợp lệ."
+                        ),
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+
+        # =========================================
+        # VALIDATE
+        # =========================================
 
         serializer = UpdateAssignmentSerializer(
             data=payload,
         )
 
         if not serializer.is_valid():
-
             return Response(
                 {
                     "success": False,
@@ -90,39 +102,58 @@ class UpdateAssignmentView(APIView):
 
         data = serializer.validated_data
 
+        # =========================================
+        # DTO
+        # =========================================
+
         dto = UpdateAssignmentDTO(
             title=data["title"],
-            description=data.get(
-                "description",
-            ),
+            description=data.get("description"),
             subject_id=data["subject_id"],
             assignment_type=data["assignment_type"],
             duration_minutes=data["duration_minutes"],
             questions=data["questions"],
         )
 
+        # =========================================
+        # USE CASE
+        # =========================================
+
         try:
 
-            assignment = update_assignment_use_case.execute(
-                assignment_id=assignment_id,
-                dto=dto,
-                university_id=university_id,
-                teacher_email=username,
+            assignment = (
+                update_assignment_use_case.execute(
+                    assignment_id=assignment_id,
+                    dto=dto,
+                    university_id=university_id,
+                    teacher_email=username,
+                )
             )
 
             return Response(
                 {
                     "success": True,
-                    "message": ("Cập nhật bài tập " "thành công."),
+                    "message": (
+                        "Cập nhật bài tập "
+                        "thành công."
+                    ),
                     "data": {
-                        "assignment_id": (assignment.assignment_id),
+                        "assignment_id": (
+                            assignment.assignment_id
+                        ),
                         "title": assignment.title,
-                        "subject_id": (assignment.subject_id),
-                        "assignment_type": (assignment.assignment_type),
+                        "subject_id": (
+                            assignment.subject_id
+                        ),
+                        "assignment_type": (
+                            assignment.assignment_type
+                        ),
                         "total_score": str(
                             assignment.total_score,
                         ),
-                        "duration_minutes": (assignment.duration_minutes),
+                        "duration_minutes": (
+                            assignment.duration_minutes
+                        ),
                     },
                 },
                 status=status.HTTP_200_OK,
@@ -140,15 +171,29 @@ class UpdateAssignmentView(APIView):
 
         except Exception as error:
 
+            import traceback
+
             print(
-                "UPDATE ASSIGNMENT ERROR:",
-                error,
+                "========== UPDATE ASSIGNMENT ERROR ==========",
+                flush=True,
+            )
+
+            print(
+                repr(error),
+                flush=True,
+            )
+
+            traceback.print_exc()
+
+            print(
+                "==============================================",
+                flush=True,
             )
 
             return Response(
                 {
                     "success": False,
-                    "message": ("Không thể cập nhật " "bài tập."),
+                    "message": str(error),
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )

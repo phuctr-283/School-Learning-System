@@ -6,12 +6,14 @@ from rest_framework import status
 from apps.assignments.presentation.serializers.assignment_detail_serializer import (
     AssignmentDetailSerializer,
 )
-from apps.assignments.infrastructure.dependencies.assignment_dependency import get_assignment_by_id_use_case
+from apps.assignments.infrastructure.dependencies.assignment_dependency import (
+    get_assignment_by_id_use_case,
+)
 
 class GetAssignmentByIdView(APIView):
 
     permission_classes = [
-        IsAuthenticated
+        IsAuthenticated,
     ]
 
     def get(
@@ -37,19 +39,18 @@ class GetAssignmentByIdView(APIView):
         try:
 
             assignment = (
-                get_assignment_by_id_use_case
-                .execute(
+                get_assignment_by_id_use_case.execute(
                     assignment_id=assignment_id,
                     university_id=university_id,
                     teacher_email=teacher_email,
                 )
             )
 
-            serializer = (
-                AssignmentDetailSerializer(
-                    assignment
-                )
+            serializer = AssignmentDetailSerializer(
+                assignment
             )
+
+            data = serializer.data
 
             return Response(
                 {
@@ -58,12 +59,18 @@ class GetAssignmentByIdView(APIView):
                         "Lấy thông tin bài tập "
                         "thành công."
                     ),
-                    "data": serializer.data,
+                    "data": data,
                 },
                 status=status.HTTP_200_OK,
             )
 
         except PermissionError as error:
+
+            print(
+                "PERMISSION ERROR:",
+                repr(error),
+                flush=True,
+            )
 
             return Response(
                 {
@@ -75,6 +82,12 @@ class GetAssignmentByIdView(APIView):
 
         except ValueError as error:
 
+            print(
+                "VALUE ERROR:",
+                repr(error),
+                flush=True,
+            )
+
             return Response(
                 {
                     "success": False,
@@ -85,12 +98,17 @@ class GetAssignmentByIdView(APIView):
 
         except Exception as error:
 
+            print(
+                "GET ASSIGNMENT ERROR:",
+                repr(error),
+                flush=True,
+            )
+
             return Response(
                 {
                     "success": False,
                     "message": (
-                        "Không thể tải "
-                        "bài tập."
+                        "Không thể tải bài tập."
                     ),
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

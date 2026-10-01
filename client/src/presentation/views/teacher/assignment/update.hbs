@@ -1,504 +1,486 @@
 <div class="assignment-form-page">
 
-    <div class="assignment-form-hero">
+  <div class="assignment-form-hero">
+
+    <div>
+
+      <span class="assignment-form-eyebrow">
+        <i class="fa-light fa-file-pen"></i>
+        Nội dung học phần
+      </span>
+
+      <h2>Chỉnh sửa bài tập</h2>
+
+      <p>
+        Cập nhật nội dung học tập và thiết kế các câu hỏi cho sinh viên.
+      </p>
+
+    </div>
+
+
+    <a class="assignment-form-back" href="/teacher/assignment/list">
+      <i class="fa-light fa-arrow-left"></i>
+      Quay lại
+    </a>
+
+  </div>
+
+
+  {{#if error}}
+
+  <div class="assignment-error" role="alert">
+    <i class="fa-light fa-circle-exclamation"></i>
+
+    <span>{{error}}</span>
+  </div>
+
+  {{/if}}
+
+
+  <form class="assignment-form-card" method="post" action="/teacher/assignment/edit/{{formData.assignment_id}}"
+    id="assignment-form" novalidate>
+
+    <section class="assignment-section">
+
+      <div class="assignment-section__heading">
+
+        <div class="assignment-section__icon">
+          <i class="fa-light fa-file-lines"></i>
+        </div>
 
         <div>
 
-            <span class="assignment-form-eyebrow">
-                <i class="fa-light fa-file-pen"></i>
-                Nội dung học phần
-            </span>
+          <h3>Thông tin nội dung</h3>
 
-            <h2>Chỉnh sửa bài tập</h2>
+          <p>
+            Cập nhật tên, mô tả, môn học và loại bài tập.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="assignment-form-grid">
+
+
+        <!-- TÊN -->
+
+        <div class="assignment-field assignment-field--full">
+
+          <label for="assignment-title">
+            Tên nội dung
+          </label>
+
+          <input id="assignment-title" type="text" name="title" maxlength="255" value="{{formData.title}}" required
+            placeholder="Ví dụ: Bài tập vòng lặp trong Python" />
+
+        </div>
+
+
+        <!-- MÔ TẢ -->
+
+        <div class="assignment-field assignment-field--full">
+
+          <label for="assignment-description">
+            Mô tả
+          </label>
+
+          <textarea id="assignment-description" name="description" rows="2"
+            placeholder="Mô tả yêu cầu hoặc nội dung cần sinh viên thực hiện...">{{formData.description}}</textarea>
+
+        </div>
+
+
+        <!-- MÔN HỌC -->
+
+        {{#if hasSelectedSubject}}
+
+        <input type="hidden" name="subject_id" value="{{formData.subject_id}}" />
+
+        <div class="assignment-field">
+
+          <label>
+            Môn học
+          </label>
+
+          <div class="assignment-input-with-icon">
+
+            <i class="fa-light fa-book"></i>
+
+            <input type="text" value="{{formData.subject_id}}" readonly />
+
+          </div>
+
+        </div>
+
+        {{else}}
+
+        <div class="assignment-field">
+
+          <label for="assignment-subject-code">
+            Môn học
+          </label>
+
+          <div class="assignment-input-with-icon">
+
+            <i class="fa-light fa-book"></i>
+
+            <select id="assignment-subject-code" name="subject_id" required>
+
+              <option value="" disabled selected>
+                Chọn môn học
+              </option>
+
+              {{#each subjects}}
+
+              <option value="{{subject_id}}">
+                {{subject_id}} - {{subject_name}}
+              </option>
+
+              {{else}}
+
+              <option value="" disabled>
+                Chưa có môn học
+              </option>
+
+              {{/each}}
+
+            </select>
+
+          </div>
+
+        </div>
+
+        {{/if}}
+
+
+        <!-- LOẠI BÀI TẬP -->
+
+        <div class="assignment-field">
+
+          <label for="assignment-type">
+            Loại bài tập
+          </label>
+
+          <div class="assignment-input-with-icon">
+
+            <i class="fa-light fa-layer-group"></i>
+
+            <select id="assignment-type" name="assignment_type" required>
+
+              <option value="practice" {{#if (eq formData.assignment_type "practice" )}} selected {{/if}}>
+                Bài luyện tập
+              </option>
+
+              <option value="homework" {{#if (eq formData.assignment_type "homework" )}} selected {{/if}}>
+                Bài tập về nhà
+              </option>
+
+              <option value="quiz" {{#if (eq formData.assignment_type "quiz" )}} selected {{/if}}>
+                Bài kiểm tra
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- THỜI GIAN -->
+
+        <div class="assignment-field assignment-field--full">
+
+          <label for="assignment-duration">
+            Thời gian làm bài (phút)
+          </label>
+
+          <div class="assignment-input-with-icon">
+
+            <i class="fa-light fa-clock"></i>
+
+            <input id="assignment-duration" type="number" name="duration_minutes" min="1" max="600"
+              value="{{#if formData.duration_minutes}}{{formData.duration_minutes}}{{else}}30{{/if}}" required />
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- QUESTIONS -->
+    <!-- ============================= -->
+
+    <section class="assignment-section assignment-builder">
+
+      <div class="assignment-builder__header">
+
+        <div class="assignment-section__heading">
+
+          <div class="assignment-section__icon">
+            <i class="fa-light fa-list-check"></i>
+          </div>
+
+          <div>
+            <h3>Cấu trúc câu hỏi</h3>
 
             <p>
-                Cập nhật nội dung học tập và thiết kế các câu hỏi cho sinh viên.
+              Cập nhật các câu hỏi của bài tập.
             </p>
+          </div>
 
         </div>
 
+      </div>
 
-        <a class="assignment-form-back" href="/teacher/assignment/list">
-            <i class="fa-light fa-arrow-left"></i>
-            Quay lại
-        </a>
+
+      <div id="questions"></div>
+
+
+      <div class="assignment-empty-question" id="question-empty" hidden>
+        <i class="fa-light fa-circle-plus"></i>
+
+        <span>
+          Chưa có câu hỏi nào.
+        </span>
+      </div>
+
+
+      <div class="assignment-builder__footer">
+
+        <button type="button" class="assignment-add-question" id="add-question">
+          <i class="fa-light fa-plus"></i>
+          Thêm câu hỏi
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <input type="hidden" name="questions" id="questions-json" />
+
+
+    <script type="application/json" id="initial-questions-data">{{{json formData.questions}}}</script>
+
+    <!-- ACTIONS -->
+
+    <div class="assignment-form-actions">
+
+      <a class="assignment-form-back" href="/teacher/assignment/list">
+        Hủy
+      </a>
+
+      <button class="assignment-form-submit" type="submit">
+        <i class="fa-light fa-floppy-disk"></i>
+
+        Lưu thay đổi
+      </button>
 
     </div>
 
-
-    {{#if error}}
-
-    <div class="assignment-error" role="alert">
-        <i class="fa-light fa-circle-exclamation"></i>
-
-        <span>{{error}}</span>
-    </div>
-
-    {{/if}}
-
-
-    <form class="assignment-form-card" method="post" action="/teacher/assignment/update/{{formData.assignment_id}}"
-        id="assignment-form" novalidate>
-
-        <section class="assignment-section">
-
-            <div class="assignment-section__heading">
-
-                <div class="assignment-section__icon">
-                    <i class="fa-light fa-file-lines"></i>
-                </div>
-
-                <div>
-
-                    <h3>Thông tin nội dung</h3>
-
-                    <p>
-                        Cập nhật tên, mô tả, môn học và loại bài tập.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="assignment-form-grid">
-
-
-                <!-- TÊN -->
-
-                <div class="assignment-field assignment-field--full">
-
-                    <label for="assignment-title">
-                        Tên nội dung
-                    </label>
-
-                    <input id="assignment-title" type="text" name="title" maxlength="255" value="{{formData.title}}"
-                        required placeholder="Ví dụ: Bài tập vòng lặp trong Python" />
-
-                </div>
-
-
-                <!-- MÔ TẢ -->
-
-                <div class="assignment-field assignment-field--full">
-
-                    <label for="assignment-description">
-                        Mô tả
-                    </label>
-
-                    <textarea id="assignment-description" name="description" rows="2"
-                        placeholder="Mô tả yêu cầu hoặc nội dung cần sinh viên thực hiện...">{{formData.description}}</textarea>
-
-                </div>
-
-
-                <!-- MÔN HỌC -->
-
-                {{#if hasSelectedSubject}}
-
-                <input type="hidden" name="subject_id" value="{{formData.subject_id}}" />
-
-                <div class="assignment-field">
-
-                    <label>
-                        Môn học
-                    </label>
-
-                    <div class="assignment-input-with-icon">
-
-                        <i class="fa-light fa-book"></i>
-
-                        <input type="text" value="{{formData.subject_id}}" readonly />
-
-                    </div>
-
-                </div>
-
-                {{else}}
-
-                <div class="assignment-field">
-
-                    <label for="assignment-subject-code">
-                        Môn học
-                    </label>
-
-                    <div class="assignment-input-with-icon">
-
-                        <i class="fa-light fa-book"></i>
-
-                        <select id="assignment-subject-code" name="subject_id" required>
-
-                            <option value="" disabled selected>
-                                Chọn môn học
-                            </option>
-
-                            {{#each subjects}}
-
-                            <option value="{{subject_id}}">
-                                {{subject_id}} - {{subject_name}}
-                            </option>
-
-                            {{else}}
-
-                            <option value="" disabled>
-                                Chưa có môn học
-                            </option>
-
-                            {{/each}}
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-                {{/if}}
-
-
-                <!-- LOẠI BÀI TẬP -->
-
-                <div class="assignment-field">
-
-                    <label for="assignment-type">
-                        Loại bài tập
-                    </label>
-
-                    <div class="assignment-input-with-icon">
-
-                        <i class="fa-light fa-layer-group"></i>
-
-                        <select id="assignment-type" name="assignment_type" required>
-
-                            <option value="practice" {{#if (eq formData.assignment_type "practice" )}} selected {{/if}}>
-                                Bài luyện tập
-                            </option>
-
-                            <option value="homework" {{#if (eq formData.assignment_type "homework" )}} selected {{/if}}>
-                                Bài tập về nhà
-                            </option>
-
-                            <option value="quiz" {{#if (eq formData.assignment_type "quiz" )}} selected {{/if}}>
-                                Bài kiểm tra
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- THỜI GIAN -->
-
-                <div class="assignment-field assignment-field--full">
-
-                    <label for="assignment-duration">
-                        Thời gian làm bài (phút)
-                    </label>
-
-                    <div class="assignment-input-with-icon">
-
-                        <i class="fa-light fa-clock"></i>
-
-                        <input id="assignment-duration" type="number" name="duration_minutes" min="1" max="600"
-                            value="{{#if formData.duration_minutes}}{{formData.duration_minutes}}{{else}}30{{/if}}"
-                            required />
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- ============================= -->
-        <!-- QUESTIONS -->
-        <!-- ============================= -->
-
-        <section class="assignment-section assignment-builder">
-
-            <div class="assignment-builder__header">
-
-                <div class="assignment-section__heading">
-
-                    <div class="assignment-section__icon">
-                        <i class="fa-light fa-list-check"></i>
-                    </div>
-
-                    <div>
-
-                        <h3>Cấu trúc câu hỏi</h3>
-
-                        <p>
-                            Cập nhật các câu hỏi của bài tập.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div id="questions"></div>
-
-
-            <div class="assignment-empty-question" id="question-empty" hidden>
-                <i class="fa-light fa-circle-plus"></i>
-
-                <span>
-                    Chưa có câu hỏi nào.
-                </span>
-            </div>
-
-
-            <div class="assignment-builder__footer">
-
-                <button type="button" class="assignment-add-question" id="add-question">
-                    <i class="fa-light fa-plus"></i>
-                    Thêm câu hỏi
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- QUESTIONS JSON -->
-
-        <input type="hidden" name="questions" id="questions-json" />
-
-
-        <!-- INITIAL QUESTIONS -->
-
-        <script type="application/json" id="initial-questions-data">{{{json formData.questions}}}</script>
-
-
-        <!-- ACTIONS -->
-
-        <div class="assignment-form-actions">
-
-            <a class="assignment-form-back" href="/teacher/assignment/list">
-                Hủy
-            </a>
-
-
-            <button class="assignment-form-submit" type="submit">
-
-                <i class="fa-light fa-floppy-disk"></i>
-
-                Lưu thay đổi
-
-            </button>
-
-        </div>
-
-    </form>
+  </form>
 
 </div>
 <script>
-    (() => {
-  "use strict";
+  (() => {
+    "use strict";
 
-  const QUESTION_TYPES = Object.freeze({
-    MULTIPLE_CHOICE: "multiple_choice",
-    ORDERING: "ordering",
-    DRAG_AND_DROP: "drag_and_drop",
-  });
+    const QUESTION_TYPES = Object.freeze({
+      MULTIPLE_CHOICE: "multiple_choice",
+      ORDERING: "ordering",
+      DRAG_AND_DROP: "drag_and_drop",
+    });
 
-  const initAssignmentBuilder = () => {
-    const form =
-      document.getElementById("assignment-form");
+    function initAssignmentBuilder() {
+      const form = document.getElementById("assignment-form");
+      const container = document.getElementById("questions");
+      const addButton = document.getElementById("add-question");
+      const emptyState = document.getElementById("question-empty");
+      const questionsInput = document.getElementById("questions-json");
+      const initialQuestionsElement =
+        document.getElementById("initial-questions-data");
 
-    const container =
-      document.getElementById("questions");
-
-    const addButton =
-      document.getElementById("add-question");
-
-    const emptyState =
-      document.getElementById("question-empty");
-
-    const questionsInput =
-      document.getElementById("questions-json");
-
-    const initialQuestionsElement =
-      document.getElementById(
-        "initial-questions-data",
-      );
-
-    if (
-      !form ||
-      !container ||
-      !addButton ||
-      !emptyState ||
-      !questionsInput
-    ) {
-      return;
-    }
-
-    if (
-      form.dataset.initialized === "true"
-    ) {
-      return;
-    }
-
-    form.dataset.initialized = "true";
-
-    // =========================================================
-    // HELPERS
-    // =========================================================
-
-    const escapeHtml = (value = "") =>
-      String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    const normalizeLines = (
-      value = "",
-    ) =>
-      String(value)
-        .split(/\r?\n/)
-        .map((line) => line.trim())
-        .filter(Boolean);
-
-    const countBlanks = (
-      content = "",
-    ) =>
-      (
-        String(content).match(/___/g) ||
-        []
-      ).length;
-
-    const countMarkedAnswers = (
-      lines = [],
-    ) =>
-      lines.filter((line) =>
-        line.startsWith("*"),
-      ).length;
-
-    // =========================================================
-    // UI
-    // =========================================================
-
-    const updateEmptyState = () => {
-      emptyState.hidden =
-        container.children.length > 0;
-    };
-
-    const updateQuestionNumbers = () => {
-      [
-        ...container.children,
-      ].forEach((editor, index) => {
-        const number =
-          editor.querySelector(
-            ".assignment-question__number",
-          );
-
-        if (number) {
-          number.textContent =
-            `Câu ${index + 1}`;
-        }
-      });
-    };
-
-    // =========================================================
-    // GET QUESTION DATA FROM EDITOR
-    // =========================================================
-
-    const getQuestionData = (
-      editor,
-    ) => {
-      return {
-        question_type:
-          editor
-            .querySelector(
-              ".question-type",
-            )
-            ?.value
-            ?.trim() || "",
-
-        question:
-          editor
-            .querySelector(
-              ".question",
-            )
-            ?.value
-            ?.trim() || "",
-
-        content:
-          editor
-            .querySelector(
-              ".content",
-            )
-            ?.value || "",
-
-        answer:
-          editor
-            .querySelector(
-              ".answer",
-            )
-            ?.value || "",
-
-        score:
-          editor
-            .querySelector(
-              ".question-score",
-            )
-            ?.value
-            ?.trim() || "",
-      };
-    };
-
-    // =========================================================
-    // RENDER QUESTION FIELDS
-    // =========================================================
-
-    const renderQuestionFields = (
-      editor,
-      type,
-      data = {},
-    ) => {
-      const target =
-        editor.querySelector(
-          ".assignment-question__body",
-        );
-
-      if (!target) {
+      if (
+        !form ||
+        !container ||
+        !addButton ||
+        !emptyState ||
+        !questionsInput
+      ) {
+        console.error("Không tìm thấy các element của assignment builder.");
         return;
       }
 
-      const question =
-        escapeHtml(
-          data.question || "",
+      if (form.dataset.initialized === "true") {
+        return;
+      }
+
+      form.dataset.initialized = "true";
+
+      // =========================================================
+      // HELPERS
+      // =========================================================
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function normalizeLines(value) {
+        return String(value ?? "")
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter(Boolean);
+      }
+
+      function countBlanks(content) {
+        return (
+          String(content ?? "").match(/___/g) || []
+        ).length;
+      }
+
+      function countMarkedAnswers(lines) {
+        return lines.filter((line) =>
+          line.startsWith("*"),
+        ).length;
+      }
+
+      function normalizeQuestion(question = {}) {
+        return {
+          question_type:
+            String(
+              question.question_type ??
+              question.questionType ??
+              QUESTION_TYPES.MULTIPLE_CHOICE,
+            ).trim(),
+
+          question:
+            String(
+              question.question ?? "",
+            ),
+
+          content:
+            String(
+              question.content ?? "",
+            ),
+
+          answer:
+            String(
+              question.answer ?? "",
+            ),
+
+          score:
+            question.score ??
+            "",
+        };
+      }
+
+      // =========================================================
+      // UI
+      // =========================================================
+
+      function updateEmptyState() {
+        emptyState.hidden =
+          container.children.length > 0;
+      }
+
+      function updateQuestionNumbers() {
+        Array.from(container.children).forEach(
+          (editor, index) => {
+            const number =
+              editor.querySelector(
+                ".assignment-question__number",
+              );
+
+            if (number) {
+              number.textContent =
+                `Câu ${index + 1}`;
+            }
+          },
         );
+      }
 
-      const content =
-        escapeHtml(
-          data.content || "",
-        );
+      // =========================================================
+      // GET CURRENT QUESTION DATA
+      // =========================================================
 
-      const answer =
-        escapeHtml(
-          data.answer || "",
-        );
+      function getQuestionData(editor) {
+        const type =
+          editor.querySelector(".question-type")?.value ?? "";
 
-      // -------------------------------------------------------
-      // MULTIPLE CHOICE
-      // -------------------------------------------------------
+        const question =
+          editor.querySelector(".question")?.value ?? "";
 
-      if (
-        type ===
-        QUESTION_TYPES.MULTIPLE_CHOICE
+        const content =
+          editor.querySelector(".content")?.value ?? "";
+
+        const answer =
+          editor.querySelector(".answer")?.value ?? "";
+
+        const score =
+          editor.querySelector(".question-score")?.value ?? "";
+
+        return {
+          question_type: type.trim(),
+          question: question.trim(),
+          content,
+          answer,
+          score: score.trim(),
+        };
+      }
+
+      // =========================================================
+      // RENDER QUESTION BODY
+      // =========================================================
+
+      function renderQuestionFields(
+        editor,
+        type,
+        data = {},
       ) {
-        target.innerHTML = `
+        const body =
+          editor.querySelector(
+            ".assignment-question__body",
+          );
+
+        if (!body) {
+          return;
+        }
+
+        const normalized =
+          normalizeQuestion(data);
+
+        const question =
+          escapeHtml(normalized.question);
+
+        const content =
+          escapeHtml(normalized.content);
+
+        const answer =
+          escapeHtml(normalized.answer);
+
+        // =======================================================
+        // MULTIPLE CHOICE
+        // =======================================================
+
+        if (
+          type ===
+          QUESTION_TYPES.MULTIPLE_CHOICE
+        ) {
+          body.innerHTML = `
           <div class="assignment-field assignment-field--full">
+
             <label>
               Nội dung câu hỏi
             </label>
@@ -509,11 +491,15 @@
               required
               placeholder="Nhập nội dung câu hỏi trắc nghiệm..."
             >${question}</textarea>
+
           </div>
 
+
           <div class="assignment-field assignment-field--full">
+
             <label>
               Nội dung bổ sung
+
               <span class="assignment-field__hint">
                 Không bắt buộc
               </span>
@@ -524,9 +510,12 @@
               rows="3"
               placeholder="Có thể bỏ trống..."
             >${content}</textarea>
+
           </div>
 
+
           <div class="assignment-field assignment-field--full">
+
             <label>
               Đáp án
             </label>
@@ -545,22 +534,24 @@ Huế"
               Đáp án đúng bắt đầu bằng dấu
               <strong>*</strong>.
             </small>
+
           </div>
         `;
 
-        return;
-      }
+          return;
+        }
 
-      // -------------------------------------------------------
-      // ORDERING
-      // -------------------------------------------------------
+        // =======================================================
+        // ORDERING
+        // =======================================================
 
-      if (
-        type ===
-        QUESTION_TYPES.ORDERING
-      ) {
-        target.innerHTML = `
+        if (
+          type ===
+          QUESTION_TYPES.ORDERING
+        ) {
+          body.innerHTML = `
           <div class="assignment-field assignment-field--full">
+
             <label>
               Nội dung câu hỏi
             </label>
@@ -571,11 +562,15 @@ Huế"
               required
               placeholder="Hãy sắp xếp các bước sau..."
             >${question}</textarea>
+
           </div>
 
+
           <div class="assignment-field assignment-field--full">
+
             <label>
               Nội dung bổ sung
+
               <span class="assignment-field__hint">
                 Không bắt buộc
               </span>
@@ -586,9 +581,12 @@ Huế"
               rows="3"
               placeholder="Có thể bỏ trống..."
             >${content}</textarea>
+
           </div>
 
+
           <div class="assignment-field assignment-field--full">
+
             <label>
               Đáp án theo thứ tự đúng
             </label>
@@ -608,22 +606,24 @@ Bước 3"
               Không sử dụng dấu
               <strong>*</strong>.
             </small>
+
           </div>
         `;
 
-        return;
-      }
+          return;
+        }
 
-      // -------------------------------------------------------
-      // DRAG AND DROP
-      // -------------------------------------------------------
+        // =======================================================
+        // DRAG AND DROP
+        // =======================================================
 
-      if (
-        type ===
-        QUESTION_TYPES.DRAG_AND_DROP
-      ) {
-        target.innerHTML = `
+        if (
+          type ===
+          QUESTION_TYPES.DRAG_AND_DROP
+        ) {
+          body.innerHTML = `
           <div class="assignment-field assignment-field--full">
+
             <label>
               Nội dung câu hỏi
             </label>
@@ -634,9 +634,12 @@ Bước 3"
               required
               placeholder="Điền phần còn thiếu..."
             >${question}</textarea>
+
           </div>
 
+
           <div class="assignment-field assignment-field--full">
+
             <label>
               Nội dung có chỗ khuyết
             </label>
@@ -655,9 +658,12 @@ return total"
               Nội dung phải có ít nhất một ký hiệu
               <strong>___</strong>.
             </small>
+
           </div>
 
+
           <div class="assignment-field assignment-field--full">
+
             <label>
               Đáp án
             </label>
@@ -678,217 +684,34 @@ sai"
               phải bằng số ký hiệu
               <strong>___</strong>.
             </small>
+
           </div>
         `;
-      }
-    };
 
-    // =========================================================
-    // VALIDATE QUESTION
-    // =========================================================
+          return;
+        }
 
-    const validateQuestion = (
-      data,
-      number,
-    ) => {
-      const type =
-        data.question_type;
-
-      const question =
-        data.question.trim();
-
-      const content =
-        data.content.trim();
-
-      const answerLines =
-        normalizeLines(
-          data.answer,
-        );
-
-      if (
-        !Object.values(
-          QUESTION_TYPES,
-        ).includes(type)
-      ) {
-        throw new Error(
-          `Câu ${number} có loại câu hỏi không hợp lệ.`,
+        console.error(
+          "QUESTION TYPE KHÔNG HỢP LỆ:",
+          type,
         );
       }
 
-      if (!question) {
-        throw new Error(
-          `Câu ${number} chưa nhập nội dung câu hỏi.`,
-        );
-      }
+      // =========================================================
+      // ADD QUESTION
+      // =========================================================
 
-      if (
-        answerLines.length === 0
-      ) {
-        throw new Error(
-          `Câu ${number} phải có ít nhất một đáp án.`,
-        );
-      }
+      function addQuestion(initialData = {}) {
+        const data =
+          normalizeQuestion(initialData);
 
-      const markedCount =
-        countMarkedAnswers(
-          answerLines,
-        );
+        const editor =
+          document.createElement("section");
 
-      // -------------------------------------------------------
-      // MULTIPLE CHOICE
-      // -------------------------------------------------------
+        editor.className =
+          "assignment-question";
 
-      if (
-        type ===
-        QUESTION_TYPES.MULTIPLE_CHOICE
-      ) {
-        if (
-          answerLines.length < 2
-        ) {
-          throw new Error(
-            `Câu ${number} phải có ít nhất 2 đáp án.`,
-          );
-        }
-
-        if (markedCount !== 1) {
-          throw new Error(
-            `Câu ${number} phải có đúng 1 đáp án bắt đầu bằng dấu *.`,
-          );
-        }
-      }
-
-      // -------------------------------------------------------
-      // ORDERING
-      // -------------------------------------------------------
-
-      if (
-        type ===
-        QUESTION_TYPES.ORDERING
-      ) {
-        if (
-          answerLines.length < 2
-        ) {
-          throw new Error(
-            `Câu ${number} phải có ít nhất 2 đáp án.`,
-          );
-        }
-
-        if (markedCount > 0) {
-          throw new Error(
-            `Câu ${number} dạng ordering không được sử dụng dấu *.`,
-          );
-        }
-      }
-
-      // -------------------------------------------------------
-      // DRAG AND DROP
-      // -------------------------------------------------------
-
-      if (
-        type ===
-        QUESTION_TYPES.DRAG_AND_DROP
-      ) {
-        if (!content) {
-          throw new Error(
-            `Câu ${number} bắt buộc phải có content.`,
-          );
-        }
-
-        const blankCount =
-          countBlanks(content);
-
-        if (blankCount < 1) {
-          throw new Error(
-            `Câu ${number} phải có ít nhất một ký hiệu ___.`,
-          );
-        }
-
-        if (
-          markedCount !==
-          blankCount
-        ) {
-          throw new Error(
-            `Câu ${number} có ${blankCount} vị trí ___ nhưng có ${markedCount} đáp án đúng.`,
-          );
-        }
-      }
-
-      return {
-        question_type: type,
-        question,
-        content,
-        answer:
-          answerLines.join("\n"),
-      };
-    };
-
-    // =========================================================
-    // COLLECT ALL QUESTIONS
-    // =========================================================
-
-    const collectQuestions =
-      () => {
-        return [
-          ...container.children,
-        ].map(
-          (editor, index) => {
-            const data =
-              getQuestionData(
-                editor,
-              );
-
-            const result =
-              validateQuestion(
-                data,
-                index + 1,
-              );
-
-            if (
-              data.score !== ""
-            ) {
-              const score =
-                Number(
-                  data.score,
-                );
-
-              if (
-                !Number.isFinite(
-                  score,
-                ) ||
-                score <= 0
-              ) {
-                throw new Error(
-                  `Điểm câu ${
-                    index + 1
-                  } phải lớn hơn 0.`,
-                );
-              }
-
-              result.score =
-                score;
-            }
-
-            return result;
-          },
-        );
-      };
-
-    // =========================================================
-    // ADD QUESTION
-    // =========================================================
-
-    const addQuestion = (
-      initialData = {},
-    ) => {
-      const editor =
-        document.createElement(
-          "section",
-        );
-
-      editor.className =
-        "assignment-question";
-
-      editor.innerHTML = `
+        editor.innerHTML = `
         <div class="assignment-question__top">
 
           <div class="assignment-question__title">
@@ -914,7 +737,6 @@ sai"
               class="assignment-question__type question-type"
               required
             >
-
               <option value="multiple_choice">
                 Trắc nghiệm
               </option>
@@ -926,7 +748,6 @@ sai"
               <option value="drag_and_drop">
                 Kéo thả điền khuyết
               </option>
-
             </select>
 
 
@@ -953,10 +774,7 @@ sai"
               class="assignment-question__remove"
             >
               <i class="fa-light fa-trash"></i>
-
-              <span>
-                Xóa
-              </span>
+              <span>Xóa</span>
             </button>
 
           </div>
@@ -964,128 +782,117 @@ sai"
         </div>
 
 
-        <div
-          class="assignment-question__body"
-        ></div>
+        <div class="assignment-question__body"></div>
       `;
 
-      container.appendChild(
-        editor,
-      );
+        container.appendChild(editor);
 
-      const typeSelector =
-        editor.querySelector(
-          ".question-type",
-        );
+        const typeSelector =
+          editor.querySelector(".question-type");
 
-      const scoreInput =
-        editor.querySelector(
-          ".question-score",
-        );
+        const scoreInput =
+          editor.querySelector(".question-score");
 
-      const removeButton =
-        editor.querySelector(
-          ".assignment-question__remove",
-        );
-
-      // =======================================================
-      // INITIAL TYPE
-      // =======================================================
-
-      const initialType =
-        Object.values(
-          QUESTION_TYPES,
-        ).includes(
-          initialData.question_type,
-        )
-          ? initialData.question_type
-          : QUESTION_TYPES.MULTIPLE_CHOICE;
-
-      typeSelector.value =
-        initialType;
-
-      // =======================================================
-      // INITIAL SCORE
-      // =======================================================
-
-      if (
-        initialData.score !==
-          undefined &&
-        initialData.score !==
-          null &&
-        initialData.score !== ""
-      ) {
-        scoreInput.value =
-          initialData.score;
-      }
-
-      // =======================================================
-      // RENDER DATA
-      // =======================================================
-
-      renderQuestionFields(
-        editor,
-        initialType,
-        initialData,
-      );
-
-      // =======================================================
-      // CHANGE TYPE
-      // =======================================================
-
-      typeSelector.addEventListener(
-        "change",
-        () => {
-          const oldData =
-            getQuestionData(
-              editor,
-            );
-
-          renderQuestionFields(
-            editor,
-            typeSelector.value,
-            oldData,
+        const removeButton =
+          editor.querySelector(
+            ".assignment-question__remove",
           );
 
-          scoreInput.value =
-            oldData.score;
-        },
-      );
+        // =======================================================
+        // SET TYPE FROM DATABASE
+        // =======================================================
 
-      // =======================================================
-      // REMOVE
-      // =======================================================
+        const type =
+          Object.values(QUESTION_TYPES).includes(
+            data.question_type,
+          )
+            ? data.question_type
+            : QUESTION_TYPES.MULTIPLE_CHOICE;
 
-      removeButton.addEventListener(
-        "click",
-        () => {
-          editor.remove();
+        typeSelector.value = type;
 
-          updateQuestionNumbers();
-          updateEmptyState();
-        },
-      );
+        // =======================================================
+        // SET SCORE FROM DATABASE
+        // =======================================================
 
-      updateQuestionNumbers();
-      updateEmptyState();
-    };
-
-    // =========================================================
-    // LOAD INITIAL QUESTIONS
-    // =========================================================
-
-    const loadInitialQuestions =
-      () => {
         if (
-          !initialQuestionsElement
+          data.score !== undefined &&
+          data.score !== null &&
+          data.score !== ""
         ) {
+          scoreInput.value = data.score;
+        }
+
+        // =======================================================
+        // RENDER EXISTING QUESTION DATA
+        // =======================================================
+
+        renderQuestionFields(
+          editor,
+          type,
+          data,
+        );
+
+        // =======================================================
+        // CHANGE QUESTION TYPE
+        // =======================================================
+
+        typeSelector.addEventListener(
+          "change",
+          () => {
+            const currentData =
+              getQuestionData(editor);
+
+            renderQuestionFields(
+              editor,
+              typeSelector.value,
+              currentData,
+            );
+
+            scoreInput.value =
+              currentData.score;
+          },
+        );
+
+        // =======================================================
+        // REMOVE QUESTION
+        // =======================================================
+
+        removeButton.addEventListener(
+          "click",
+          () => {
+            editor.remove();
+
+            updateQuestionNumbers();
+            updateEmptyState();
+          },
+        );
+
+        updateQuestionNumbers();
+        updateEmptyState();
+      }
+
+      // =========================================================
+      // LOAD QUESTIONS FROM HBS
+      // =========================================================
+
+      function loadInitialQuestions() {
+        if (!initialQuestionsElement) {
+          console.warn(
+            "Không tìm thấy #initial-questions-data",
+          );
+
           return false;
         }
 
         const raw =
-          initialQuestionsElement
-            .textContent
+          initialQuestionsElement.textContent
             ?.trim() || "";
+
+        console.log(
+          "INITIAL QUESTIONS RAW:",
+          raw,
+        );
 
         if (!raw) {
           return false;
@@ -1098,49 +905,235 @@ sai"
             JSON.parse(raw);
         } catch (error) {
           console.error(
-            "PARSE INITIAL QUESTIONS ERROR:",
+            "Không parse được questions:",
             error,
           );
 
           return false;
         }
 
-        if (
-          !Array.isArray(
-            questions,
-          )
-        ) {
+        console.log(
+          "INITIAL QUESTIONS PARSED:",
+          questions,
+        );
+
+        if (!Array.isArray(questions)) {
           console.error(
-            "INITIAL QUESTIONS MUST BE ARRAY.",
+            "formData.questions phải là array.",
           );
 
           return false;
         }
 
+        // Xóa dữ liệu cũ nếu có
+        container.innerHTML = "";
+
         questions.forEach(
           (question) => {
-            addQuestion(
-              question,
-            );
+            addQuestion(question);
           },
         );
 
         return questions.length > 0;
-      };
+      }
 
-    // =========================================================
-    // VALIDATE ASSIGNMENT
-    // =========================================================
+      // =========================================================
+      // VALIDATE QUESTION
+      // =========================================================
 
-    const validateAssignment =
-      () => {
+      function validateQuestion(
+        data,
+        number,
+      ) {
+        const type =
+          data.question_type;
+
+        const question =
+          String(data.question ?? "").trim();
+
+        const content =
+          String(data.content ?? "").trim();
+
+        const answerLines =
+          normalizeLines(data.answer);
+
+        if (
+          !Object.values(
+            QUESTION_TYPES,
+          ).includes(type)
+        ) {
+          throw new Error(
+            `Câu ${number} có loại câu hỏi không hợp lệ.`,
+          );
+        }
+
+        if (!question) {
+          throw new Error(
+            `Câu ${number} chưa nhập nội dung câu hỏi.`,
+          );
+        }
+
+        if (
+          answerLines.length === 0
+        ) {
+          throw new Error(
+            `Câu ${number} phải có ít nhất một đáp án.`,
+          );
+        }
+
+        const markedCount =
+          countMarkedAnswers(
+            answerLines,
+          );
+
+        // -------------------------------------------------------
+        // MULTIPLE CHOICE
+        // -------------------------------------------------------
+
+        if (
+          type ===
+          QUESTION_TYPES.MULTIPLE_CHOICE
+        ) {
+          if (
+            answerLines.length < 2
+          ) {
+            throw new Error(
+              `Câu ${number} phải có ít nhất 2 đáp án.`,
+            );
+          }
+
+          if (
+            markedCount !== 1
+          ) {
+            throw new Error(
+              `Câu ${number} phải có đúng 1 đáp án bắt đầu bằng dấu *.`,
+            );
+          }
+        }
+
+        // -------------------------------------------------------
+        // ORDERING
+        // -------------------------------------------------------
+
+        if (
+          type ===
+          QUESTION_TYPES.ORDERING
+        ) {
+          if (
+            answerLines.length < 2
+          ) {
+            throw new Error(
+              `Câu ${number} phải có ít nhất 2 đáp án.`,
+            );
+          }
+
+          if (
+            markedCount > 0
+          ) {
+            throw new Error(
+              `Câu ${number} dạng ordering không được sử dụng dấu *.`,
+            );
+          }
+        }
+
+        // -------------------------------------------------------
+        // DRAG AND DROP
+        // -------------------------------------------------------
+
+        if (
+          type ===
+          QUESTION_TYPES.DRAG_AND_DROP
+        ) {
+          if (!content) {
+            throw new Error(
+              `Câu ${number} bắt buộc phải có content.`,
+            );
+          }
+
+          const blankCount =
+            countBlanks(content);
+
+          if (
+            blankCount < 1
+          ) {
+            throw new Error(
+              `Câu ${number} phải có ít nhất một ký hiệu ___.`,
+            );
+          }
+
+          if (
+            markedCount !==
+            blankCount
+          ) {
+            throw new Error(
+              `Câu ${number} có ${blankCount} vị trí ___ nhưng có ${markedCount} đáp án đúng.`,
+            );
+          }
+        }
+
+        return {
+          question_type: type,
+          question,
+          content,
+          answer:
+            answerLines.join("\n"),
+        };
+      }
+
+      // =========================================================
+      // COLLECT QUESTIONS
+      // =========================================================
+
+      function collectQuestions() {
+        return Array.from(
+          container.children,
+        ).map(
+          (editor, index) => {
+            const data =
+              getQuestionData(editor);
+
+            const result =
+              validateQuestion(
+                data,
+                index + 1,
+              );
+
+            if (
+              data.score !== ""
+            ) {
+              const score =
+                Number(data.score);
+
+              if (
+                !Number.isFinite(score) ||
+                score <= 0
+              ) {
+                throw new Error(
+                  `Điểm câu ${index + 1} phải lớn hơn 0.`,
+                );
+              }
+
+              result.score =
+                score;
+            }
+
+            return result;
+          },
+        );
+      }
+
+      // =========================================================
+      // VALIDATE ASSIGNMENT
+      // =========================================================
+
+      function validateAssignment() {
         const title =
           document
             .getElementById(
               "assignment-title",
             )
             ?.value
-            .trim() || "";
+            ?.trim() || "";
 
         const subject =
           form.querySelector(
@@ -1148,8 +1141,7 @@ sai"
           );
 
         const subjectId =
-          subject?.value
-            ?.trim() || "";
+          subject?.value?.trim() || "";
 
         const type =
           document
@@ -1157,7 +1149,7 @@ sai"
               "assignment-type",
             )
             ?.value
-            .trim() || "";
+            ?.trim() || "";
 
         const duration =
           Number(
@@ -1187,9 +1179,7 @@ sai"
         }
 
         if (
-          !Number.isInteger(
-            duration,
-          ) ||
+          !Number.isInteger(duration) ||
           duration < 1 ||
           duration > 600
         ) {
@@ -1197,96 +1187,107 @@ sai"
             "Thời gian làm bài phải từ 1 đến 600 phút.",
           );
         }
-      };
+      }
 
-    // =========================================================
-    // ADD BUTTON
-    // =========================================================
+      // =========================================================
+      // ADD BUTTON
+      // =========================================================
 
-    addButton.addEventListener(
-      "click",
-      () => {
-        addQuestion();
-      },
-    );
+      addButton.addEventListener(
+        "click",
+        () => {
+          addQuestion();
+        },
+      );
 
-    // =========================================================
-    // SUBMIT
-    // =========================================================
+      // =========================================================
+      // SUBMIT UPDATE
+      // =========================================================
 
-    form.addEventListener(
-      "submit",
-      (event) => {
-        event.preventDefault();
+      form.addEventListener(
+        "submit",
+        (event) => {
+          event.preventDefault();
 
-        try {
-          validateAssignment();
+          try {
+            validateAssignment();
 
-          const questions =
-            collectQuestions();
+            const questions =
+              collectQuestions();
 
-          if (
-            questions.length === 0
-          ) {
-            throw new Error(
-              "Vui lòng thêm ít nhất một câu hỏi.",
-            );
-          }
+            if (
+              questions.length === 0
+            ) {
+              throw new Error(
+                "Vui lòng thêm ít nhất một câu hỏi.",
+              );
+            }
 
-          questionsInput.value =
-            JSON.stringify(
+            // Quan trọng:
+            // ghi dữ liệu câu hỏi mới vào hidden input
+            questionsInput.value =
+              JSON.stringify(
+                questions,
+              );
+
+            console.log(
+              "UPDATE QUESTIONS:",
               questions,
             );
 
-          HTMLFormElement.prototype.submit.call(
-            form,
-          );
+            HTMLFormElement.prototype.submit.call(
+              form,
+            );
+          } catch (error) {
+            console.error(
+              "UPDATE ASSIGNMENT VALIDATION ERROR:",
+              error,
+            );
 
-        } catch (error) {
-          window.alert(
-            error.message ||
+            window.alert(
+              error.message ||
               "Dữ liệu bài tập không hợp lệ.",
-          );
-        }
-      },
-    );
+            );
+          }
+        },
+      );
 
-    // =========================================================
-    // LOAD DATABASE QUESTIONS
-    // =========================================================
+      // =========================================================
+      // LOAD DATABASE DATA
+      // =========================================================
 
-    const hasInitialQuestions =
-      loadInitialQuestions();
+      const hasInitialQuestions =
+        loadInitialQuestions();
 
-    // =========================================================
-    // IF NO DATABASE QUESTIONS
-    // =========================================================
+      // =========================================================
+      // EMPTY DATABASE
+      // =========================================================
 
-    if (!hasInitialQuestions) {
-      addQuestion();
+      if (!hasInitialQuestions) {
+        addQuestion();
+      }
+
+      updateQuestionNumbers();
+      updateEmptyState();
     }
 
-    updateQuestionNumbers();
-    updateEmptyState();
-  };
+    // ===========================================================
+    // INIT
+    // ===========================================================
 
-  // ===========================================================
-  // INIT
-  // ===========================================================
-
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-    document.addEventListener(
-      "DOMContentLoaded",
-      initAssignmentBuilder,
-      {
-        once: true,
-      },
-    );
-  } else {
-    initAssignmentBuilder();
-  }
-})();
+    if (
+      document.readyState ===
+      "loading"
+    ) {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initAssignmentBuilder,
+        {
+          once: true,
+        },
+      );
+    } else {
+      initAssignmentBuilder();
+    }
+  })();
 </script>

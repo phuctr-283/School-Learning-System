@@ -1,8 +1,12 @@
+from decimal import Decimal
+
 from rest_framework import serializers
+
 
 class AssignmentQuestionInputSerializer(
     serializers.Serializer,
 ):
+
     question_type = serializers.ChoiceField(
         choices=[
             "multiple_choice",
@@ -32,6 +36,6 @@ class AssignmentQuestionInputSerializer(
         allow_null=True,
         max_digits=5,
         decimal_places=2,
-        min_value="0.01",
-        max_value="10.00",
+        min_value=Decimal("0.01"),
+        max_value=Decimal("10.00"),
     )

@@ -1,7 +1,7 @@
 const AssignmentApplicationRepository = require("../../../domain/repositories/assignment/assignment_application_repository");
 
 const AssignmentApplicationDTO = require("../../../application/assignments/dto/assignment_application.dto");
-const AssignmentApplicationContentDTO = require("../../../application/assignments/dto/assignment_application_content.dto")
+const AssignmentApplicationContentDTO = require("../../../application/assignments/dto/assignment_application_content.dto");
 const assignmentApi = require("../../api/assignment/assignment_api");
 const errorApi = require("../../api/error_api");
 
@@ -88,8 +88,9 @@ class AssignmentApplicationRepositoryImpl extends AssignmentApplicationRepositor
       );
     }
   }
-  async getStudentAssignmentApplications(req,classSectionId, lessonId) {
-    const response = await assignmentApi.getStudentAssignmentApplications(req,
+  async getStudentAssignmentApplications(req, classSectionId, lessonId) {
+    const response = await assignmentApi.getStudentAssignmentApplications(
+      req,
       classSectionId,
       lessonId,
     );
@@ -97,6 +98,39 @@ class AssignmentApplicationRepositoryImpl extends AssignmentApplicationRepositor
     const data = response?.data ?? [];
 
     return data.map((item) => new AssignmentApplicationContentDTO(item));
+  }
+  async getStudentAssignmentAttempts(
+    req,
+    { assignmentApplicationId, classSectionId, lessonId },
+  ) {
+    try {
+      const response = await assignmentApi.getStudentAssignmentAttempts(req, {
+        assignmentApplicationId,
+        classSectionId,
+        lessonId,
+      });
+
+      if (!response || response.success !== true) {
+        throw new Error(
+          response?.message || "Không thể lấy danh sách sinh viên.",
+        );
+      }
+
+      return response.data;
+    } catch (error) {
+      const backendData = error.response?.data;
+
+      console.error(
+        "GET STUDENT ASSIGNMENT ATTEMPTS ERROR:",
+        backendData || error.message,
+      );
+
+      if (backendData?.message) {
+        throw new Error(backendData.message);
+      }
+
+      throw new Error(error.message || "Không thể lấy danh sách sinh viên.");
+    }
   }
 }
 

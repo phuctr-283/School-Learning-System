@@ -535,7 +535,7 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             .first()
             .select_related()
         )
-
+        print("CLASS_SECTION", class_section.class_section_id)
         if class_section is None:
             raise AssignmentNotFoundError("Không tìm thấy lớp học phần.")
 
@@ -571,7 +571,7 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             .first()
             .select_related()
         )
-
+        print("STUDENT:", student.student_id)
         if student is None:
             raise AssignmentNotFoundError("Mã sinh viên không tồn tại.")
 
@@ -586,7 +586,7 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             student=student,
             class_section=class_section,
         ).first()
-
+        print("ENROLLMENT",enrollment)
         if enrollment is None:
             raise AssignmentForbiddenError("Sinh viên không thuộc lớp học phần này.")
 
@@ -749,3 +749,191 @@ class MongoAssignmentApplicationRepository(AssignmentApplicationRepository):
             )
 
         return result
+    def get_student_attempts(
+            self,
+            assignment_application_id: str,
+            class_section_id: str,
+            lesson_id: str,
+        ):
+            assignment_application_id = str(assignment_application_id or "").strip()
+    
+            class_section_id = str(class_section_id or "").strip()
+    
+            lesson_id = str(lesson_id or "").strip()
+    
+            if not assignment_application_id:
+                raise AssignmentBadRequestError("Thiếu mã áp dụng bài tập.")
+    
+            if not class_section_id:
+                raise AssignmentBadRequestError("Thiếu mã lớp học phần.")
+    
+            if not lesson_id:
+                raise AssignmentBadRequestError("Thiếu mã bài học.")
+    
+            # --------------------------------------------------
+            # 1. Assignment application
+            # --------------------------------------------------
+    
+            application = AssignmentApplicationModel.objects(
+                assignment_application_id=assignment_application_id,
+            ).first()
+    
+            if application is None:
+                raise AssignmentNotFoundError("Không tìm thấy áp dụng bài tập.")
+    
+            if application.lesson_id != lesson_id:
+                raise AssignmentBadRequestError("Áp dụng bài tập không thuộc bài học này.")
+    
+            # --------------------------------------------------
+            # 2. Class section
+            # --------------------------------------------------
+    
+            class_section = ClassSectionModel.objects(
+                class_section_id=class_section_id,
+            ).first()
+    
+            if class_section is None:
+                raise AssignmentNotFoundError("Không tìm thấy lớp học phần.")
+    
+            # --------------------------------------------------
+            # 3. Kiểm tra application có áp dụng cho class section
+            # --------------------------------------------------
+    
+            application_class_section = next(
+                (
+                    item
+                    for item in (application.class_sections or [])
+                    if (
+                        item.class_section
+                        and str(item.class_section.class_section_id) == class_section_id
+                    )
+                ),
+                None,
+            )
+    
+            if application_class_section is None:
+                raise AssignmentForbiddenError(
+                    "Bài tập không được áp dụng cho lớp học phần này."
+                )
+    
+            # Nếu application có trạng thái riêng cho class section
+            if application_class_section.status != "active":
+                raise AssignmentLockedError("Bài tập chưa được mở cho lớp học phần này.")
+    
+            # --------------------------------------------------
+            # 4. Lấy tất cả sinh viên trong class section
+            # --------------------------------------------------
+    
+            enrollments = ClassSectionStudentModel.objects(
+                class_section=class_section,
+            ).select_related()
+    
+            # --------------------------------------------------
+            # 5. Lấy tất cả attempts của application + class section
+            # --------------------------------------------------
+    
+            attempts = (
+                AssignmentAttemptModel.objects(
+                    assignment_application=application,
+                    class_section=class_section,
+                ).order_by("-started_at")
+                .select_related()
+                
+            )
+    
+            # --------------------------------------------------
+            # 6. Chỉ giữ attempt mới nhất của từng student
+            # --------------------------------------------------
+    
+            latest_attempt_by_student = {}
+    
+            for attempt in attempts:
+    
+                if attempt.student is None:
+                    continue
+    
+                student_id = attempt.student.student_id
+    
+                if student_id not in latest_attempt_by_student:
+                    latest_attempt_by_student[student_id] = attempt
+    
+            # --------------------------------------------------
+            # 7. Ghép student + attempt
+            # --------------------------------------------------
+    
+            students = []
+    
+            for enrollment in enrollments:
+    
+                student = enrollment.student
+    
+                if student is None:
+                    continue
+    
+                student_id = student.student_id
+    
+                attempt = latest_attempt_by_student.get(student_id)
+    
+                if attempt is None:
+    
+                    student_status = "not_started"
+                    status_label = "Chưa làm bài"
+                    score = None
+                    total_score = None
+                    attempt_id = None
+    
+                elif attempt.status == "in_progress":
+    
+                    student_status = "in_progress"
+                    status_label = "Đang làm"
+                    score = None
+                    total_score = attempt.total_score
+                    attempt_id = attempt.attempt_id
+    
+                elif attempt.status == "submitted":
+    
+                    student_status = "submitted"
+                    status_label = "Đã nộp"
+                    score = attempt.score
+                    total_score = attempt.total_score
+                    attempt_id = attempt.attempt_id
+    
+                elif attempt.status == "graded":
+    
+                    student_status = "graded"
+                    status_label = "Đã chấm"
+                    score = attempt.score
+                    total_score = attempt.total_score
+                    attempt_id = attempt.attempt_id
+    
+                else:
+    
+                    student_status = attempt.status
+                    status_label = attempt.status
+                    score = attempt.score
+                    total_score = attempt.total_score
+                    attempt_id = attempt.attempt_id
+    
+                students.append(
+                    {
+                        "student_id": student_id,
+                        "full_name": getattr(
+                            student,
+                            "full_name",
+                            "",
+                        ),
+                        "status": student_status,
+                        "status_label": status_label,
+                        "score": score,
+                        "total_score": total_score,
+                        "attempt_id": attempt_id,
+                    }
+                )
+    
+            return {
+                "assignment_application_id": (application.assignment_application_id),
+                "class_section_id": (class_section.class_section_id),
+                "lesson_id": application.lesson_id,
+                "students": students,
+            }
+    

@@ -7,6 +7,7 @@ class UpdateAssignmentDTO {
     subjectId,
 
     title,
+
     description = null,
 
     assignment_type,
@@ -17,56 +18,35 @@ class UpdateAssignmentDTO {
 
     questions = [],
   }) {
-    this.assignmentId = String(
-      assignment_id ?? assignmentId ?? "",
-    ).trim();
+    this.assignmentId = String(assignment_id ?? assignmentId ?? "").trim();
 
-    this.subjectId = String(
-      subject_id ?? subjectId ?? "",
-    ).trim();
+    this.subjectId = String(subject_id ?? subjectId ?? "").trim();
 
-    this.title = String(
-      title ?? "",
-    ).trim();
+    this.title = String(title ?? "").trim();
 
     this.description =
-      typeof description === "string"
-        ? description.trim() || null
-        : null;
+      typeof description === "string" ? description.trim() || null : null;
 
     this.assignmentType = String(
-      assignment_type ??
-        assignmentType ??
-        "practice",
+      assignment_type ?? assignmentType ?? "practice",
     ).trim();
 
-    const rawDuration =
-      duration_minutes ??
-      durationMinutes;
+    const rawDuration = duration_minutes ?? durationMinutes;
 
-    this.durationMinutes =
-      Number(rawDuration);
+    this.durationMinutes = Number(rawDuration);
 
-    this.questions = Array.isArray(
-      questions,
-    )
+    this.questions = Array.isArray(questions)
       ? questions.map((item) => {
           const normalized = {
             question_type: String(
-              item?.question_type ?? "",
+              item?.question_type ?? item?.questionType ?? "",
             ).trim(),
 
-            question: String(
-              item?.question ?? "",
-            ).trim(),
+            question: String(item?.question ?? "").trim(),
 
-            content: String(
-              item?.content ?? "",
-            ),
+            content: String(item?.content ?? ""),
 
-            answer: String(
-              item?.answer ?? "",
-            ),
+            answer: String(item?.answer ?? ""),
           };
 
           if (
@@ -74,8 +54,7 @@ class UpdateAssignmentDTO {
             item?.score !== null &&
             item?.score !== ""
           ) {
-            normalized.score =
-              Number(item.score);
+            normalized.score = Number(item.score);
           }
 
           return normalized;
@@ -85,55 +64,42 @@ class UpdateAssignmentDTO {
 
   validate() {
     if (!this.assignmentId) {
-      throw new Error(
-        "Thiếu mã bài tập.",
-      );
+      throw new Error("Thiếu mã bài tập.");
     }
 
     if (!this.title) {
-      throw new Error(
-        "Tên bài tập không được để trống.",
-      );
+      throw new Error("Tên bài tập không được để trống.");
     }
 
     if (!this.subjectId) {
-      throw new Error(
-        "Chưa chọn môn học.",
-      );
+      throw new Error("Chưa chọn môn học.");
+    }
+
+    if (!["practice", "homework", "quiz"].includes(this.assignmentType)) {
+      throw new Error("Loại bài tập không hợp lệ.");
     }
 
     if (
-      ![
-        "practice",
-        "homework",
-        "quiz",
-      ].includes(this.assignmentType)
-    ) {
-      throw new Error(
-        "Loại bài tập không hợp lệ.",
-      );
-    }
-
-    if (
-      !Number.isInteger(
-        this.durationMinutes,
-      ) ||
+      !Number.isInteger(this.durationMinutes) ||
       this.durationMinutes < 1 ||
       this.durationMinutes > 600
     ) {
-      throw new Error(
-        "Thời gian làm bài phải từ 1 đến 600 phút.",
-      );
+      throw new Error("Thời gian làm bài phải từ 1 đến 600 phút.");
     }
 
-    if (
-      !Array.isArray(this.questions) ||
-      this.questions.length === 0
-    ) {
-      throw new Error(
-        "Bài tập phải có ít nhất một câu hỏi.",
-      );
+    if (!Array.isArray(this.questions) || this.questions.length === 0) {
+      throw new Error("Bài tập phải có ít nhất một câu hỏi.");
     }
+
+    this.questions.forEach((question, index) => {
+      if (!question.question_type) {
+        throw new Error(`Câu hỏi ${index + 1} chưa có loại câu hỏi.`);
+      }
+
+      if (!question.question) {
+        throw new Error(`Câu hỏi ${index + 1} chưa có nội dung.`);
+      }
+    });
   }
 
   toRequest() {
@@ -146,11 +112,9 @@ class UpdateAssignmentDTO {
 
       subject_id: this.subjectId,
 
-      assignment_type:
-        this.assignmentType,
+      assignment_type: this.assignmentType,
 
-      duration_minutes:
-        this.durationMinutes,
+      duration_minutes: this.durationMinutes,
 
       questions: this.questions,
     };

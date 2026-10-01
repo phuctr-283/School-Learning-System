@@ -58,24 +58,41 @@ class AssignmentMapper:
         university = model.university
 
         if subject is None:
-            raise ValueError(
-                "Bài tập chưa được gán môn học.",
-            )
+            raise ValueError("Bài tập chưa được gán môn học.")
 
         if subject.department is None:
-            raise ValueError(
-                "Môn học của bài tập chưa được gán khoa.",
-            )
+            raise ValueError("Môn học của bài tập chưa được gán khoa.")
 
         if teacher is None:
-            raise ValueError(
-                "Bài tập chưa được gán giảng viên.",
-            )
+            raise ValueError("Bài tập chưa được gán giảng viên.")
 
         if university is None:
-            raise ValueError(
-                "Bài tập chưa được gán trường đại học.",
-            )
+            raise ValueError("Bài tập chưa được gán trường đại học.")
+
+        # ==========================================
+        # QUESTIONS
+        # ==========================================
+
+        question_models = model.questions or []
+
+        questions = [
+            AssessmentQuestionMapper.to_entity(question_model)
+            for question_model in question_models
+        ]
+
+        # ==========================================
+        # DEBUG
+        # ==========================================
+
+        print(
+            "ASSIGNMENT MAPPER MODEL QUESTIONS:",
+            len(question_models),
+        )
+
+        print(
+            "ASSIGNMENT MAPPER ENTITY QUESTIONS:",
+            len(questions),
+        )
 
         return Assignment(
             assignment_id=str(model.assignment_id),
@@ -86,10 +103,7 @@ class AssignmentMapper:
             title=model.title,
             description=model.description,
             assignment_type=model.assignment_type,
-            questions=[
-                AssessmentQuestionMapper.to_entity(question)
-                for question in model.questions
-            ],
+            questions=questions,
             total_score=model.total_score,
             duration_minutes=model.duration_minutes,
             status=model.status,

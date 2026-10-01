@@ -44,7 +44,7 @@ const assignmentApi = {
 
     const response = await authenticatedApi.get(
       req,
-      `/assignments/${encodeURIComponent(id)}/`,
+      `/assignments/assignments/${encodeURIComponent(id)}/`,
       config,
     );
 
@@ -143,11 +143,35 @@ const assignmentApi = {
     return response.data;
   },
   async updateAssignment(req, assignmentId, payload, config = {}) {
-    const response = await authenticatedApi.put(
+    const response = await authenticatedApi.post(
       req,
-      `/assignments/${encodeURIComponent(assignmentId)}/update/`,
+      `/assignments/assignments/${encodeURIComponent(assignmentId)}/update/`,
       payload,
       config,
+    );
+
+    return response.data;
+  },
+  async getStudentAssignmentAttempts(
+    req,
+    { assignmentApplicationId, classSectionId, lessonId },
+    config = {},
+  ) {
+    const params = {
+      assignment_application_id: assignmentApplicationId,
+
+      class_section_id: classSectionId,
+
+      lesson_id: lessonId,
+    };
+
+    const response = await authenticatedApi.get(
+      req,
+      "/assignments/assignments/student-attempts/",
+      {
+        ...config,
+        params,
+      },
     );
 
     return response.data;

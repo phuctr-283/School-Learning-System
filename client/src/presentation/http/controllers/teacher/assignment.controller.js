@@ -1,7 +1,10 @@
 const {
   createAssignmentUseCase,
   getAssignmentsUseCase,
-  getAssignmentsBySubjectUseCase,getAssignmentByIdUseCase
+  getAssignmentsBySubjectUseCase,
+  getAssignmentByIdUseCase,
+  getStudentAssignmentAttemptsUseCase,
+  updateAssignmentUseCase,
 } = require("../../../../infrastructure/dependencies/assignment/assignment_dependency");
 
 const {
@@ -213,18 +216,58 @@ class AssignmentController {
 
       const subjects = await getTeacherSubjectsUseCase.execute(req);
 
-      const formData = {
-        assignment_id: assignment.assignment_id,
-        title: assignment.title ?? "",
-        description: assignment.description ?? "",
-        subject_id: assignment.subject_id ?? "",
-        assignment_type: assignment.assignment_type ?? "practice",
-        duration_minutes: assignment.duration_minutes ?? 30,
-        questions: Array.isArray(assignment.questions)
-          ? assignment.questions
-          : [],
-      };
+      console.log("GET ASSIGNMENT BY ID:", JSON.stringify(assignment, null, 2));
 
+      // =========================================================
+      // NORMALIZE QUESTIONS
+      // =========================================================
+
+      let questions = assignment?.questions;
+
+      // Trường hợp backend trả JSON string
+      if (typeof questions === "string") {
+        try {
+          questions = JSON.parse(questions);
+        } catch (error) {
+          console.error("PARSE ASSIGNMENT QUESTIONS ERROR:", error);
+
+          questions = [];
+        }
+      }
+
+      // Nếu backend không trả array
+      if (!Array.isArray(questions)) {
+        questions = [];
+      }
+
+      // =========================================================
+      // NORMALIZE QUESTION DATA
+      // =========================================================
+
+      questions = questions.map((question) => ({
+        question_type: question?.question_type ?? question?.questionType ?? "",
+
+        question: question?.question ?? "",
+
+        content: question?.content ?? "",
+
+        answer: question?.answer ?? "",
+
+        score: question?.score ?? "",
+      }));
+
+      console.log("UPDATE FORM QUESTIONS:", JSON.stringify(questions, null, 2));
+
+      const formData = {
+        assignment_id: assignment?.assignment_id ?? assignmentId,
+        title: assignment?.title ?? "",
+        description: assignment?.description ?? "",
+        subject_id: assignment?.subject_id ?? "",
+        assignment_type: assignment?.assignment_type ?? "practice",
+        duration_minutes: assignment?.duration_minutes ?? 30,
+        questions,
+      };
+      console.log("UPDATE FORM DATA:", JSON.stringify(formData, null, 2));
       return res.status(200).render("teacher/assignment/update", {
         pageTitle: "Chỉnh sửa bài tập",
         isEdit: true,
@@ -260,70 +303,178 @@ class AssignmentController {
   }
   async updateAssignment(req, res) {
     const assignmentId = String(req.params.assignmentId ?? "").trim();
-
-    if (!assignmentId) {
-      return res.redirect("/teacher/assignment/list");
-    }
-
-    const subjectId = getRequestSubjectId(req);
-
     let questions = [];
-
     try {
-      const rawQuestions = req.body?.questions;
-
-      if (typeof rawQuestions === "string") {
-        const value = rawQuestions.trim();
-
-        questions = value ? JSON.parse(value) : [];
-      } else if (Array.isArray(rawQuestions)) {
-        questions = rawQuestions;
+      if (!assignmentId) {
+        throw new Error("Thiếu mã bài tập.");
+      }
+      questions = req.body.questions;
+      if (typeof questions === "string") {
+        try {
+          questions = JSON.parse(questions);
+        } catch (parseError) {
+          console.error("PARSE QUESTIONS ERROR:", parseError);
+          throw new Error("Dữ liệu câu hỏi không hợp lệ.");
+        }
       }
 
       if (!Array.isArray(questions)) {
-        throw new Error("Danh sách câu hỏi không hợp lệ.");
+        questions = [];
       }
-    } catch (error) {
-      console.error("PARSE UPDATE ASSIGNMENT QUESTIONS ERROR:", error);
+      console.log("========== UPDATE ASSIGNMENT ==========");
+      console.log("ASSIGNMENT ID:", assignmentId);
+      console.log("REQUEST BODY:", req.body);
+      console.log("QUESTIONS:", JSON.stringify(questions, null, 2));
 
-      return this.renderUpdateAssignmentPage(req, res, {
-        statusCode: 400,
+      const input = {
+        assignment_id: assignmentId,
 
-        formData: {
-          ...req.body,
-          assignment_id: assignmentId,
-          subject_id: subjectId,
-          questions: [],
-        },
+        title: req.body.title,
 
-        error: "Dữ liệu câu hỏi không hợp lệ.",
-      });
-    }
+        description: req.body.description,
 
-    const formData = {
-      ...req.body,
+        subject_id: req.body.subject_id,
 
-      assignment_id: assignmentId,
+        assignment_type: req.body.assignment_type,
 
-      subject_id: subjectId,
+        duration_minutes: req.body.duration_minutes,
 
-      questions,
-    };
+        questions,
+      };
+      const result = await updateAssignmentUseCase.execute(req, input);
 
-    try {
-      await updateAssignmentUseCase.execute(req, formData);
+      console.log("UPDATE ASSIGNMENT SUCCESS:", result);
 
       return res.redirect("/teacher/assignment/list");
     } catch (error) {
-      console.error("UPDATE ASSIGNMENT ERROR:", error);
+      console.error("UPDATE ASSIGNMENT PAGE ERROR:", error);
+      try {
+        const assignment = await getAssignmentByIdUseCase.execute(
+          req,
+          assignmentId,
+        );
+        const subjects = await getTeacherSubjectsUseCase.execute(req);
+        return res
+          .status(error.response?.status ?? 400)
+          .render("teacher/assignment/update", {
+            pageTitle: "Chỉnh sửa bài tập",
+            isEdit: true,
+            assignment,
+            formData: {
+              assignment_id: assignmentId,
+              title: req.body.title ?? assignment.title ?? "",
+              description: req.body.description ?? assignment.description ?? "",
+              subject_id: req.body.subject_id ?? assignment.subject_id ?? "",
+              assignment_type:
+                req.body.assignment_type ??
+                assignment.assignment_type ??
+                "practice",
+              duration_minutes:
+                req.body.duration_minutes ?? assignment.duration_minutes ?? 30,
+              questions,
+            },
+            subjects,
+            hasSelectedSubject: Boolean(
+              req.body.subject_id ?? assignment.subject_id,
+            ),
+            error: error.message || "Không thể cập nhật bài tập.",
+          });
+      } catch (renderError) {
+        console.error("RENDER UPDATE ERROR:", renderError);
+        return res.status(400).render("teacher/assignment/update", {
+          pageTitle: "Chỉnh sửa bài tập",
+          isEdit: true,
+          assignment: null,
+          formData: {
+            assignment_id: assignmentId,
+            title: req.body.title ?? "",
+            description: req.body.description ?? "",
+            subject_id: req.body.subject_id ?? "",
+            assignment_type: req.body.assignment_type ?? "practice",
+            duration_minutes: req.body.duration_minutes ?? 30,
+            questions,
+          },
+          subjects: [],
+          hasSelectedSubject: Boolean(req.body.subject_id),
+          error: error.message || "Không thể cập nhật bài tập.",
+        });
+      }
+    }
+  }
+  async showStudentAttemptsPage(req, res) {
+    const assignmentApplicationId = String(
+      req.params.assignmentApplicationId ?? "",
+    ).trim();
 
-      return this.renderUpdateAssignmentPage(req, res, {
-        statusCode: 400,
+    const classSectionId = String(req.query.class_section_id ?? "").trim();
 
-        formData,
-
-        error: error.message || "Không thể cập nhật bài tập.",
+    const lessonId = String(req.query.lesson_id ?? "").trim();
+    if (!assignmentApplicationId || !classSectionId || !lessonId) {
+      return res.redirect(
+        `/teacher/history/class-sections/${encodeURIComponent(classSectionId)}`,
+      );
+    }
+    try {
+      const data = await getStudentAssignmentAttemptsUseCase.execute(req, {
+        assignmentApplicationId,
+        classSectionId,
+        lessonId,
       });
+
+      return res.status(200).render("teacher/history/list_student", {
+        pageTitle: "Sinh viên làm bài",
+
+        assignmentApplicationId,
+
+        classSectionId,
+
+        lessonId,
+
+        students: data.students || [],
+
+        totalStudents: data.students?.length || 0,
+
+        completedStudents:
+          data.students?.filter(
+            (item) => item.status === "submitted" || item.status === "graded",
+          ).length || 0,
+
+        inProgressStudents:
+          data.students?.filter((item) => item.status === "in_progress")
+            .length || 0,
+
+        notStartedStudents:
+          data.students?.filter((item) => item.status === "not_started")
+            .length || 0,
+
+        error: null,
+      });
+    } catch (error) {
+      console.error("SHOW STUDENT ATTEMPTS PAGE ERROR:", error);
+
+      return res
+        .status(error.response?.status || 400)
+        .render("teacher/history/list_student", {
+          pageTitle: "Sinh viên làm bài",
+
+          assignmentApplicationId,
+
+          classSectionId,
+
+          lessonId,
+
+          students: [],
+
+          totalStudents: 0,
+
+          completedStudents: 0,
+
+          inProgressStudents: 0,
+
+          notStartedStudents: 0,
+
+          error: error.message || "Không thể tải danh sách sinh viên.",
+        });
     }
   }
 }

@@ -163,27 +163,39 @@ function createAssignmentHTML(assignment, classSectionId) {
     assignment.assignmentApplicationId ??
     "";
 
-  const lessonId = assignment.lesson_id ?? assignment.lessonId ?? "";
+  const lessonId =
+    assignment.lesson_id ??
+    assignment.lessonId ??
+    "";
 
-  const title = assignment.title ?? "";
+  const title =
+    assignment.title ??
+    "";
 
   const assignmentId =
-    assignment.assignment_id ?? assignment.assignmentId ?? "";
+    assignment.assignment_id ??
+    assignment.assignmentId ??
+    "";
+
+  const href =
+    `/teacher/history/application/${encodeURIComponent(
+      applicationId,
+    )}/students` +
+    `?class_section_id=${encodeURIComponent(classSectionId)}` +
+    `&lesson_id=${encodeURIComponent(lessonId)}`;
 
   return `
     <a
-      href="/teacher/assignment/applications/${encodeURIComponent(
-        applicationId,
-      )}/class-sections/${encodeURIComponent(
-        classSectionId,
-      )}/lessons/${encodeURIComponent(lessonId)}"
+      href="${href}"
       class="lesson-assignment-item"
       data-assignment-application-id="${escapeHtml(applicationId)}"
       data-class-section-id="${escapeHtml(classSectionId)}"
       data-lesson-id="${escapeHtml(lessonId)}"
       data-assignment-id="${escapeHtml(assignmentId)}"
     >
+
       <div class="lesson-assignment-main">
+
         <div class="lesson-assignment-title">
 
           <span class="lesson-assignment-icon">
@@ -195,6 +207,7 @@ function createAssignmentHTML(assignment, classSectionId) {
           </span>
 
         </div>
+
       </div>
 
       <span
@@ -203,6 +216,7 @@ function createAssignmentHTML(assignment, classSectionId) {
       >
         <i class="fa-light fa-chevron-right"></i>
       </span>
+
     </a>
   `;
 }

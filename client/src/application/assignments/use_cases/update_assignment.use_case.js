@@ -1,24 +1,15 @@
-const UpdateAssignmentDTO = require(
-  "../dto/update_assignment.dto.js",
-);
+const UpdateAssignmentDTO = require("../dto/update_assignment.dto");
 
 class UpdateAssignmentUseCase {
   constructor(assignmentRepository) {
-    this.assignmentRepository =
-      assignmentRepository;
+    this.assignmentRepository = assignmentRepository;
   }
 
   async execute(req, input) {
-    const dto =
-      new UpdateAssignmentDTO(input);
+    const dto = new UpdateAssignmentDTO(input);
 
-    return this.assignmentRepository
-      .updateAssignment(
-        req,
-        dto,
-      );
+    return this.assignmentRepository.updateAssignment(req, dto);
   }
 }
 
-module.exports =
-  UpdateAssignmentUseCase;
+module.exports = UpdateAssignmentUseCase;

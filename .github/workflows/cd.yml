@@ -1,0 +1,79 @@
+name: School Learning System Platform
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  
+  IMAGE_BE: ${{ github.repository_owner }}/sls_be
+  IMAGE_FE: ${{ github.repository_owner }}/sls_fe
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lowercase image names
+        run: |
+          echo "GHCR_BE=$(echo ${{ env.REGISTRY }}/${{ env.IMAGE_BE }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "GHCR_FE=$(echo ${{ env.REGISTRY }}/${{ env.IMAGE_FE }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Build and push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          push: true
+          tags: |
+            ${{ env.GHCR_BE }}:latest
+            ${{ env.GHCR_BE }}:${{ github.sha }}
+
+      - name: Build and push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          push: true
+          tags: |
+            ${{ env.GHCR_FE }}:latest
+            ${{ env.GHCR_FE }}:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to VPS
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << EOF
+            echo "1. Sign in GHCR on VPS to pull image docker ..."
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            echo "2. Come in target folder ..."
+            cd ~/ThayTruong/school_learning_system
+
+            echo "3. Pull new code and restart ..."
+            docker compose pull
+            docker compose up -d --force-recreate
+
+            echo "Successful Deploy"
+          EOF
